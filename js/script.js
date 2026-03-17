@@ -20,3 +20,32 @@ function scrollSlider(sliderId, direction) {
     });
   }
 }
+// Listen for the form submission
+document
+  .getElementById("loginForm")
+  .addEventListener("submit", async (event) => {
+    event.preventDefault(); // Stops the default page reload
+    const email = document.getElementById("email").value;
+    const password = document.getElementById("password").value;
+
+    try {
+      // 'fetch' sends the data to Express backend
+      const response = await fetch("http://localhost:3000/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email: email, password: password }),
+      });
+
+      // Read the backend's reply
+      const data = await response.json();
+      const messageDiv = document.getElementById("loginMessage");
+
+      if (response.ok) {
+        messageDiv.innerHTML = `<span class="text-success">${data.message}</span>`;
+      } else {
+        messageDiv.innerHTML = `<span class="text-danger">${data.message}</span>`;
+      }
+    } catch (error) {
+      console.error("Error communicating with backend:", error);
+    }
+  });
