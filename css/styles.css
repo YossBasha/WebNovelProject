@@ -333,3 +333,113 @@ form .btn-outline-success:hover {
     margin-left: 10px;
   }
 }
+/* --- Login Modal Override --- */
+
+/* Target the inner dialog content */
+#loginModal .modal-content {
+  background-color: #1a1a1a; /* Dark background from your image */
+  color: #ffffff;
+  border-radius: 20px;
+  border: 1px solid #333;
+  padding: 1.5rem;
+}
+
+/* Ensure the header and title look clean */
+#loginModal .modal-header {
+  border: none;
+  padding-bottom: 0;
+}
+
+#loginModal .modal-title {
+  font-size: 1.75rem;
+  font-weight: 700;
+}
+
+/* Style the close button (the X) to be white */
+#loginModal .btn-close {
+  filter: invert(1) grayscale(100%) brightness(200%);
+}
+
+/* Fix the Input layout - Avoid overlapping */
+#loginModal .modal-body .mb-3,
+#loginModal .modal-body .mb-4 {
+  position: relative;
+  clear: both;
+}
+
+#loginModal .form-label {
+  color: #a0a0a0;
+  margin-bottom: 0.5rem;
+}
+
+#loginModal .form-control {
+  background-color: #6d6d00;
+  border: none;
+  color: white;
+  padding: 0.8rem;
+  border-radius: 12px;
+}
+
+#loginModal .form-control:focus {
+  background-color: #848400;
+  box-shadow: none;
+  outline: 2px solid #fff;
+}
+#loginModal .btn-dark {
+  background-color: #262626;
+  border: 1px solid #444;
+  padding: 1rem;
+  font-size: 1.1rem;
+  border-radius: 12px;
+  margin-top: 10px;
+}
+#loginModal a.text-dark {
+  color: #ffffff !important;
+  text-decoration: underline;
+}
+#loginForm {
+  display: block !important;
+  margin: 0 !important;
+}
+#loginForm .mb-3,
+#loginForm .mb-4 {
+  display: block;
+  width: 100%;
+  margin-bottom: 1.5rem !important;
+}
+
+#loginForm .form-control {
+  width: 100%;
+  background-color: #2a2a2a !important;
+  border: 1px solid #444 !important;
+  color: white !important;
+  border-radius: 8px;
+  padding: 12px;
+}
+
+#loginModal .modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 25px 10px 25px;
+}
+
+#loginForm .btn-dark {
+  background-color: white !important;
+  color: black !important;
+  font-weight: bold;
+  border-radius: 8px;
+  padding: 12px;
+  margin-top: 10px;
+  border: none;
+  width: 100%;
+}
+
+#loginForm a.text-dark {
+  color: #00d4ff !important;
+  text-decoration: none;
+}
+
+#loginForm a.text-dark:hover {
+  text-decoration: underline;
+}
