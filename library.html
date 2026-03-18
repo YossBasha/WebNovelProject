@@ -1,0 +1,182 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>My Library - NextPage</title>
+    <link rel="stylesheet" href="css/library.css" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"
+    />
+    <link rel="stylesheet" href="css/styles.css" />
+  </head>
+  <body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-xl navbar-dark sticky-top">
+      <div class="container-fluid">
+        <a class="navbar-brand fs-2 fw-bold" href="index.html">NextPage</a>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarBasic"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarBasic">
+          <ul class="navbar-nav me-auto mb-2 mb-xl-0">
+            <li class="nav-item">
+              <a class="nav-link active" href="#">Discover</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link active" href="#">Authors</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link active" href="#">Contact</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link active" href="./about.html">About</a>
+            </li>
+            <li class="nav-item nav-pills sign-in ms-xl-auto" id="signInItem">
+              <a
+                class="nav-link active"
+                href="#"
+                data-bs-toggle="modal"
+                data-bs-target="#loginModal"
+                >Sign In</a
+              >
+            </li>
+            <li class="nav-item nav-pills" id="registerItem">
+              <a
+                class="nav-link active register-btn sign-in"
+                href="#"
+                data-bs-toggle="modal"
+                data-bs-target="#registerModal"
+                >Register</a
+              >
+            </li>
+
+            <li
+              class="nav-item dropdown d-none ms-xl-auto"
+              id="userProfileItem"
+            >
+              <a
+                class="nav-link dropdown-toggle text-white d-flex align-items-center gap-2"
+                href="#"
+                role="button"
+                data-bs-toggle="dropdown"
+                aria-expanded="false"
+              >
+                <i class="bi bi-person-circle fs-4"></i>
+                <span class="fw-bold">My Account</span>
+              </a>
+              <ul class="dropdown-menu dropdown-menu-end dropdown-menu-dark">
+                <li><a class="dropdown-item" href="#">Library</a></li>
+                <li><a class="dropdown-item" href="#">Settings</a></li>
+                <li><hr class="dropdown-divider" /></li>
+                <li>
+                  <a class="dropdown-item text-danger" href="#" id="logoutBtn"
+                    >Logout</a
+                  >
+                </li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <div class="collapse navbar-collapse show" id="navbarBasic">
+      <form class="d-flex search-form-responsive search-bar-custom px-3 mt-2">
+        <input
+          class="form-control me-2"
+          type="search"
+          placeholder="Novels / Authors"
+          aria-label="Search"
+        />
+        <button class="btn btn-outline-success" type="submit">
+          <i class="bi bi-search"></i>
+        </button>
+      </form>
+    </div>
+
+    <main class="container my-5">
+      <div class="d-flex justify-content-between align-items-center mb-5">
+        <h2 class="text-white fw-bold">My Personal Library</h2>
+        <!-- Sort Dropdown -->
+        <div class="dropdown">
+          <button
+            class="btn btn-outline-light dropdown-toggle"
+            type="button"
+            data-bs-toggle="dropdown"
+          >
+            Sort By
+          </button>
+          <ul class="dropdown-menu dropdown-menu-dark">
+            <li><a class="dropdown-item" href="#">Recently Added</a></li>
+            <li><a class="dropdown-item" href="#">Rating</a></li>
+            <li><a class="dropdown-item" href="#">A-Z</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="row g-4" id="libraryGrid"></div>
+    </main>
+
+    <footer class="footer-section pt-5">
+      <div class="container">
+        <div class="row border-top border-secondary pt-5 pb-4">
+          <div class="col-lg-3 mb-4">
+            <h4 class="fw-bold mb-4">NextPage</h4>
+            <div class="d-flex gap-3 fs-5 social-icons">
+              <a href="#" class="text-white-50"
+                ><i class="bi bi-twitter-x"></i
+              ></a>
+              <a href="#" class="text-white-50"
+                ><i class="bi bi-instagram"></i
+              ></a>
+              <a href="#" class="text-white-50"
+                ><i class="bi bi-youtube"></i
+              ></a>
+              <a href="#" class="text-white-50"
+                ><i class="bi bi-linkedin"></i
+              ></a>
+            </div>
+          </div>
+          <div class="col-6 col-md-3 col-lg-3 mb-4">
+            <h6 class="text-uppercase fw-bold mb-3">Community</h6>
+            <ul class="list-unstyled footer-links">
+              <li><a href="#">Authors</a></li>
+              <li><a href="#">Personal Library</a></li>
+              <li><a href="#">Writing Contests</a></li>
+              <li><a href="#">Forum</a></li>
+              <li><a href="#">Events</a></li>
+            </ul>
+          </div>
+          <div class="col-6 col-md-3 col-lg-3 mb-4">
+            <h6 class="text-uppercase fw-bold mb-3">Resources</h6>
+            <ul class="list-unstyled footer-links">
+              <li><a href="#">Help Center</a></li>
+              <li><a href="#">Privacy Policy</a></li>
+              <li><a href="#">Terms of Service</a></li>
+              <li><a href="#">Contact Us</a></li>
+              <li><a href="#">About</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <!-- scripts moved below -->
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="js/renderData.js"></script>
+    <script src="js/script.js"></script>
+    <script src="js/library.js"></script>
+  </body>
+</html>
