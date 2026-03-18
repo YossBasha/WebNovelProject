@@ -44,7 +44,7 @@ h3 {
 
 /* Pill buttons (Sign In / General) */
 .nav-pills .nav-link.active,
-.nav-pills .show > .nav-link {
+.nav-pills .show>.nav-link {
   background-color: white;
   color: black !important;
   border-radius: 9999px;
@@ -144,11 +144,13 @@ form .btn-outline-success:hover {
   scroll-behavior: smooth;
   gap: 20px;
   padding: 10px 20px 30px 20px;
-  scrollbar-width: none; /* Firefox */
+  scrollbar-width: none;
+  /* Firefox */
 }
 
 .featured-novels::-webkit-scrollbar {
-  display: none; /* WebKit */
+  display: none;
+  /* WebKit */
 }
 
 .card-img-top {
@@ -223,6 +225,7 @@ form .btn-outline-success:hover {
 .scroll-btn.left {
   left: -20px;
 }
+
 .scroll-btn.right {
   right: -20px;
 }
@@ -230,9 +233,11 @@ form .btn-outline-success:hover {
 .custom-nav-btn {
   transition: opacity 0.3s ease;
 }
+
 .custom-nav-btn:hover {
   opacity: 0.6;
 }
+
 .d-flex h3.m-0 {
   margin: 0 !important;
 }
@@ -258,20 +263,16 @@ form .btn-outline-success:hover {
 }
 
 .category-card .card-img-overlay {
-  background: linear-gradient(
-    to top,
-    rgba(0, 0, 0, 0.8) 0%,
-    rgba(0, 0, 0, 0) 60%
-  );
+  background: linear-gradient(to top,
+      rgba(0, 0, 0, 0.8) 0%,
+      rgba(0, 0, 0, 0) 60%);
   transition: background 0.3s ease;
 }
 
 .category-card:hover .card-img-overlay {
-  background: linear-gradient(
-    to top,
-    rgba(22, 14, 68, 0.9) 0%,
-    rgba(0, 0, 0, 0.2) 100%
-  );
+  background: linear-gradient(to top,
+      rgba(22, 14, 68, 0.9) 0%,
+      rgba(0, 0, 0, 0.2) 100%);
 }
 
 .category-card .card-title {
@@ -333,6 +334,7 @@ form .btn-outline-success:hover {
     margin-left: 10px;
   }
 }
+
 /* =========================================
    AUTH MODALS (Login & Register)
    ========================================= */
@@ -438,6 +440,9 @@ form .btn-outline-success:hover {
 #registerForm a:hover {
   text-decoration: underline;
 }
+
 .hidden li {
   list-style-type: none;
-} /* Fixed random dot */
+}
+
+/* Fixed random dot */
