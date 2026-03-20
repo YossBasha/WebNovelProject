@@ -37,8 +37,27 @@ function checkAuthState() {
 
 // ==================================================== Authentication JS
 document.addEventListener("DOMContentLoaded", () => {
-  // --- 1. Check Authentication State on Page Load ---
+  // 1. Check if user is logged in to update navbar
   checkAuthState();
+
+  // 2. Protect Personal Library Link (Runs on Index & Details pages)
+  const personalLibraryLink = document.getElementById("personalLibraryLink");
+  if (personalLibraryLink) {
+    personalLibraryLink.addEventListener("click", (e) => {
+      const token =
+        localStorage.getItem("userToken") ||
+        sessionStorage.getItem("userToken");
+
+      if (!token) {
+        e.preventDefault(); // Stop navigation
+        const loginModalEl = document.getElementById("loginModal");
+        const loginModal =
+          bootstrap.Modal.getInstance(loginModalEl) ||
+          new bootstrap.Modal(loginModalEl);
+        loginModal.show();
+      }
+    });
+  }
 
   // --- 2. Handle Login Form Submission ---
   const loginForm = document.getElementById("loginForm");
@@ -77,15 +96,9 @@ document.addEventListener("DOMContentLoaded", () => {
           storage.setItem("userToken", token);
           storage.setItem("userName", finalUsername);
 
+          // Refresh the page after 1 second
           setTimeout(() => {
-            const modalElement = document.getElementById("loginModal");
-            const modalInstance = bootstrap.Modal.getInstance(modalElement);
-            if (modalInstance) modalInstance.hide();
-
-            loginForm.reset();
-            messageDiv.innerHTML = "";
-
-            checkAuthState();
+            window.location.reload();
           }, 1000);
         } else {
           messageDiv.innerHTML = `<span class="text-danger">${data.message}</span>`;
@@ -133,13 +146,8 @@ document.addEventListener("DOMContentLoaded", () => {
           localStorage.setItem("userName", username);
 
           setTimeout(() => {
-            const modalElement = document.getElementById("registerModal");
-            const modalInstance = bootstrap.Modal.getInstance(modalElement);
-            if (modalInstance) modalInstance.hide();
-
-            registerForm.reset();
-            messageDiv.innerHTML = "";
-            checkAuthState();
+            // Refresh the page to log the user in instantly
+            window.location.reload();
           }, 1500);
         } else {
           messageDiv.innerHTML = `<span class="text-danger">${data.message}</span>`;
@@ -152,19 +160,22 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   // --- 4. Handle Logout ---
+  // --- Handle Logout ---
   const logoutBtn = document.getElementById("logoutBtn");
   if (logoutBtn) {
     logoutBtn.addEventListener("click", (e) => {
       e.preventDefault();
 
-      // Clear the local storage (if they used "Remember me")
+      // Clear the local storage
       localStorage.removeItem("userToken");
       localStorage.removeItem("userName");
 
-      // Clear the session storage (if they didn't use "Remember me")
+      // Clear the session storage
       sessionStorage.removeItem("userToken");
       sessionStorage.removeItem("userName");
 
+      // Refresh the page to reset the state back to logged-out
+      window.location.reload();
       checkAuthState();
     });
   }

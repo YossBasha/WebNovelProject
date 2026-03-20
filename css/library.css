@@ -1,38 +1,149 @@
 .novel-card {
-    position: relative;
-    overflow: hidden;
-    border-radius: 12px;
-    transition: transform 0.3s ease;
-    cursor: pointer;
-    border: 1px solid rgba(255, 255, 255, 0.1);
+  position: relative;
+  overflow: hidden;
+  border-radius: 12px;
+  transition: transform 0.3s ease;
+  cursor: pointer;
+  border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .novel-card:hover {
-    transform: translateY(-10px);
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
+  transform: translateY(-10px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
 }
 
 .novel-card img {
-    width: 100%;
-    display: block;
-    aspect-ratio: 2/3;
-    object-fit: cover;
+  width: 100%;
+  display: block;
+  aspect-ratio: 2/3;
+  object-fit: cover;
 }
 
 .hover-overlay {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    background: linear-gradient(to top,
-            rgba(0, 0, 0, 0.95) 0%,
-            rgba(0, 0, 0, 0.7) 100%);
-    backdrop-filter: blur(8px);
-    padding: 15px;
-    transform: translateY(101%);
-    transition: transform 0.3s ease-in-out;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: linear-gradient(
+    to top,
+    rgba(0, 0, 0, 0.95) 0%,
+    rgba(0, 0, 0, 0.7) 100%
+  );
+  backdrop-filter: blur(8px);
+  padding: 15px;
+  transform: translateY(101%);
+  transition: transform 0.3s ease-in-out;
 }
 
 .novel-card:hover .hover-overlay {
-    transform: translateY(0);
+  transform: translateY(0);
+}
+/* =========================================
+   AUTH MODALS (Login & Register)
+   ========================================= */
+
+/* Container & Background */
+#loginModal .modal-content,
+#registerModal .modal-content {
+  background-color: #1a1a1a;
+  color: #ffffff;
+  border-radius: 20px;
+  border: 1px solid #333;
+  padding: 1.5rem;
+}
+
+/* Header & Close Button */
+#loginModal .modal-header,
+#registerModal .modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border: none;
+  padding: 20px 25px 10px;
+}
+
+#loginModal .modal-title,
+#registerModal .modal-title {
+  font-size: 1.75rem;
+  font-weight: 700;
+}
+
+#loginModal .btn-close,
+#registerModal .btn-close {
+  filter: invert(1) grayscale(100%) brightness(200%);
+}
+
+/* Form Layout Reset */
+#loginForm,
+#registerForm {
+  display: block !important;
+}
+
+#loginForm .mb-3,
+#loginForm .mb-4,
+#registerForm .mb-3,
+#registerForm .mb-4 {
+  margin-bottom: 1.25rem !important;
+}
+
+#loginForm .form-label,
+#registerForm .form-label {
+  color: #a0a0a0;
+  font-size: 0.9rem;
+}
+
+/* Inputs */
+#loginForm .form-control,
+#registerForm .form-control {
+  width: 100%;
+  background-color: #2a2a2a !important;
+  border: 1px solid #444 !important;
+  color: white !important;
+  border-radius: 8px;
+  padding: 12px;
+  transition: border-color 0.2s;
+}
+
+#loginForm .form-control:focus,
+#registerForm .form-control:focus {
+  border-color: #00d4ff !important;
+  box-shadow: 0 0 0 2px rgba(0, 212, 255, 0.2);
+  outline: none;
+}
+
+/* Primary Action Button */
+#loginForm .btn-dark,
+#registerForm .btn-dark {
+  background-color: white !important;
+  color: black !important;
+  font-weight: bold;
+  border-radius: 8px;
+  padding: 12px;
+  width: 100%;
+  border: none;
+  margin-top: 10px;
+  transition: transform 0.2s;
+}
+
+#loginForm .btn-dark:hover,
+#registerForm .btn-dark:hover {
+  transform: translateY(-2px);
+  background-color: #f0f0f0 !important;
+}
+
+/* Links */
+#loginForm a,
+#registerForm a {
+  color: #00d4ff !important;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+#loginForm a:hover,
+#registerForm a:hover {
+  text-decoration: underline;
+}
+
+.hidden li {
+  list-style-type: none;
 }

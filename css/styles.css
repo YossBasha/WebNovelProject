@@ -44,7 +44,7 @@ h3 {
 
 /* Pill buttons (Sign In / General) */
 .nav-pills .nav-link.active,
-.nav-pills .show>.nav-link {
+.nav-pills .show > .nav-link {
   background-color: white;
   color: black !important;
   border-radius: 9999px;
@@ -263,16 +263,20 @@ form .btn-outline-success:hover {
 }
 
 .category-card .card-img-overlay {
-  background: linear-gradient(to top,
-      rgba(0, 0, 0, 0.8) 0%,
-      rgba(0, 0, 0, 0) 60%);
+  background: linear-gradient(
+    to top,
+    rgba(0, 0, 0, 0.8) 0%,
+    rgba(0, 0, 0, 0) 60%
+  );
   transition: background 0.3s ease;
 }
 
 .category-card:hover .card-img-overlay {
-  background: linear-gradient(to top,
-      rgba(22, 14, 68, 0.9) 0%,
-      rgba(0, 0, 0, 0.2) 100%);
+  background: linear-gradient(
+    to top,
+    rgba(22, 14, 68, 0.9) 0%,
+    rgba(0, 0, 0, 0.2) 100%
+  );
 }
 
 .category-card .card-title {
