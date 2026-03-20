@@ -32,7 +32,10 @@
         <div class="collapse navbar-collapse" id="navbarrBasic">
           <ul class="navbar-nav me-auto mb-2 mb-xl-0">
             <li class="nav-item nav-pills">
-              <a class="nav-link active" href="./library.html"
+              <a
+                class="nav-link active"
+                href="./library.html"
+                id="personalLibraryLink"
                 >Personal Library</a
               >
             </li>
@@ -82,7 +85,9 @@
                 <span class="fw-bold">My Account</span>
               </a>
               <ul class="dropdown-menu dropdown-menu-end dropdown-menu-dark">
-                <li><a class="dropdown-item" href="#">Library</a></li>
+                <li>
+                  <a class="dropdown-item" href="library.html">Library</a>
+                </li>
                 <li><a class="dropdown-item" href="#">Settings</a></li>
                 <li><hr class="dropdown-divider" /></li>
                 <li>
@@ -198,7 +203,10 @@
                     >Remember me</label
                   >
                 </div>
-                <button type="submit" class="btn btn-dark w-100 mb-3">
+                <button
+                  type="submit"
+                  class="btn btn-warning w-100 mb-3 fw-bold"
+                >
                   Log in
                 </button>
                 <div class="text-center mt-3">
@@ -346,6 +354,5 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="js/renderData.js"></script>
     <script src="js/script.js"></script>
-    <script src="js/library.js"></script>
   </body>
 </html>
