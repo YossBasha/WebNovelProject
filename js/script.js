@@ -181,16 +181,15 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 });
 
-// Slider function stays outside since it's called directly from HTML onclick attributes
 function scrollSlider(sliderId, direction) {
   const slider = document.getElementById(sliderId);
-  const firstCard = slider.querySelector(".card");
+  const firstItem = slider.firstElementChild;
 
-  if (firstCard) {
-    const cardWidth = firstCard.offsetWidth;
+  if (firstItem) {
+    const itemWidth = firstItem.offsetWidth;
     const style = window.getComputedStyle(slider);
     const gap = parseInt(style.columnGap) || 0;
-    const scrollAmount = cardWidth + gap;
+    const scrollAmount = itemWidth + gap;
 
     slider.scrollBy({
       left: direction * scrollAmount,

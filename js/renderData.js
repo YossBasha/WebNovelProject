@@ -10,7 +10,7 @@ const categories = ["Fantasy", "Sci-Fi", "Romance", "Mystery"];
 // =============== HTML template for a single novel card ===================
 function createNovelCard(novel) {
   return `
-  <a href="novel_details.html?title=${encodeURIComponent(novel.title)} " class="text-decoration-none text-dark">
+  <a href="novel_details.html?title=${encodeURIComponent(novel.title)}" class="text-decoration-none text-dark novel-link-wrapper">
     <div class="card">
       <img src="${novel.imgSrc}" class="card-img-top" alt="${novel.title}" />
       <div class="card-body">
