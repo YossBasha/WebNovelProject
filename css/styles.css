@@ -44,7 +44,7 @@ h3 {
 
 /* Pill buttons (Sign In / General) */
 .nav-pills .nav-link.active,
-.nav-pills .show > .nav-link {
+.nav-pills .show>.nav-link {
   background-color: white;
   color: black !important;
   border-radius: 9999px;
@@ -148,6 +148,11 @@ form .btn-outline-success:hover {
   /* Firefox */
 }
 
+.featured-novels .novel-link-wrapper {
+  flex: 0 0 250px;
+  display: block;
+}
+
 .featured-novels::-webkit-scrollbar {
   display: none;
   /* WebKit */
@@ -159,13 +164,14 @@ form .btn-outline-success:hover {
 }
 
 .featured-novels .card {
-  flex: 0 0 250px;
+  height: 100%;
   background-color: #1a1a1a;
   border: 1px solid #333;
   border-radius: 8px;
   transition: transform 0.3s ease;
   margin-top: 20px;
 }
+
 
 .featured-novels .card:hover {
   transform: translateY(-10px);
@@ -192,13 +198,16 @@ form .btn-outline-success:hover {
   padding: 10px;
 }
 
-/* Bestseller Slider Overrides */
 #bestSellerSlider {
   gap: 40px;
 }
 
-#bestSellerSlider .card {
+#bestSellerSlider .novel-link-wrapper {
   flex: 0 0 300px;
+}
+
+#bestSellerSlider .card {
+  height: 100%;
 }
 
 #bestSellerSlider .card-img-top {
@@ -263,20 +272,16 @@ form .btn-outline-success:hover {
 }
 
 .category-card .card-img-overlay {
-  background: linear-gradient(
-    to top,
-    rgba(0, 0, 0, 0.8) 0%,
-    rgba(0, 0, 0, 0) 60%
-  );
+  background: linear-gradient(to top,
+      rgba(0, 0, 0, 0.8) 0%,
+      rgba(0, 0, 0, 0) 60%);
   transition: background 0.3s ease;
 }
 
 .category-card:hover .card-img-overlay {
-  background: linear-gradient(
-    to top,
-    rgba(22, 14, 68, 0.9) 0%,
-    rgba(0, 0, 0, 0.2) 100%
-  );
+  background: linear-gradient(to top,
+      rgba(22, 14, 68, 0.9) 0%,
+      rgba(0, 0, 0, 0.2) 100%);
 }
 
 .category-card .card-title {
