@@ -1,0 +1,13 @@
+.author-card {
+  transition: transform 0.3s ease;
+  cursor: pointer;
+}
+
+.author-card:hover {
+  transform: translateY(-5px);
+  border-color: #ffc107 !important; /* Warning yellow color */
+}
+
+.card-img-top {
+  border-bottom: 1px solid #444;
+}
