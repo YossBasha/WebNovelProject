@@ -14,11 +14,6 @@ const authors = [
     image: "imgs/author3.webp",
     info: "Author of Pride and Prejudice.",
   },
-  {
-    name: "Osama Abo Se3da",
-    image: "imgs/author3.webp",
-    info: "3ameed m3rs w 5awal.",
-  },
   // Add as many as you want here
 ];
 
