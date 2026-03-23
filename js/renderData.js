@@ -44,7 +44,13 @@ let categoriesHTML = categories
 
 // Injecting the HTML into the DOM when the page loads
 document.addEventListener("DOMContentLoaded", () => {
-  document.getElementById("novelSlider").innerHTML = novelsHTML;
-  document.getElementById("bestSellerSlider").innerHTML = novelsHTML;
-  document.getElementById("categoryContainer").innerHTML = categoriesHTML;
+  // Use a helper variable to make it cleaner
+  const novelSlider = document.getElementById("novelSlider");
+  const bestSellerSlider = document.getElementById("bestSellerSlider");
+  const categoryContainer = document.getElementById("categoryContainer");
+
+  // Only inject if the element exists
+  if (novelSlider) novelSlider.innerHTML = novelsHTML;
+  if (bestSellerSlider) bestSellerSlider.innerHTML = novelsHTML;
+  if (categoryContainer) categoryContainer.innerHTML = categoriesHTML;
 });

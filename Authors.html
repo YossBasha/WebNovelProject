@@ -3,25 +3,19 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Novel Details</title>
-
+    <title>Authors</title>
     <link
-      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap"
-      rel="stylesheet"
-    />
-    <link
-      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
       rel="stylesheet"
     />
     <link
       rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"
     />
-
-    <link rel="stylesheet" href="css/novel-details_style.css" />
     <link rel="stylesheet" href="css/styles.css" />
+    <link rel="stylesceet" href="css/authors.css" />
   </head>
-  <body class="bg-dark text-white">
+  <body>
     <nav class="navbar navbar-expand-xl navbar-dark sticky-top">
       <div class="container-fluid">
         <a class="navbar-brand fs-2 fw-bold" href="index.html">NextPage</a>
@@ -37,7 +31,10 @@
         <div class="collapse navbar-collapse" id="navbarrBasic">
           <ul class="navbar-nav me-auto mb-2 mb-xl-0">
             <li class="nav-item nav-pills">
-              <a class="nav-link active" href="./library.html"
+              <a
+                class="nav-link active"
+                href="./library.html"
+                id="personalLibraryLink"
                 >Personal Library</a
               >
             </li>
@@ -83,6 +80,7 @@
                 href="#"
                 role="button"
                 data-bs-toggle="dropdown"
+                aria-expanded="false"
               >
                 <i class="bi bi-person-circle fs-4"></i>
                 <span class="fw-bold">My Account</span>
@@ -104,70 +102,31 @@
         </div>
       </div>
     </nav>
+    <div class="collapse navbar-collapse show" id="navbarBasic">
+      <form class="d-flex search-form-responsive search-bar-custom px-3 mt-2">
+        <input
+          class="form-control me-2"
+          type="search"
+          placeholder="Novels / Authors"
+          aria-label="Search"
+        />
+        <button class="btn btn-outline-success" type="submit">
+          <i class="bi bi-search"></i>
+        </button>
+      </form>
+    </div>
 
     <main class="container my-5">
-      <div class="card novel-card border-0 shadow-lg">
-        <div class="row g-0">
-          <div
-            class="col-md-4 image-section d-flex align-items:center justify-content:center p-4"
-          >
-            <img
-              src="imgs/novel1.webp"
-              class="img-fluid rounded shadow"
-              alt="Novel Cover"
-            />
-          </div>
-
-          <div class="col-md-8 content-section p-5">
-            <h1 class="novel-title mb-1">The Title of the Novel</h1>
-            <p class="category-name text-muted mb-1">Fantasy & Adventure</p>
-            <h2 class="author-name h5 mb-4 text-warning">by Author Name</h2>
-
-            <div class="price-box mb-4">
-              <span class="h2 fw-bold text-white">$19.99</span>
-            </div>
-
-            <div class="row info-sections-wrapper mb-4">
-              <div class="col-md-6 description-container">
-                <h3 class="h6 text-uppercase fw-bold text-secondary">
-                  Overview
-                </h3>
-                <p class="description small text-light-50">
-                  This is a placeholder for the novel's description. You can
-                  write a captivating summary of the plot, the setting, and the
-                  journey of the main characters here.
-                </p>
-              </div>
-              <div class="col-md-6 table-of-contents">
-                <h3 class="h6 text-uppercase fw-bold text-secondary">
-                  Table of Contents
-                </h3>
-                <p class="contents small text-light-50">
-                  Chapter 1: The Beginning<br />
-                  Chapter 2: The Journey Starts<br />
-                  Chapter 3: The Hidden Secret
-                </p>
-              </div>
-            </div>
-
-            <div class="action-area d-flex align-items-center gap-4 mt-auto">
-              <div
-                class="rating-container bg-secondary bg-opacity-25 px-3 py-1 rounded"
-              >
-                <span class="star-icon text-warning">★</span>
-                <span class="rating-value fw-bold">9.5</span>
-                <span class="rating-max text-muted small">/ 10</span>
-              </div>
-              <button class="btn btn-warning px-5 fw-bold buy-btn">
-                Buy Now
-              </button>
-            </div>
-          </div>
-        </div>
+      <div class="d-flex justify-content-between align-items-center mb-5">
+        <h2 class="text-white fw-bold">Authors</h2>
       </div>
+      <div
+        class="row row-cols-1 row-cols-md-3 row-cols-lg-4 g-4"
+        id="authorsGrid"
+      ></div>
     </main>
 
-    <footer class="footer-section bg-black py-5 border-top border-secondary">
+    <footer class="footer-section pt-5">
       <div class="container">
         <div class="row border-top border-secondary pt-5 pb-4">
           <div class="col-lg-3 mb-4">
@@ -203,41 +162,36 @@
               <li><a href="#">Help Center</a></li>
               <li><a href="#">Privacy Policy</a></li>
               <li><a href="#">Terms of Service</a></li>
-              <li><a href="#">Contact Us</a></li>
               <li><a href="#">About</a></li>
             </ul>
           </div>
         </div>
       </div>
     </footer>
-    <div class="hidden-modals">
+    <div class="hidden">
       <div class="modal fade" id="loginModal" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
-          <div class="modal-content bg-dark text-white border-secondary">
+          <div class="modal-content">
             <div class="modal-header border-0 pb-0">
               <h5 class="modal-title fw-bold">Welcome Back</h5>
               <button
                 type="button"
-                class="btn-close btn-close-white"
+                class="btn-close"
                 data-bs-dismiss="modal"
+                aria-label="Close"
               ></button>
             </div>
             <div class="modal-body p-4">
               <form id="loginForm">
                 <div class="mb-3">
                   <label for="email" class="form-label">Username / Email</label>
-                  <input
-                    type="text"
-                    class="form-control bg-secondary text-white border-0"
-                    id="email"
-                    required
-                  />
+                  <input type="text" class="form-control" id="email" required />
                 </div>
                 <div class="mb-4">
                   <label for="password" class="form-label">Password</label>
                   <input
                     type="password"
-                    class="form-control bg-secondary text-white border-0"
+                    class="form-control"
                     id="password"
                     required
                   />
@@ -259,10 +213,10 @@
                   Log in
                 </button>
                 <div class="text-center mt-3">
-                  <span class="text-white-50">Don't have an account? </span>
+                  <span>Don't have an account? </span>
                   <a
                     href="#"
-                    class="text-decoration-none text-warning fw-bold"
+                    class="text-decoration-none text-dark fw-bold"
                     data-bs-toggle="modal"
                     data-bs-target="#registerModal"
                     data-bs-dismiss="modal"
@@ -283,13 +237,14 @@
         aria-hidden="true"
       >
         <div class="modal-dialog modal-dialog-centered">
-          <div class="modal-content bg-dark text-white border-secondary">
+          <div class="modal-content">
             <div class="modal-header border-0 pb-0">
               <h5 class="modal-title fw-bold">Create Account</h5>
               <button
                 type="button"
-                class="btn-close btn-close-white"
+                class="btn-close"
                 data-bs-dismiss="modal"
+                aria-label="Close"
               ></button>
             </div>
             <div class="modal-body p-4">
@@ -298,7 +253,7 @@
                   <label for="regUsername" class="form-label">Username</label>
                   <input
                     type="text"
-                    class="form-control bg-secondary text-white border-0"
+                    class="form-control"
                     id="regUsername"
                     required
                   />
@@ -307,7 +262,7 @@
                   <label for="regEmail" class="form-label">Email address</label>
                   <input
                     type="email"
-                    class="form-control bg-secondary text-white border-0"
+                    class="form-control"
                     id="regEmail"
                     required
                   />
@@ -316,7 +271,7 @@
                   <label for="regPassword" class="form-label">Password</label>
                   <input
                     type="password"
-                    class="form-control bg-secondary text-white border-0"
+                    class="form-control"
                     id="regPassword"
                     required
                   />
@@ -327,17 +282,25 @@
                   >
                   <input
                     type="password"
-                    class="form-control bg-secondary text-white border-0"
+                    class="form-control"
                     id="regConfirmPassword"
                     required
                   />
                 </div>
-                <button
-                  type="submit"
-                  class="btn btn-warning w-100 mb-3 fw-bold"
-                >
+                <button type="submit" class="btn btn-dark w-100 mb-3">
                   Register
                 </button>
+                <div class="text-center mt-3">
+                  <span>Already have an account? </span>
+                  <a
+                    href="#"
+                    class="text-decoration-none text-dark fw-bold"
+                    data-bs-toggle="modal"
+                    data-bs-target="#loginModal"
+                    data-bs-dismiss="modal"
+                    >Log in</a
+                  >
+                </div>
               </form>
               <div id="registerMessage" class="mt-3 text-center fw-bold"></div>
             </div>
@@ -345,30 +308,9 @@
         </div>
       </div>
     </div>
-
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="js/renderData.js"></script>
     <script src="js/script.js"></script>
-    <script>
-      document.addEventListener("DOMContentLoaded", () => {
-        // --- Button Logic ---
-        const buyBtn = document.querySelector(".buy-btn");
-        if (
-          !localStorage.getItem("userToken") &&
-          !sessionStorage.getItem("userToken")
-        ) {
-          buyBtn.innerText = "Login to Buy";
-          buyBtn.setAttribute("data-bs-toggle", "modal");
-          buyBtn.setAttribute("data-bs-target", "#loginModal");
-        }
-
-        // --- Dynamic Title Logic ---
-        const params = new URLSearchParams(window.location.search);
-        const title = params.get("title");
-        if (title) {
-          document.querySelector(".novel-title").innerText =
-            decodeURIComponent(title);
-        }
-      });
-    </script>
+    <script src="js/authors.js"></script>
   </body>
 </html>
