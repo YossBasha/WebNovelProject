@@ -183,17 +183,38 @@ document.addEventListener("DOMContentLoaded", () => {
 
 function scrollSlider(sliderId, direction) {
   const slider = document.getElementById(sliderId);
-  const firstItem = slider.firstElementChild;
+  if (!slider) return;
 
-  if (firstItem) {
-    const itemWidth = firstItem.offsetWidth;
-    const style = window.getComputedStyle(slider);
-    const gap = parseInt(style.columnGap) || 0;
-    const scrollAmount = itemWidth + gap;
+  // 1. Set the exact scroll distance (220px card + 16px gap)
+  const scrollAmount = 236;
 
-    slider.scrollBy({
-      left: direction * scrollAmount,
-      behavior: "smooth",
-    });
+  // 2. Setup animation variables
+  const startScroll = slider.scrollLeft;
+  const targetScroll = startScroll + direction * scrollAmount;
+  const distance = targetScroll - startScroll;
+  const duration = 350; // Animation speed in milliseconds (adjust to your liking)
+  let startTime = null;
+
+  // 3. The Custom Animation Loop
+  function animateScroll(currentTime) {
+    if (!startTime) startTime = currentTime;
+    const timeElapsed = currentTime - startTime;
+
+    // Calculate progress between 0 and 1
+    const progress = Math.min(timeElapsed / duration, 1);
+
+    // Ease-Out Cubic function (starts fast, slows down smoothly at the end)
+    const easeOut = 1 - Math.pow(1 - progress, 3);
+
+    // Apply the current position to the scrollbar
+    slider.scrollLeft = startScroll + distance * easeOut;
+
+    // If the animation isn't finished, request the next frame
+    if (timeElapsed < duration) {
+      window.requestAnimationFrame(animateScroll);
+    }
   }
+
+  // Start the animation
+  window.requestAnimationFrame(animateScroll);
 }
