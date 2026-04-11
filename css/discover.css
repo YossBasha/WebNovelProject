@@ -1,23 +1,6 @@
-/* Background and text colors */
-body {
-    margin: 0;
-    padding: 0;
-    background-color: #1A001F; /* Your requested color */
-    color: #ffffff;
-    font-family: 'Segoe UI', sans-serif;
-}
-
-/* Sticky Search Bar Styling */
-.navbar {
-    position: sticky;
-    top: 0;
-    background-color: rgba(26, 0, 31, 0.98);
-    padding: 20px;
-    display: flex;
-    justify-content: center;
-    border-bottom: 1px solid #3d004d;
-    z-index: 1000;
-}
+/* =========================================
+   DISCOVER PAGE — Page-specific overrides
+   ========================================= */
 
 .search-box {
     

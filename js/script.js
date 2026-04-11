@@ -1,7 +1,6 @@
 // ==================================================== Helper Functions
 
-// Function to toggle navbar elements based on login status
-// Function to toggle navbar elements based on login status
+// Toggles navbar elements based on login status
 function checkAuthState() {
   // FIXED: Check localStorage first, and if it's empty, check sessionStorage
   const token =
@@ -160,7 +159,6 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   // --- 4. Handle Logout ---
-  // --- Handle Logout ---
   const logoutBtn = document.getElementById("logoutBtn");
   if (logoutBtn) {
     logoutBtn.addEventListener("click", (e) => {

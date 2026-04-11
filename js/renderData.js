@@ -67,11 +67,11 @@ const mockDB = {
     },
     {
       id: 102,
-      title: "Niggerman",
+      title: "Echoes of the Void",
       authorId: 202,
       price: 9.99,
       categories: ["Sci-Fi"],
-      description: "A niggerman in a cave",
+      description: "A lone astronaut drifts through the darkness between galaxies, hearing transmissions that should be impossible.",
       imgSrc: "imgs/novel2.webp",
       rating: 4.8,
       views: 18900,
@@ -413,7 +413,6 @@ document.addEventListener("DOMContentLoaded", () => {
       .join("");
   }
 
-  // 3. Render Categories Grid
   // 3. Render Categories Grid
   if (categoryContainer) {
     categoryContainer.innerHTML = mockDB.categories
