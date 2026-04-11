@@ -1,0 +1,109 @@
+/* Background and text colors */
+body {
+    margin: 0;
+    padding: 0;
+    background-color: #1A001F; /* Your requested color */
+    color: #ffffff;
+    font-family: 'Segoe UI', sans-serif;
+}
+
+/* Sticky Search Bar Styling */
+.navbar {
+    position: sticky;
+    top: 0;
+    background-color: rgba(26, 0, 31, 0.98);
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+    border-bottom: 1px solid #3d004d;
+    z-index: 1000;
+}
+
+.search-box {
+    
+    position: relative;
+    width: 90%;
+    max-width: 500px;
+}
+
+.search-box i {
+    position: absolute;
+    left: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #9d00b1;
+}
+.discover-header {
+    padding: 30px 0;
+    display: flex;
+    justify-content: center;
+    border-bottom: 1px solid #3d004d;
+}
+
+.search-box input {
+    width: 100%;
+    padding: 12px 15px 12px 45px;
+    background: #2d0036;
+    border: 1px solid #4a0058;
+    border-radius: 25px;
+    color: #fff;
+    outline: none;
+    transition: 0.3s;
+}
+
+/* Layout Grid */
+.container {
+    padding: 40px 5%;
+}
+
+.discover-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 25px;
+}
+
+/* Novel Card Design */
+.card {
+    background-color: #2d0036;
+    border-radius: 12px;
+    overflow: hidden; /* Clips the image to the card corners */
+    transition: transform 0.3s ease;
+    cursor: pointer;
+    border: 1px solid #3d004d;
+}
+
+/* Hover Effect */
+.card:hover {
+    transform: translateY(-10px);
+    border-color: #9d00b1;
+}
+
+/* Image Container & Image Scaling */
+.card-image-container {
+    width: 100%;
+    height: 280px; /* Standardized height for all cards */
+    background-color: #1A001F;
+}
+
+.novel-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Ensures image fills space without stretching */
+    display: block;
+}
+
+/* Card Text Styling */
+.card-info {
+    padding: 15px;
+}
+
+.card-info h3 {
+    margin: 0;
+    font-size: 1.1rem;
+}
+
+.card-info p {
+    margin: 5px 0 0 0;
+    font-size: 0.85rem;
+    color: #b18bb5;
+}
