@@ -44,9 +44,17 @@ function scrollSlider(sliderId, direction) {
   const slider = document.getElementById(sliderId);
   if (!slider) return;
 
-  const scrollAmount = 236; // 220px card + 16px gap
+  const firstCard = slider.querySelector('.novel-link-wrapper');
+  const cardWidth = firstCard ? firstCard.offsetWidth : 220;
+  const gap = parseInt(window.getComputedStyle(slider).gap) || 16;
+  const scrollAmount = cardWidth + gap;
+
+  // RTL handling: In RTL, progress (Next) is towards negative scrollLeft.
+  const isRTL = document.documentElement.dir === 'rtl';
+  const effectiveDirection = isRTL ? -direction : direction;
+
   const startScroll = slider.scrollLeft;
-  const targetScroll = startScroll + direction * scrollAmount;
+  const targetScroll = startScroll + effectiveDirection * scrollAmount;
   const distance = targetScroll - startScroll;
   const duration = 350;
   let startTime = null;

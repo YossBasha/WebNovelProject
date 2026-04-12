@@ -708,3 +708,22 @@ h3 {
   margin-left: 1rem;
   margin-right: 0;
 }
+
+/* RTL Arrow Mirroring */
+[dir="rtl"] .bi-arrow-left::before,
+[dir="rtl"] .bi-arrow-right::before,
+[dir="rtl"] .bi-arrow-left-short::before,
+[dir="rtl"] .bi-arrow-right-short::before {
+  display: inline-block;
+  transform: scaleX(-1);
+}
+
+[dir="rtl"] .scroll-btn.left {
+  left: auto;
+  right: -20px;
+}
+
+[dir="rtl"] .scroll-btn.right {
+  right: auto;
+  left: -20px;
+}
