@@ -29,7 +29,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const chipsEl = document.getElementById("categoryChips");
     if (chipsEl) {
       chipsEl.innerHTML = novel.categories
-        .map((c) => `<a href="Discover.html?category=${encodeURIComponent(c)}" class="category-chip">${c}</a>`)
+        .map((c) => `<a href="discover.html?category=${encodeURIComponent(c)}" class="category-chip">${c}</a>`)
         .join("");
     }
 

@@ -69,6 +69,18 @@ function scrollSlider(sliderId, direction) {
 document.addEventListener("DOMContentLoaded", () => {
   checkAuthState();
 
+  // --- Dynamic Navbar Visibility ---
+  const currentPath = window.location.pathname;
+  const currentPage = currentPath.split("/").pop() || "index.html";
+  
+  document.querySelectorAll(".navbar-nav .nav-link").forEach(link => {
+    const href = link.getAttribute("href");
+    if (href && (href === currentPage || href === `./${currentPage}`)) {
+      // Hide the parent li of the current page link
+      link.parentElement.classList.add("d-none");
+    }
+  });
+
   // --- Protected Links ---
   const personalLibraryLink = document.getElementById("personalLibraryLink");
   if (personalLibraryLink) {
