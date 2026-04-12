@@ -26,13 +26,27 @@ if (personalLibraryLink) {
 }
 let currentSort = "recently";
 
-function renderLibrary() {
+async function renderLibrary() {
   const libraryGrid = document.getElementById("libraryGrid");
   if (!libraryGrid) return;
 
-  let myBooks = typeof getUserLibrary !== "undefined" ? getUserLibrary() : [];
   const lang = typeof getActiveLang !== "undefined" ? getActiveLang() : (localStorage.getItem("preferredLang") || "en");
   const viewText = { en: "View", ar: "عرض", es: "Ver" }[lang] || "View";
+
+  let allNovels = [];
+  try {
+    allNovels = await fetchNovels();
+  } catch (err) {
+    console.error("Library: Failed to fetch novels", err);
+    libraryGrid.innerHTML = `<p class="text-danger text-center w-100">Failed to load library.</p>`;
+    return;
+  }
+
+  // --- Mock User Library Logic ---
+  // In a real app, this would come from a 'UserLibrary' API endpoint.
+  // For now, we'll mock it by picking a few specific novel IDs.
+  const myBookIds = [101, 103, 105, 107, 109];
+  let myBooks = allNovels.filter(n => myBookIds.includes(n.id));
 
   if (myBooks.length === 0) {
     libraryGrid.innerHTML = `<div class="col-12 text-center mt-5"><p class="text-white-50">${
@@ -50,8 +64,8 @@ function renderLibrary() {
     myBooks.sort((a, b) => b.rating - a.rating);
   } else if (currentSort === "az") {
     myBooks.sort((a, b) => {
-      const titleA = (typeof getTranslation !== "undefined" ? getTranslation(a, "title") : (a[lang]?.title || a.en?.title || "")).toLowerCase();
-      const titleB = (typeof getTranslation !== "undefined" ? getTranslation(b, "title") : (b[lang]?.title || b.en?.title || "")).toLowerCase();
+      const titleA = (typeof getTranslation !== "undefined" ? getTranslation(a, "title") : a.title).toLowerCase();
+      const titleB = (typeof getTranslation !== "undefined" ? getTranslation(b, "title") : b.title).toLowerCase();
       return titleA.localeCompare(titleB, lang);
     });
   }
@@ -59,13 +73,16 @@ function renderLibrary() {
 
   libraryGrid.innerHTML = myBooks
     .map((book) => {
-      const title = typeof getTranslation !== "undefined" ? getTranslation(book, "title") : (book[lang]?.title || book.en?.title);
-      const description = typeof getTranslation !== "undefined" ? getTranslation(book, "description") : (book[lang]?.description || book.en?.description);
+      const title = book.title;
+      const description = book.description;
+      const imgSrc = book.imgSrc
+        ? (book.imgSrc.startsWith("http") ? book.imgSrc : `${API_BASE_URL}/${book.imgSrc}`)
+        : "";
 
       return `
         <div class="col-6 col-md-4 col-lg-3 col-xl-2 mb-4">
             <div class="novel-card">
-                <img src="${book.imgSrc}" alt="${title}" class="img-fluid rounded">
+                <img src="${imgSrc}" alt="${title}" class="img-fluid rounded">
                 <div class="hover-overlay text-center">
                     <h6 class="text-white fw-bold">${title}</h6>
                     <p class="text-warning small mb-2"><i class="bi bi-star-fill"></i> ${book.rating}</p>
@@ -78,6 +95,7 @@ function renderLibrary() {
     })
     .join("");
 }
+
 
 function initSorting() {
   const sortOptions = document.querySelectorAll(".sort-option");
