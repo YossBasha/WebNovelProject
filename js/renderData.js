@@ -438,6 +438,10 @@ function getUserLibrary() {
   );
 }
 
+window.getActiveLang = getActiveLang;
+window.getTranslation = getTranslation;
+window.getUserLibrary = getUserLibrary;
+
 function getAuthorName(authorId) {
   const author = mockDB.authors.find((a) => a.id === authorId);
   return author ? getTranslation(author, "name") : "Unknown Author";
@@ -491,11 +495,24 @@ function renderAllData() {
     categoryContainer.innerHTML = mockDB.categories
       .map((cat) => {
         const catName = cat[lang] || cat.en;
+
+        // Find all novels that belong to this category
+        const categoryNovels = mockDB.novels.filter((novel) =>
+          novel.categories.includes(cat.id)
+        );
+
+        // Pick a random novel cover or use the default category image
+        let coverImage = cat.image;
+        if (categoryNovels.length > 0) {
+          const randomIndex = Math.floor(Math.random() * categoryNovels.length);
+          coverImage = categoryNovels[randomIndex].imgSrc;
+        }
+
         return `
         <div class="col-6 col-md-4 col-lg-2 mb-3">
           <a href="discover.html?category=${encodeURIComponent(cat.id)}" class="text-decoration-none">
             <div class="card category-card border-0 shadow-sm overflow-hidden" style="height: 140px; cursor: pointer; transition: transform 0.2s; border-radius: 0.75rem; background-color: #1a1a1a;">
-              <img src="${cat.image}" class="card-img" style="height: 100%; width: 100%; object-fit: cover; border-radius: 0.75rem;" alt="${catName}" />
+              <img src="${coverImage}" class="card-img" style="height: 100%; width: 100%; object-fit: cover; border-radius: 0.75rem;" alt="${catName}" />
               <div class="card-img-overlay d-flex flex-column justify-content-center align-items-center" style="background: rgba(0, 0, 0, 0.5); border-radius: 0.75rem;">
                 <h5 class="card-title fw-bold text-white m-0 text-center text-uppercase" style="letter-spacing: 1px; font-size: 0.95rem;">
                   ${catName}

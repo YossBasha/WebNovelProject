@@ -70,7 +70,16 @@ const translations = {
     sort_popular: "Most Popular",
     sort_rating: "Top Rated",
     sort_random: "Randomly Shuffled",
-    label_chapter: "Chapter"
+    sort_az: "A-Z",
+    label_chapter: "Chapter",
+    about_title: "About <span class=\"text-warning\">NextPage</span>",
+    about_subtitle: "NextPage is a curated platform for web novel enthusiasts. We believe great stories deserve great readers — and we're here to make that connection happen.",
+    mission_title: "Our Mission",
+    mission_desc: "To bring emerging authors and passionate readers onto one seamless platform, making online fiction more accessible and enjoyable for everyone.",
+    community_title: "Our Community",
+    community_desc: "A growing community of writers and readers across Fantasy, Sci-Fi, Romance, Mystery, and more — all united by a love of storytelling.",
+    authors_title: "For Authors",
+    authors_desc: "We provide authors with the tools and audience they need to share their work, build a following, and grow their craft."
   },
   ar: {
     nav_library: "المكتبة الشخصية",
@@ -143,7 +152,16 @@ const translations = {
     sort_popular: "الأكثر شعبية",
     sort_rating: "الأعلى تقييماً",
     sort_random: "ترتيب عشوائي",
-    label_chapter: "الفصل"
+    sort_az: "أ-ي",
+    label_chapter: "الفصل",
+    about_title: "حول <span class=\"text-warning\">NextPage</span>",
+    about_subtitle: "NextPage هي منصة منسقة لعشاق الروايات عبر الإنترنت. نحن نؤمن بأن القصص الرائعة تستحق قراء رائعين - ونحن هنا لجعل هذا التواصل حقيقة.",
+    mission_title: "رسالتنا",
+    mission_desc: "جمع المؤلفين الناشئين والقراء الشغوفين على منصة سلسة واحدة، مما يجعل الخيال عبر الإنترنت أكثر سهولة ومتعة للجميع.",
+    community_title: "مجتمعنا",
+    community_desc: "مجتمع متنامٍ من الكتاب والقراء عبر الخيال العلمي، الفانتازيا، الرومانسية، الغموض، وأكثر - جميعهم متحدون بحب سرد القصص.",
+    authors_title: "للمؤلفين",
+    authors_desc: "نحن نزود المؤلفين بالأدوات والجمهور الذي يحتاجونه لمشاركة أعمالهم، وبناء قاعدة جماهيرية، وتطوير مهاراتهم."
   },
   es: {
     nav_library: "Biblioteca Personal",
@@ -216,7 +234,16 @@ const translations = {
     sort_popular: "Más populares",
     sort_rating: "Mejor calificados",
     sort_random: "Orden aleatorio",
-    label_chapter: "Capítulo"
+    sort_az: "A-Z",
+    label_chapter: "Capítulo",
+    about_title: "Sobre <span class=\"text-warning\">NextPage</span>",
+    about_subtitle: "NextPage es una plataforma seleccionada para entusiastas de las novelas web. Creemos que las grandes historias merecen grandes lectores, y estamos aquí para que esa conexión suceda.",
+    mission_title: "Nuestra Misión",
+    mission_desc: "Reunir a autores emergentes y lectores apasionados en una plataforma perfecta, haciendo que la ficción en línea sea más accesible y agradable para todos.",
+    community_title: "Nuestra Comunidad",
+    community_desc: "Una comunidad creciente de escritores y lectores de fantasía, ciencia ficción, romance, misterio y más, todos unidos por el amor a la narración de historias.",
+    authors_title: "Para Autores",
+    authors_desc: "Brindamos a los autores las herramientas y la audiencia que necesitan para compartir su trabajo, crear seguidores y hacer crecer su oficio."
   }
 };
 
@@ -251,6 +278,11 @@ function changeLanguage(lang) {
   
   // Custom updates for elements with icons or complex structures
   updateUIExtraneous(lang);
+
+  // Restore username if logged in
+  if (typeof checkAuthState === "function") {
+    checkAuthState();
+  }
 }
 
 function updateUIExtraneous(lang) {
@@ -260,6 +292,9 @@ function updateUIExtraneous(lang) {
     
     const exploreBtn = document.querySelector('[data-i18n="explore_btn"]');
     if(exploreBtn) exploreBtn.innerHTML = translations[lang].explore_btn;
+
+    const aboutTitle = document.querySelector('[data-i18n="about_title"]');
+    if(aboutTitle) aboutTitle.innerHTML = translations[lang].about_title;
 }
 
 document.addEventListener("DOMContentLoaded", () => {

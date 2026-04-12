@@ -83,19 +83,20 @@
     <main class="container my-5">
       <div class="d-flex justify-content-between align-items-center mb-5">
         <h2 class="text-white fw-bold" data-i18n="library_title">My Personal Library</h2>
-        <!-- Sort Dropdown -->
         <div class="dropdown">
           <button
             class="btn btn-outline-light dropdown-toggle"
             type="button"
+            id="librarySortButton"
             data-bs-toggle="dropdown"
+            data-i18n="sort_by"
           >
             Sort By
           </button>
-          <ul class="dropdown-menu dropdown-menu-dark">
-            <li><a class="dropdown-item" href="#">Recently Added</a></li>
-            <li><a class="dropdown-item" href="#">Rating</a></li>
-            <li><a class="dropdown-item" href="#">A-Z</a></li>
+          <ul class="dropdown-menu dropdown-menu-dark" id="sortMenu">
+            <li><a class="dropdown-item sort-option" href="#" data-sort="recently" data-i18n="sort_recently">Recently Added</a></li>
+            <li><a class="dropdown-item sort-option" href="#" data-sort="rating" data-i18n="sort_rating">Rating</a></li>
+            <li><a class="dropdown-item sort-option" href="#" data-sort="az" data-i18n="sort_az">A-Z</a></li>
           </ul>
         </div>
       </div>

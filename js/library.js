@@ -24,23 +24,44 @@ if (personalLibraryLink) {
     // If they DO have a token, the code does nothing and lets the link work normally!
   });
 }
+let currentSort = "recently";
+
 function renderLibrary() {
   const libraryGrid = document.getElementById("libraryGrid");
   if (!libraryGrid) return;
 
-  const myBooks = typeof getUserLibrary !== "undefined" ? getUserLibrary() : [];
-  const lang = typeof getActiveLang !== "undefined" ? getActiveLang() : "en";
+  let myBooks = typeof getUserLibrary !== "undefined" ? getUserLibrary() : [];
+  const lang = typeof getActiveLang !== "undefined" ? getActiveLang() : (localStorage.getItem("preferredLang") || "en");
   const viewText = { en: "View", ar: "عرض", es: "Ver" }[lang] || "View";
 
   if (myBooks.length === 0) {
-    libraryGrid.innerHTML = `<div class="col-12 text-center mt-5"><p class="text-white-50">${lang === 'ar' ? 'مكتبتك فارغة حالياً.' : (lang === 'es' ? 'Tu biblioteca está vacía actualmente.' : 'Your library is currently empty.')}</p></div>`;
+    libraryGrid.innerHTML = `<div class="col-12 text-center mt-5"><p class="text-white-50">${
+      lang === "ar"
+        ? "مكتبتك فارغة حالياً."
+        : lang === "es"
+          ? "Tu biblioteca está vacía actualmente."
+          : "Your library is currently empty."
+    }</p></div>`;
     return;
   }
 
+  // --- Sorting Logic ---
+  if (currentSort === "rating") {
+    myBooks.sort((a, b) => b.rating - a.rating);
+  } else if (currentSort === "az") {
+    myBooks.sort((a, b) => {
+      const titleA = (typeof getTranslation !== "undefined" ? getTranslation(a, "title") : (a[lang]?.title || a.en?.title || "")).toLowerCase();
+      const titleB = (typeof getTranslation !== "undefined" ? getTranslation(b, "title") : (b[lang]?.title || b.en?.title || "")).toLowerCase();
+      return titleA.localeCompare(titleB, lang);
+    });
+  }
+  // "recently" uses the default order
+
   libraryGrid.innerHTML = myBooks
     .map((book) => {
-      const title = getTranslation(book, "title");
-      const description = getTranslation(book, "description");
+      const title = typeof getTranslation !== "undefined" ? getTranslation(book, "title") : (book[lang]?.title || book.en?.title);
+      const description = typeof getTranslation !== "undefined" ? getTranslation(book, "description") : (book[lang]?.description || book.en?.description);
+
       return `
         <div class="col-6 col-md-4 col-lg-3 col-xl-2 mb-4">
             <div class="novel-card">
@@ -58,6 +79,31 @@ function renderLibrary() {
     .join("");
 }
 
+function initSorting() {
+  const sortOptions = document.querySelectorAll(".sort-option");
+  const sortButton = document.getElementById("librarySortButton");
+
+  sortOptions.forEach((option) => {
+    option.addEventListener("click", (e) => {
+      e.preventDefault();
+      currentSort = option.getAttribute("data-sort");
+
+      // Update button text to reflect current sort (localized)
+      if (sortButton) {
+        const lang = typeof getActiveLang !== "undefined" ? getActiveLang() : (localStorage.getItem("preferredLang") || "en");
+        const sortKey = option.getAttribute("data-i18n");
+        if (typeof translations !== "undefined" && translations[lang] && translations[lang][sortKey]) {
+          sortButton.textContent = translations[lang][sortKey];
+        } else {
+          sortButton.textContent = option.textContent;
+        }
+      }
+
+      renderLibrary();
+    });
+  });
+}
+
 document.addEventListener("DOMContentLoaded", () => {
   // 1. Force Redirect: If they somehow get to library.html without logging in, kick them out.
   const token = localStorage.getItem("userToken") || sessionStorage.getItem("userToken");
@@ -68,6 +114,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // 2. Render the Library Grid
   renderLibrary();
+
+  // 3. Initialize Sorting
+  initSorting();
 });
 
 window.renderLibrary = renderLibrary;
