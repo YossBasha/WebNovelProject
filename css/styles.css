@@ -681,13 +681,37 @@ h3 {
   text-align: right;
 }
 
-[dir="rtl"] .me-auto {
+/* Discover Search RTL Fix */
+[dir="rtl"] .discover-search-icon {
+  left: auto;
+  right: 16px;
+}
+
+[dir="rtl"] .discover-search-input {
+  padding: 0.75rem 2.75rem 0.75rem 1.25rem;
+}
+
+[dir="rtl"] .sort-btn::after {
+  margin-left: 0;
+  margin-right: 0.75rem;
+}
+
+[dir="rtl"] .me-auto,
+[dir="rtl"] .me-sm-auto,
+[dir="rtl"] .me-md-auto,
+[dir="rtl"] .me-lg-auto,
+[dir="rtl"] .me-xl-auto,
+[dir="rtl"] .me-xxl-auto {
   margin-left: auto !important;
   margin-right: 0 !important;
 }
 
 [dir="rtl"] .ms-auto,
-[dir="rtl"] .ms-xl-auto {
+[dir="rtl"] .ms-sm-auto,
+[dir="rtl"] .ms-md-auto,
+[dir="rtl"] .ms-lg-auto,
+[dir="rtl"] .ms-xl-auto,
+[dir="rtl"] .ms-xxl-auto {
   margin-right: auto !important;
   margin-left: 0 !important;
 }
