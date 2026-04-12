@@ -24,49 +24,50 @@ if (personalLibraryLink) {
     // If they DO have a token, the code does nothing and lets the link work normally!
   });
 }
-document.addEventListener("DOMContentLoaded", () => {
-  // 1. Force Redirect: If they somehow get to library.html without logging in, kick them out.
-  const token =
-    localStorage.getItem("userToken") || sessionStorage.getItem("userToken");
-  if (!token) {
-    window.location.href = "index.html";
-    return; // Stop the script here so it doesn't try to load the books
+function renderLibrary() {
+  const libraryGrid = document.getElementById("libraryGrid");
+  if (!libraryGrid) return;
+
+  const myBooks = typeof getUserLibrary !== "undefined" ? getUserLibrary() : [];
+  const lang = typeof getActiveLang !== "undefined" ? getActiveLang() : "en";
+  const viewText = { en: "View", ar: "عرض", es: "Ver" }[lang] || "View";
+
+  if (myBooks.length === 0) {
+    libraryGrid.innerHTML = `<div class="col-12 text-center mt-5"><p class="text-white-50">${lang === 'ar' ? 'مكتبتك فارغة حالياً.' : (lang === 'es' ? 'Tu biblioteca está vacía actualmente.' : 'Your library is currently empty.')}</p></div>`;
+    return;
   }
 
-  // 2. Render the Library Grid
-  const libraryGrid = document.getElementById("libraryGrid");
-
-  if (libraryGrid) {
-    const myBooks = [
-      {
-        id: 1,
-        title: "The Wild Robot",
-        rating: "4.8",
-        img: "./imgs/novel1.webp",
-        details: "A robot finds herself on a remote island.",
-      },
-    ];
-
-    function renderLibrary() {
-      libraryGrid.innerHTML = myBooks
-        .map(
-          (book) => `
-        <div class="col-6 col-md-4 col-lg-3 col-xl-2">
+  libraryGrid.innerHTML = myBooks
+    .map((book) => {
+      const title = getTranslation(book, "title");
+      const description = getTranslation(book, "description");
+      return `
+        <div class="col-6 col-md-4 col-lg-3 col-xl-2 mb-4">
             <div class="novel-card">
-                <img src="${book.img}" alt="${book.title}" class="img-fluid rounded">
+                <img src="${book.imgSrc}" alt="${title}" class="img-fluid rounded">
                 <div class="hover-overlay text-center">
-                    <h6 class="text-white fw-bold">${book.title}</h6>
+                    <h6 class="text-white fw-bold">${title}</h6>
                     <p class="text-warning small mb-2"><i class="bi bi-star-fill"></i> ${book.rating}</p>
-                    <p class="text-light" style="font-size: 0.7rem;">${book.details}</p>
-                    <a href="view.html?id=${book.id}" class="btn btn-sm btn-primary w-100 mt-2">View</a>
+                    <p class="text-light" style="font-size: 0.7rem;">${description}</p>
+                    <a href="novel_details.html?id=${book.id}" class="btn btn-sm btn-primary w-100 mt-2">${viewText}</a>
                 </div>
             </div>
         </div>
-      `,
-        )
-        .join("");
-    }
+      `;
+    })
+    .join("");
+}
 
-    renderLibrary();
+document.addEventListener("DOMContentLoaded", () => {
+  // 1. Force Redirect: If they somehow get to library.html without logging in, kick them out.
+  const token = localStorage.getItem("userToken") || sessionStorage.getItem("userToken");
+  if (!token) {
+    window.location.href = "index.html";
+    return;
   }
+
+  // 2. Render the Library Grid
+  renderLibrary();
 });
+
+window.renderLibrary = renderLibrary;

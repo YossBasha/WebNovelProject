@@ -11,6 +11,8 @@
   --text-muted: rgba(255, 255, 255, 0.65);
   --card-bg: #1a1a1a;
   --input-bg: #2a2a2a;
+  --modal-dark: #1e1e2d;
+  --accent-blue-alt: #3498db;
 }
 
 body {
@@ -591,4 +593,113 @@ h3 {
 #contactModal .btn-warning:hover {
   transform: translateY(-2px);
   box-shadow: 0 8px 20px rgba(243, 156, 18, 0.35);
+}
+/* =========================================
+   PREFERENCES MODAL (Sleek Dark Theme)
+   ========================================= */
+.settings-modal-content {
+  background-color: var(--modal-dark) !important;
+  color: #fff;
+  border-radius: 20px !important;
+  border: 1px solid rgba(255, 255, 255, 0.08) !important;
+  padding: 1.5rem;
+}
+
+.settings-modal-header {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05) !important;
+  padding-bottom: 1rem;
+}
+
+.preference-section {
+  margin-top: 1.5rem;
+}
+
+.preference-title {
+  font-size: 1.25rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+}
+
+.preference-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: background 0.2s;
+  background: rgba(255, 255, 255, 0.03);
+  margin-bottom: 0.5rem;
+  border: 1px solid transparent;
+}
+
+.preference-item:hover {
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.preference-item.active {
+  border-color: var(--accent-blue-alt);
+  background: rgba(52, 152, 219, 0.1);
+}
+
+.preference-info h6 {
+  margin: 0;
+  font-weight: 600;
+}
+
+.preference-info p {
+  margin: 0;
+  font-size: 0.8rem;
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.check-circle {
+  width: 24px;
+  height: 24px;
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+}
+
+.preference-item.active .check-circle {
+  border-color: var(--accent-blue-alt);
+  background: var(--accent-blue-alt);
+}
+
+.preference-item.active .check-circle::after {
+  content: '\F633';
+  font-family: 'bootstrap-icons';
+  color: white;
+  font-size: 14px;
+}
+
+/* RTL Support */
+[dir="rtl"] {
+  text-align: right;
+}
+
+[dir="rtl"] .ms-auto, 
+[dir="rtl"] .me-auto {
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+}
+
+[dir="rtl"] .navbar-nav {
+  padding-right: 0;
+}
+
+[dir="rtl"] .modal-header .btn-close {
+  margin: -0.5rem auto -0.5rem -0.5rem;
+}
+
+[dir="rtl"] .preference-item {
+  flex-direction: row-reverse;
+}
+
+[dir="rtl"] .check-circle {
+  margin-left: 1rem;
+  margin-right: 0;
 }

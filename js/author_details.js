@@ -1,30 +1,34 @@
-document.addEventListener("DOMContentLoaded", () => {
+function renderAuthorDetails() {
   const params = new URLSearchParams(window.location.search);
   const authorId = parseInt(params.get("id"));
 
   if (isNaN(authorId)) return;
 
   const author = mockDB.authors.find((a) => a.id === authorId);
+  const lang = typeof getActiveLang !== "undefined" ? getActiveLang() : "en";
 
   if (!author) {
     const nameEl = document.getElementById("authorName");
-    if (nameEl) nameEl.textContent = "Author Not Found";
+    if (nameEl) nameEl.textContent = lang === "ar" ? "المؤلف غير موجود" : (lang === "es" ? "Autor no encontrado" : "Author Not Found");
     return;
   }
 
-  document.title = `${author.name} - NextPage`;
+  const authorName = getTranslation(author, "name");
+  const authorBio = getTranslation(author, "bio");
+
+  document.title = `${authorName} - NextPage`;
 
   const avatarEl = document.getElementById("authorAvatar");
   if (avatarEl) {
     avatarEl.src = author.image;
-    avatarEl.alt = author.name;
+    avatarEl.alt = authorName;
   }
   
   const nameEl = document.getElementById("authorName");
-  if (nameEl) nameEl.textContent = author.name;
+  if (nameEl) nameEl.textContent = authorName;
   
   const bioEl = document.getElementById("authorBio");
-  if (bioEl) bioEl.textContent = author.bio;
+  if (bioEl) bioEl.textContent = authorBio;
 
   const authorNovels = mockDB.novels.filter((n) => n.authorId === author.id);
 
@@ -48,9 +52,13 @@ document.addEventListener("DOMContentLoaded", () => {
 
   const genresEl = document.getElementById("authorGenres");
   if (genresEl) {
-    const genres = [...new Set(authorNovels.flatMap((n) => n.categories))];
-    genresEl.innerHTML = genres
-      .map((g) => `<span class="author-profile-genre-pill">${g}</span>`)
+    const uniqueCatIds = [...new Set(authorNovels.flatMap((n) => n.categories))];
+    genresEl.innerHTML = uniqueCatIds
+      .map((catId) => {
+          const cat = mockDB.categories.find(c => c.id === catId);
+          const catName = cat ? (cat[lang] || cat.en) : catId;
+          return `<span class="author-profile-genre-pill">${catName}</span>`;
+      })
       .join("");
   }
 
@@ -62,22 +70,30 @@ document.addEventListener("DOMContentLoaded", () => {
       if (noNovelsMsg) noNovelsMsg.classList.remove("d-none");
     } else {
       if (noNovelsMsg) noNovelsMsg.classList.add("d-none");
-      grid.innerHTML = authorNovels.map((novel) => `
+      grid.innerHTML = authorNovels.map((novel) => {
+        const title = getTranslation(novel, "title");
+        const cats = novel.categories.map(catId => {
+            const cat = mockDB.categories.find(c => c.id === catId);
+            return cat ? (cat[lang] || cat.en) : catId;
+        }).join(" · ");
+        const bestsellerText = { en: "Bestseller", ar: "الأكثر مبيعاً", es: "Más vendido" }[lang] || "Bestseller";
+
+        return `
         <div class="col-6 col-md-4 col-lg-3">
           <a href="novel_details.html?id=${novel.id}" class="text-decoration-none">
             <div class="author-novel-card">
               <div class="author-novel-img-wrap">
-                <img src="${novel.imgSrc}" alt="${novel.title}" />
+                <img src="${novel.imgSrc}" alt="${title}" />
                 <div class="author-novel-overlay">
                   <span class="author-novel-rating">
                     <i class="bi bi-star-fill text-warning"></i> ${novel.rating}
                   </span>
                 </div>
-                ${novel.isBestSeller ? '<span class="author-novel-badge">Bestseller</span>' : ""}
+                ${novel.isBestSeller ? `<span class="author-novel-badge">${bestsellerText}</span>` : ""}
               </div>
               <div class="author-novel-body">
-                <h6 class="author-novel-title">${novel.title}</h6>
-                <p class="author-novel-cats">${novel.categories.join(" · ")}</p>
+                <h6 class="author-novel-title">${title}</h6>
+                <p class="author-novel-cats">${cats}</p>
                 <div class="author-novel-footer">
                   <span class="author-novel-price">$${novel.price.toFixed(2)}</span>
                   <span class="author-novel-views">
@@ -88,7 +104,11 @@ document.addEventListener("DOMContentLoaded", () => {
             </div>
           </a>
         </div>
-      `).join("");
+      `;
+      }).join("");
     }
   }
-});
+}
+
+document.addEventListener("DOMContentLoaded", renderAuthorDetails);
+window.renderAuthorDetails = renderAuthorDetails;

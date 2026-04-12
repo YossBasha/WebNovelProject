@@ -69,6 +69,46 @@
   background: rgba(255, 255, 255, 0.1);
 }
 
+.sort-dropdown {
+  width: fit-content;
+}
+
+.sort-btn {
+  background: rgba(255, 255, 255, 0.07) !important;
+  border: 1px solid rgba(255, 255, 255, 0.15) !important;
+  color: #fff !important;
+  border-radius: 50px !important;
+  padding: 0.65rem 1.75rem !important;
+  font-size: 0.88rem !important;
+  font-weight: 500 !important;
+  transition: all 0.25s ease !important;
+}
+
+.sort-btn:hover {
+  background: rgba(255, 255, 255, 0.12) !important;
+  border-color: rgba(255, 255, 255, 0.3) !important;
+}
+
+.sort-btn::after {
+  margin-left: 0.75rem;
+  vertical-align: 0.125em;
+}
+
+.sort-dropdown .dropdown-item {
+  font-size: 0.88rem;
+  padding: 0.6rem 1.2rem;
+  transition: background 0.2s;
+}
+
+.sort-dropdown .dropdown-item:hover {
+  background: rgba(157, 0, 177, 0.2);
+}
+
+.sort-dropdown .dropdown-item.active {
+  background: #9d00b1;
+  color: #fff;
+}
+
 /* ── Category Filter Pills ── */
 .discover-filter-pills {
   display: flex;

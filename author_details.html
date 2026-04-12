@@ -33,37 +33,37 @@
         <div class="collapse navbar-collapse" id="navbarBasic">
           <ul class="navbar-nav me-auto mb-2 mb-xl-0">
             <li class="nav-item">
-              <a class="nav-link active" href="./library.html" id="personalLibraryLink">Personal Library</a>
+              <a class="nav-link active" href="./library.html" id="personalLibraryLink" data-i18n="nav_library">Personal Library</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link active" href="discover.html">Discover</a>
+              <a class="nav-link active" href="discover.html" data-i18n="nav_discover">Discover</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link active" href="authors.html">Authors</a>
+              <a class="nav-link active" href="authors.html" data-i18n="nav_authors">Authors</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link active" href="#" data-bs-toggle="modal" data-bs-target="#contactModal">Contact</a>
+              <a class="nav-link active" href="#" data-bs-toggle="modal" data-bs-target="#contactModal" data-i18n="nav_contact">Contact</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link active" href="./about.html">About</a>
+              <a class="nav-link active" href="./about.html" data-i18n="nav_about">About</a>
             </li>
             <li class="nav-item sign-in ms-xl-auto" id="signInItem">
-              <a class="nav-link active" href="#" data-bs-toggle="modal" data-bs-target="#loginModal">Sign In</a>
+              <a class="nav-link active" href="#" data-bs-toggle="modal" data-bs-target="#loginModal" data-i18n="nav_signin">Sign In</a>
             </li>
             <li class="nav-item" id="registerItem">
-              <a class="nav-link active register-btn" href="#" data-bs-toggle="modal" data-bs-target="#registerModal">Register</a>
+              <a class="nav-link active register-btn" href="#" data-bs-toggle="modal" data-bs-target="#registerModal" data-i18n="nav_register">Register</a>
             </li>
 
             <li class="nav-item dropdown d-none ms-xl-auto" id="userProfileItem">
               <a class="nav-link dropdown-toggle text-white d-flex align-items-center gap-2" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                 <i class="bi bi-person-circle fs-4"></i>
-                <span class="fw-bold">My Account</span>
+                <span class="fw-bold" data-i18n="nav_my_account">My Account</span>
               </a>
               <ul class="dropdown-menu dropdown-menu-end dropdown-menu-dark">
-                <li><a class="dropdown-item" href="library.html">Library</a></li>
-                <li><a class="dropdown-item" href="#">Settings</a></li>
+                <li><a class="dropdown-item" href="library.html" data-i18n="nav_library">Library</a></li>
+                <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#settingsModal" data-i18n="nav_settings">Settings</a></li>
                 <li><hr class="dropdown-divider" /></li>
-                <li><a class="dropdown-item text-danger" href="#" id="logoutBtn">Logout</a></li>
+                <li><a class="dropdown-item text-danger" href="#" id="logoutBtn" data-i18n="nav_logout">Logout</a></li>
               </ul>
             </li>
           </ul>
@@ -71,7 +71,7 @@
           <!-- Optimized Search Form Inside Collapse -->
           <form class="d-flex search-form-responsive mt-3 mt-xl-0" action="discover.html" method="GET">
             <div class="input-group">
-              <input class="form-control" type="search" name="q" placeholder="Search novels..." aria-label="Search" />
+              <input class="form-control" type="search" name="q" placeholder="Search novels..." aria-label="Search" data-i18n="search_placeholder" />
               <button class="btn btn-search" type="submit">
                 <i class="bi bi-search"></i>
               </button>
@@ -91,7 +91,7 @@
         </div>
         <div class="author-profile-info">
           <p class="author-profile-back">
-            <a href="authors.html"><i class="bi bi-arrow-left"></i> All Authors</a>
+            <a href="authors.html"><i class="bi bi-arrow-left"></i> <span data-i18n="all_authors">All Authors</span></a>
           </p>
           <h1 class="author-profile-name" id="authorName">Loading...</h1>
           <p class="author-profile-bio" id="authorBio"></p>
@@ -99,15 +99,15 @@
           <div class="author-stats" id="authorStats">
             <div class="author-stat">
               <span class="author-stat-value" id="statNovels">—</span>
-              <span class="author-stat-label">Novels</span>
+              <span class="author-stat-label" data-i18n="label_novels">Novels</span>
             </div>
             <div class="author-stat">
               <span class="author-stat-value" id="statViews">—</span>
-              <span class="author-stat-label">Total Reads</span>
+              <span class="author-stat-label" data-i18n="label_reads">Total Reads</span>
             </div>
             <div class="author-stat">
               <span class="author-stat-value" id="statRating">—</span>
-              <span class="author-stat-label">Avg. Rating</span>
+              <span class="author-stat-label" data-i18n="label_rating">Avg. Rating</span>
             </div>
           </div>
 
@@ -118,7 +118,7 @@
       <!-- Author's Novels -->
       <div class="mt-5">
         <h2 class="author-section-title">
-          <i class="bi bi-book me-2 text-warning"></i>Works by this Author
+          <i class="bi bi-book me-2 text-warning"></i><span data-i18n="author_works">Works by this Author</span>
         </h2>
         <div class="row g-4 mt-1" id="authorNovelsGrid"></div>
         <p class="text-center text-white-50 mt-4 d-none" id="noNovelsMsg">
@@ -142,21 +142,21 @@
             </div>
           </div>
           <div class="col-6 col-md-3 col-lg-3 mb-4">
-            <h6 class="text-uppercase fw-bold mb-3">Community</h6>
+            <h6 class="text-uppercase fw-bold mb-3" data-i18n="footer_community">Community</h6>
             <ul class="list-unstyled footer-links">
-              <li><a href="authors.html">Authors</a></li>
-              <li><a href="library.html">Personal Library</a></li>
-              <li><a href="discover.html">Discover Novels</a></li>
-              <li><a href="index.html">Home</a></li>
+              <li><a href="authors.html" data-i18n="nav_authors">Authors</a></li>
+              <li><a href="library.html" data-i18n="nav_library">Personal Library</a></li>
+              <li><a href="discover.html" data-i18n="nav_discover">Discover Novels</a></li>
+              <li><a href="index.html" data-i18n="footer_home">Home</a></li>
             </ul>
           </div>
           <div class="col-6 col-md-3 col-lg-3 mb-4">
-            <h6 class="text-uppercase fw-bold mb-3">Resources</h6>
+            <h6 class="text-uppercase fw-bold mb-3" data-i18n="footer_resources">Resources</h6>
             <ul class="list-unstyled footer-links">
-              <li><a href="about.html">About Us</a></li>
-              <li><a href="#" data-bs-toggle="modal" data-bs-target="#contactModal">Contact Us</a></li>
-              <li><a href="#">Privacy Policy</a></li>
-              <li><a href="#">Terms of Service</a></li>
+              <li><a href="about.html" data-i18n="footer_about">About Us</a></li>
+              <li><a href="#" data-bs-toggle="modal" data-bs-target="#contactModal" data-i18n="footer_contact">Contact Us</a></li>
+              <li><a href="#" data-i18n="footer_privacy">Privacy Policy</a></li>
+              <li><a href="#" data-i18n="footer_terms">Terms of Service</a></li>
             </ul>
           </div>
         </div>
@@ -173,8 +173,8 @@
             <div class="modal-body p-4">
               <div class="row g-4 align-items-center">
                 <div class="col-md-5">
-                  <h2 class="display-6 fw-bold text-warning mb-3">Contact Us</h2>
-                  <p class="text-white-50">Have a question? Send us a message and we'll get back to you within 24 hours.</p>
+                  <h2 class="display-6 fw-bold text-warning mb-3" data-i18n="modal_contact_title">Contact Us</h2>
+                  <p class="text-white-50" data-i18n="contact_desc">Have a question? Send us a message and we'll get back to you within 24 hours.</p>
                   <ul class="list-unstyled mt-4">
                     <li class="mb-2"><i class="bi bi-envelope-fill me-2 text-warning"></i>support@nextpage.com</li>
                     <li><i class="bi bi-geo-alt-fill me-2 text-warning"></i>123 WebNovel St, Fiction City</li>
@@ -183,10 +183,10 @@
                 <div class="col-md-7">
                   <form id="contactForm">
                     <div class="row g-3">
-                      <div class="col-md-6"><input type="text" class="form-control bg-secondary text-white border-0 py-3" placeholder="Name" required /></div>
-                      <div class="col-md-6"><input type="email" class="form-control bg-secondary text-white border-0 py-3" placeholder="Email" required /></div>
-                      <div class="col-12"><textarea class="form-control bg-secondary text-white border-0 py-3" rows="4" placeholder="Your Message..." required></textarea></div>
-                      <div class="col-12"><button type="submit" class="btn btn-warning w-100 fw-bold py-3 text-uppercase">Send Message</button></div>
+                      <div class="col-md-6"><input type="text" class="form-control bg-secondary text-white border-0 py-3" placeholder="Name" data-i18n="placeholder_name" required /></div>
+                      <div class="col-md-6"><input type="email" class="form-control bg-secondary text-white border-0 py-3" placeholder="Email" data-i18n="placeholder_email" required /></div>
+                      <div class="col-12"><textarea class="form-control bg-secondary text-white border-0 py-3" rows="4" placeholder="Your Message..." data-i18n="placeholder_message" required></textarea></div>
+                      <div class="col-12"><button type="submit" class="btn btn-warning w-100 fw-bold py-3 text-uppercase" data-i18n="btn_send">Send Message</button></div>
                     </div>
                   </form>
                 </div>
@@ -200,29 +200,29 @@
         <div class="modal-dialog modal-dialog-centered">
           <div class="modal-content">
             <div class="modal-header border-0 pb-0">
-              <h5 class="modal-title fw-bold">Welcome Back</h5>
+              <h5 class="modal-title fw-bold" data-i18n="modal_welcome">Welcome Back</h5>
               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body p-4">
               <form id="loginForm">
                 <div class="mb-3">
-                  <label for="email" class="form-label">Username / Email</label>
+                  <label for="email" class="form-label" data-i18n="label_username">Username / Email</label>
                   <input type="text" class="form-control" id="email" required />
                 </div>
                 <div class="mb-4">
-                  <label for="password" class="form-label">Password</label>
+                  <label for="password" class="form-label" data-i18n="label_password">Password</label>
                   <input type="password" class="form-control" id="password" required />
                 </div>
                 <div class="mb-3 form-check">
                   <input type="checkbox" class="form-check-input" id="rememberMe" />
-                  <label class="form-check-label" for="rememberMe">Remember me</label>
+                  <label class="form-check-label" for="rememberMe" data-i18n="label_remember">Remember me</label>
                 </div>
-                <button type="submit" class="btn btn-warning w-100 mb-3 fw-bold">Log in</button>
+                <button type="submit" class="btn btn-warning w-100 mb-3 fw-bold" data-i18n="btn_login">Log in</button>
                 <div class="text-center mt-3">
-                  <span>Don't have an account? </span>
+                  <span data-i18n="label_no_account">Don't have an account? </span>
                   <a href="#" class="text-decoration-none text-dark fw-bold"
                     data-bs-toggle="modal" data-bs-target="#registerModal" data-bs-dismiss="modal"
-                    >Create one</a>
+                    data-i18n="link_create">Create one</a>
                 </div>
               </form>
               <div id="loginMessage" class="mt-3 text-center fw-bold"></div>
@@ -235,33 +235,33 @@
         <div class="modal-dialog modal-dialog-centered">
           <div class="modal-content">
             <div class="modal-header border-0 pb-0">
-              <h5 class="modal-title fw-bold">Create Account</h5>
+              <h5 class="modal-title fw-bold" data-i18n="modal_create">Create Account</h5>
               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body p-4">
               <form id="registerForm">
                 <div class="mb-3">
-                  <label for="regUsername" class="form-label">Username</label>
+                  <label for="regUsername" class="form-label" data-i18n="label_username">Username</label>
                   <input type="text" class="form-control" id="regUsername" required />
                 </div>
                 <div class="mb-3">
-                  <label for="regEmail" class="form-label">Email address</label>
+                  <label for="regEmail" class="form-label" data-i18n="label_email">Email address</label>
                   <input type="email" class="form-control" id="regEmail" required />
                 </div>
                 <div class="mb-3">
-                  <label for="regPassword" class="form-label">Password</label>
+                  <label for="regPassword" class="form-label" data-i18n="label_password">Password</label>
                   <input type="password" class="form-control" id="regPassword" required />
                 </div>
                 <div class="mb-4">
-                  <label for="regConfirmPassword" class="form-label">Confirm Password</label>
+                  <label for="regConfirmPassword" class="form-label" data-i18n="label_confirm">Confirm Password</label>
                   <input type="password" class="form-control" id="regConfirmPassword" required />
                 </div>
-                <button type="submit" class="btn btn-dark w-100 mb-3">Register</button>
+                <button type="submit" class="btn btn-dark w-100 mb-3" data-i18n="btn_register">Register</button>
                 <div class="text-center mt-3">
-                  <span>Already have an account? </span>
+                  <span data-i18n="label_already">Already have an account? </span>
                   <a href="#" class="text-decoration-none text-dark fw-bold"
                     data-bs-toggle="modal" data-bs-target="#loginModal" data-bs-dismiss="modal"
-                    >Log in</a>
+                    data-i18n="btn_login">Log in</a>
                 </div>
               </form>
               <div id="registerMessage" class="mt-3 text-center fw-bold"></div>
@@ -271,8 +271,71 @@
       </div>
     </div>
 
+    </div>
+
+    <!-- =============== Settings/Preferences Modal ==================== -->
+    <div class="modal fade" id="settingsModal" tabindex="-1" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content settings-modal-content">
+          <div class="modal-header settings-modal-header border-0">
+            <h5 class="modal-title fw-bold" data-i18n="settings_title">Preference</h5>
+            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body p-0">
+            <!-- Genre Preference Section -->
+            <div class="preference-section">
+              <div class="preference-title" data-i18n="settings_genre">Genre Preference</div>
+              
+              <div class="preference-item genre-option" data-genre="romance">
+                <div class="preference-info">
+                  <h6 data-i18n="genre_romance">More Romance</h6>
+                  <p data-i18n="genre_romance_desc">More fiction in contemporary and other romance</p>
+                </div>
+                <div class="check-circle"></div>
+              </div>
+
+              <div class="preference-item genre-option active" data-genre="fantasy">
+                <div class="preference-info">
+                  <h6 data-i18n="genre_fantasy">More Fantasy</h6>
+                  <p data-i18n="genre_fantasy_desc">More fiction in fantasy, games, and magical realism</p>
+                </div>
+                <div class="check-circle"></div>
+              </div>
+            </div>
+
+            <!-- Language Section -->
+            <div class="preference-section mt-4">
+              <div class="preference-title" data-i18n="settings_lang">Language</div>
+              
+              <div class="preference-item lang-option active" data-lang="en">
+                <div class="preference-info">
+                  <h6 data-i18n="lang_en">English</h6>
+                </div>
+                <div class="check-circle"></div>
+              </div>
+
+              <div class="preference-item lang-option" data-lang="ar">
+                <div class="preference-info">
+                  <h6 data-i18n="lang_ar">العربية</h6>
+                </div>
+                <div class="check-circle"></div>
+              </div>
+
+              <div class="preference-item lang-option" data-lang="es">
+                <div class="preference-info">
+                  <h6 data-i18n="lang_es">Español</h6>
+                </div>
+                <div class="check-circle"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="js/renderData.js"></script>
+    <script src="js/i18n.js"></script>
     <script src="js/script.js"></script>
     <script src="js/author_details.js"></script>
   </body>
