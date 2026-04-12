@@ -204,5 +204,60 @@ document.addEventListener("DOMContentLoaded", () => {
       scrollSlider("bestSellerSlider", direction);
     }
   });
+
+  // --- Initialize UI Enhancements ---
+  initToasts();
+  initScrollReveal();
 });
+
+// ==================================================== 
+// UI Enhancements Helpers
+// ==================================================== 
+
+function initToasts() {
+  if (!document.getElementById("toastContainer")) {
+    const container = document.createElement("div");
+    container.id = "toastContainer";
+    document.body.appendChild(container);
+  }
+}
+
+function showToast(message, type = "success") {
+  const container = document.getElementById("toastContainer");
+  if (!container) return;
+
+  const toast = document.createElement("div");
+  toast.className = `np-toast ${type}`;
+  
+  const icon = type === "success" ? "bi-check-circle-fill" : "bi-exclamation-circle-fill";
+  toast.innerHTML = `<i class="bi ${icon}"></i> <span>${message}</span>`;
+  
+  container.appendChild(toast);
+
+  // Remove toast after animation completes
+  setTimeout(() => {
+    toast.remove();
+  }, 3000);
+}
+
+function initScrollReveal() {
+  const observerOptions = {
+    threshold: 0.1,
+    rootMargin: "0px 0px -50px 0px"
+  };
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add("active");
+        observer.unobserve(entry.target); // Reveal only once
+      }
+    });
+  }, observerOptions);
+
+  document.querySelectorAll(".reveal-on-scroll").forEach(el => observer.observe(el));
+}
+
+// Global exposure
+window.showToast = showToast;
 

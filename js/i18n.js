@@ -79,7 +79,16 @@ const translations = {
     community_title: "Our Community",
     community_desc: "A growing community of writers and readers across Fantasy, Sci-Fi, Romance, Mystery, and more — all united by a love of storytelling.",
     authors_title: "For Authors",
-    authors_desc: "We provide authors with the tools and audience they need to share their work, build a following, and grow their craft."
+    authors_desc: "We provide authors with the tools and audience they need to share their work, build a following, and grow their craft.",
+    related_novels: "You Might Also Like",
+    reviews_title: "User Reviews",
+    leave_review: "Leave a Review",
+    filter_all: "All",
+    filter_ongoing: "Ongoing",
+    filter_completed: "Completed",
+    no_reviews_yet: "No reviews yet. Be the first to share your thoughts!",
+    placeholder_review: "What did you think of this story?",
+    btn_submit_review: "Submit Review"
   },
   ar: {
     nav_library: "المكتبة الشخصية",
@@ -161,7 +170,16 @@ const translations = {
     community_title: "مجتمعنا",
     community_desc: "مجتمع متنامٍ من الكتاب والقراء عبر الخيال العلمي، الفانتازيا، الرومانسية، الغموض، وأكثر - جميعهم متحدون بحب سرد القصص.",
     authors_title: "للمؤلفين",
-    authors_desc: "نحن نزود المؤلفين بالأدوات والجمهور الذي يحتاجونه لمشاركة أعمالهم، وبناء قاعدة جماهيرية، وتطوير مهاراتهم."
+    authors_desc: "نحن نزود المؤلفين بالأدوات والجمهور الذي يحتاجونه لمشاركة أعمالهم، وبناء قاعدة جماهيرية، وتطوير مهاراتهم.",
+    related_novels: "قد يعجبك أيضاً",
+    reviews_title: "مراجعات المستخدمين",
+    leave_review: "اترك مراجعة",
+    filter_all: "الكل",
+    filter_ongoing: "مستمرة",
+    filter_completed: "مكتملة",
+    no_reviews_yet: "لا توجد مراجعات بعد. كن أول من يشارك أفكاره!",
+    placeholder_review: "ما رأيك في هذه القصة؟",
+    btn_submit_review: "إرسال المراجعة"
   },
   es: {
     nav_library: "Biblioteca Personal",
@@ -243,7 +261,16 @@ const translations = {
     community_title: "Nuestra Comunidad",
     community_desc: "Una comunidad creciente de escritores y lectores de fantasía, ciencia ficción, romance, misterio y más, todos unidos por el amor a la narración de historias.",
     authors_title: "Para Autores",
-    authors_desc: "Brindamos a los autores las herramientas y la audiencia que necesitan para compartir su trabajo, crear seguidores y hacer crecer su oficio."
+    authors_desc: "Brindamos a los autores las herramientas y la audiencia que necesitan para compartir su trabajo, crear seguidores y hacer crecer su oficio.",
+    related_novels: "También te puede gustar",
+    reviews_title: "Reseñas de usuarios",
+    leave_review: "Deja una reseña",
+    filter_all: "Todos",
+    filter_ongoing: "En curso",
+    filter_completed: "Finalizado",
+    no_reviews_yet: "Aún no hay reseñas. ¡Sé el primero en compartir tus pensamientos!",
+    placeholder_review: "¿Qué te ha parecido esta historia?",
+    btn_submit_review: "Enviar reseña"
   }
 };
 

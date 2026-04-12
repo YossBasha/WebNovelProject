@@ -115,12 +115,19 @@
             </ul>
           </div>
 
-          <div class="discover-filter-pills" id="filterPills"></div>
+          <div class="discover-filter-pills" id="categoryPills"></div>
+          
+          <!-- Status Filter -->
+          <div class="discover-status-filters d-flex gap-2 ms-lg-auto" id="statusFilters">
+            <button class="btn btn-sm btn-outline-secondary rounded-pill active" data-status="all" data-i18n="filter_all">All</button>
+            <button class="btn btn-sm btn-outline-secondary rounded-pill" data-status="ongoing" data-i18n="filter_ongoing">Ongoing</button>
+            <button class="btn btn-sm btn-outline-secondary rounded-pill" data-status="completed" data-i18n="filter_completed">Completed</button>
+          </div>
         </div>
       </div>
     </div>
 
-    <main class="container my-5">
+    <main class="container my-5 reveal-on-scroll">
       <div class="row g-4" id="discoverGrid"></div>
       <p class="text-center text-white-50 mt-5 d-none" id="noResultsMsg" data-i18n="no_results">
         No novels found matching your search.

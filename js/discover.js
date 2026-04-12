@@ -1,12 +1,14 @@
 function renderDiscoverPage() {
   const params = new URLSearchParams(window.location.search);
   let activeCategory = params.get("category") || "All";
+  let activeStatus = "all";
   const initialQuery = params.get("q") || "";
-  let currentSort = "random"; // Default sort: Randomly Shuffled
+  let currentSort = "random";
 
   const discoverGrid = document.getElementById("discoverGrid");
   const searchInput = document.getElementById("discoverSearch");
-  const filterPillsEl = document.getElementById("filterPills");
+  const categoryPillsEl = document.getElementById("categoryPills");
+  const statusFiltersEl = document.getElementById("statusFilters");
   const noResultsMsg = document.getElementById("noResultsMsg");
   const headingEl = document.getElementById("discoverHeading");
   const sortBtn = document.getElementById("sortDropdown");
@@ -21,39 +23,50 @@ function renderDiscoverPage() {
     searchInput.dataset.initialized = "true";
   }
 
-  // Categories now have IDs and localized names
   const allCategories = [{ id: "All", en: "All", ar: "الكل", es: "Todo" }, ...mockDB.categories];
 
   function renderPills() {
-    filterPillsEl.innerHTML = allCategories.map(cat => {
-      const catName = cat[lang] || cat.en;
-      const catId = cat.id;
-      return `
-        <button
-          class="discover-pill ${catId === activeCategory ? "active" : ""}"
-          data-category="${catId}"
-        >${catName}</button>
-      `;
-    }).join("");
+    if (categoryPillsEl) {
+      categoryPillsEl.innerHTML = allCategories.map(cat => {
+        const catName = cat[lang] || cat.en;
+        const catId = cat.id;
+        return `
+          <button
+            class="discover-pill ${catId === activeCategory ? "active" : ""}"
+            data-category="${catId}"
+          >${catName}</button>
+        `;
+      }).join("");
 
-    filterPillsEl.querySelectorAll(".discover-pill").forEach(btn => {
-      btn.addEventListener("click", () => {
-        activeCategory = btn.dataset.category;
-        renderPills();
-        renderGrid();
+      categoryPillsEl.querySelectorAll(".discover-pill").forEach(btn => {
+        btn.addEventListener("click", () => {
+          activeCategory = btn.dataset.category;
+          renderPills();
+          renderGrid();
+        });
       });
-    });
+    }
+  }
+
+  function initStatusFilters() {
+    if (statusFiltersEl) {
+      statusFiltersEl.querySelectorAll("button").forEach(btn => {
+        btn.addEventListener("click", () => {
+          statusFiltersEl.querySelectorAll("button").forEach(b => b.classList.remove("active"));
+          btn.classList.add("active");
+          activeStatus = btn.dataset.status;
+          renderGrid();
+        });
+      });
+    }
   }
 
   function updateSortUI() {
     if (!sortBtn || !activeSortLabel) return;
-    
-    // Update active state in dropdown
     document.querySelectorAll(".sort-dropdown .dropdown-item").forEach(item => {
       item.classList.toggle("active", item.getAttribute("data-sort") === currentSort);
     });
 
-    // Update button label: "Sort By: {{Selected}}"
     const sortKeys = {
       random: "sort_random",
       recently: "sort_recently",
@@ -61,9 +74,10 @@ function renderDiscoverPage() {
       rating: "sort_rating"
     };
     
-    const sortText = translations[lang][sortKeys[currentSort]] || currentSort;
-    const sortByText = translations[lang]["sort_by"] || "Sort By";
-    
+    // Safety check for translations
+    const i18n = typeof translations !== "undefined" ? translations[lang] : {};
+    const sortText = i18n[sortKeys[currentSort]] || currentSort;
+    const sortByText = i18n["sort_by"] || "Sort By";
     activeSortLabel.textContent = `${sortByText}: ${sortText}`;
   }
 
@@ -72,25 +86,26 @@ function renderDiscoverPage() {
 
     // 1. Filter
     let filtered = mockDB.novels.filter(novel => {
-      const matchesCat = activeCategory === "All" ||
-        novel.categories.includes(activeCategory);
+      const matchesCat = activeCategory === "All" || novel.categories.includes(activeCategory);
       
       const authorName = getAuthorName(novel.authorId).toLowerCase();
       const title = getTranslation(novel, "title").toLowerCase();
       
-      const matchesSearch = !query ||
-        title.includes(query) ||
-        authorName.includes(query);
+      const matchesSearch = !query || title.includes(query) || authorName.includes(query);
       
-      return matchesCat && matchesSearch;
+      // Mock Status Filter (assuming IDs 101-110 are ongoing, others completed for demo)
+      const isOngoing = novel.id % 2 === 0; 
+      const matchesStatus = activeStatus === "all" || 
+                           (activeStatus === "ongoing" && isOngoing) || 
+                           (activeStatus === "completed" && !isOngoing);
+      
+      return matchesCat && matchesSearch && matchesStatus;
     });
 
     // 2. Sort
     if (currentSort === "random") {
-      // Simple Fisher-Yates or just Math.random shuffle logic
       filtered.sort(() => Math.random() - 0.5);
     } else if (currentSort === "recently") {
-      // Sort by dateAdded DESC, fallback to id DESC
       filtered.sort((a, b) => {
         if (a.dateAdded && b.dateAdded) return new Date(b.dateAdded) - new Date(a.dateAdded);
         return b.id - a.id;
@@ -101,11 +116,12 @@ function renderDiscoverPage() {
       filtered.sort((a, b) => b.rating - a.rating);
     }
 
+    const i18n = typeof translations !== "undefined" ? translations[lang] : {};
     if (activeCategory !== "All") {
       const catObj = mockDB.categories.find(c => c.id === activeCategory);
       headingEl.textContent = catObj ? (catObj[lang] || catObj.en) : activeCategory;
     } else {
-      headingEl.textContent = translations[lang].discover_title || "Discover Novels";
+      headingEl.textContent = i18n.discover_title || "Discover Novels";
     }
 
     if (filtered.length === 0) {
@@ -113,12 +129,12 @@ function renderDiscoverPage() {
       noResultsMsg.classList.remove("d-none");
     } else {
       noResultsMsg.classList.add("d-none");
-      discoverGrid.innerHTML = filtered.map(novel => {
+      discoverGrid.innerHTML = filtered.map((novel, idx) => {
         const title = getTranslation(novel, "title");
         const authorName = getAuthorName(novel.authorId);
 
         return `
-        <div class="col-6 col-md-4 col-lg-3 col-xl-2">
+        <div class="col-6 col-md-4 col-lg-3 col-xl-2 reveal-on-scroll delay-${(idx % 4) + 1}">
           <a href="novel_details.html?id=${novel.id}" class="text-decoration-none">
             <div class="discover-novel-card">
               <div class="discover-card-img-wrap">
@@ -146,6 +162,9 @@ function renderDiscoverPage() {
         </div>
       `;
       }).join("");
+      
+      // Re-init ScrollReveal for new items
+      if (window.initScrollReveal) window.initScrollReveal();
     }
   }
 
@@ -166,6 +185,7 @@ function renderDiscoverPage() {
   
   updateSortUI();
   renderPills();
+  initStatusFilters();
   renderGrid();
 }
 

@@ -80,7 +80,7 @@
       </div>
     </nav>
     <!-- =============== Page items container ==================== -->
-    <div class="container mt-5">
+    <div class="container mt-5 reveal-on-scroll">
       <h3 class="mb-4" data-i18n="featured_title">Featured Novels</h3>
       <div class="position-relative">
         <button
@@ -88,7 +88,13 @@
         >
           <i class="bi bi-arrow-left-short"></i>
         </button>
-        <div class="featured-novels" id="novelSlider"></div>
+        <div class="featured-novels" id="novelSlider">
+          <!-- Skeleton SSS -->
+          <div class="novel-link-wrapper skeleton skeleton-img"></div>
+          <div class="novel-link-wrapper skeleton skeleton-img"></div>
+          <div class="novel-link-wrapper skeleton skeleton-img"></div>
+          <div class="novel-link-wrapper skeleton skeleton-img"></div>
+        </div>
         <button
           class="btn btn-dark scroll-btn right"
         >
@@ -97,7 +103,7 @@
       </div>
     </div>
 
-    <div class="container mt-5">
+    <div class="container mt-5 reveal-on-scroll delay-1">
       <div class="d-flex justify-content-between align-items-center mb-4 px-4">
         <h3 class="m-0" data-i18n="bestseller_title">Top 10 Bestselling Novels</h3>
         <div
@@ -116,11 +122,15 @@
         </div>
       </div>
       <div class="position-relative">
-        <div class="featured-novels" id="bestSellerSlider"></div>
+        <div class="featured-novels" id="bestSellerSlider">
+          <div class="novel-link-wrapper skeleton skeleton-img"></div>
+          <div class="novel-link-wrapper skeleton skeleton-img"></div>
+          <div class="novel-link-wrapper skeleton skeleton-img"></div>
+        </div>
       </div>
     </div>
 
-    <div class="container mt-5 mb-5">
+    <div class="container mt-5 mb-5 reveal-on-scroll delay-2">
       <h3 class="mb-4" data-i18n="categories_title">Categories</h3>
       <div class="row g-4" id="categoryContainer"></div>
     </div>
