@@ -3,11 +3,8 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta
-      name="description"
-      content="Learn about NextPage — the platform dedicated to connecting readers with the best web novels across genres."
-    />
-    <title>About Us - NextPage</title>
+    <title>Author Details - NextPage</title>
+    <meta name="description" content="Author profile and novels on NextPage." />
     <link
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
       rel="stylesheet"
@@ -17,12 +14,14 @@
       href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"
     />
     <link rel="stylesheet" href="css/styles.css" />
+    <link rel="stylesheet" href="css/author-details.css" />
   </head>
   <body>
     <!-- =============== Navbar ==================== -->
     <nav class="navbar navbar-expand-xl navbar-dark sticky-top">
       <div class="container-fluid">
-        <a class="navbar-brand fs-2 fw-bold" href="index.html">NextPage</a        <button
+        <a class="navbar-brand fs-2 fw-bold" href="index.html">NextPage</a>
+        <button
           class="navbar-toggler"
           type="button"
           data-bs-toggle="collapse"
@@ -80,67 +79,54 @@
           </form>
         </div>
       </div>
-    </nav>v>
+    </nav>
 
-    <!-- =============== About Hero ==================== -->
-    <section class="py-5 mt-4">
-      <div class="container">
-        <div class="row justify-content-center text-center mb-5">
-          <div class="col-lg-8">
-            <h1 class="display-5 fw-bold mb-3">About <span class="text-warning">NextPage</span></h1>
-            <p class="lead text-white-50">
-              NextPage is a curated platform for web novel enthusiasts. We
-              believe great stories deserve great readers — and we're here to
-              make that connection happen.
-            </p>
-          </div>
+    <!-- =============== Author Profile ==================== -->
+    <main class="container my-5" id="authorMain">
+
+      <!-- Profile Hero -->
+      <div class="author-profile-hero" id="authorHero">
+        <div class="author-avatar-wrap">
+          <img id="authorAvatar" src="" alt="Author Photo" />
         </div>
+        <div class="author-profile-info">
+          <p class="author-profile-back">
+            <a href="Authors.html"><i class="bi bi-arrow-left"></i> All Authors</a>
+          </p>
+          <h1 class="author-profile-name" id="authorName">Loading...</h1>
+          <p class="author-profile-bio" id="authorBio"></p>
 
-        <div class="row g-4 justify-content-center mb-5">
-          <div class="col-md-4">
-            <div class="card bg-dark border-secondary text-center p-4 h-100" style="border-radius: 1rem;">
-              <i class="bi bi-book-half fs-1 text-warning mb-3"></i>
-              <h4 class="fw-bold">Our Mission</h4>
-              <p class="text-white-50 small">
-                To bring emerging authors and passionate readers onto one
-                seamless platform, making online fiction more accessible and
-                enjoyable for everyone.
-              </p>
+          <div class="author-stats" id="authorStats">
+            <div class="author-stat">
+              <span class="author-stat-value" id="statNovels">—</span>
+              <span class="author-stat-label">Novels</span>
+            </div>
+            <div class="author-stat">
+              <span class="author-stat-value" id="statViews">—</span>
+              <span class="author-stat-label">Total Reads</span>
+            </div>
+            <div class="author-stat">
+              <span class="author-stat-value" id="statRating">—</span>
+              <span class="author-stat-label">Avg. Rating</span>
             </div>
           </div>
-          <div class="col-md-4">
-            <div class="card bg-dark border-secondary text-center p-4 h-100" style="border-radius: 1rem;">
-              <i class="bi bi-people-fill fs-1 text-warning mb-3"></i>
-              <h4 class="fw-bold">Our Community</h4>
-              <p class="text-white-50 small">
-                A growing community of writers and readers across Fantasy,
-                Sci-Fi, Romance, Mystery, and more — all united by a love of
-                storytelling.
-              </p>
-            </div>
-          </div>
-          <div class="col-md-4">
-            <div class="card bg-dark border-secondary text-center p-4 h-100" style="border-radius: 1rem;">
-              <i class="bi bi-pen-fill fs-1 text-warning mb-3"></i>
-              <h4 class="fw-bold">For Authors</h4>
-              <p class="text-white-50 small">
-                We provide authors with the tools and audience they need to
-                share their work, build a following, and grow their craft.
-              </p>
-            </div>
-          </div>
-        </div>
 
-        <div class="row justify-content-center text-center">
-          <div class="col-lg-6">
-            <h2 class="fw-bold mb-3">Ready to start reading?</h2>
-            <a href="Discover.html" class="btn btn-warning fw-bold px-5 py-2">
-              Explore the Library
-            </a>
-          </div>
+          <div class="author-genre-pills" id="authorGenres"></div>
         </div>
       </div>
-    </section>
+
+      <!-- Author's Novels -->
+      <div class="mt-5">
+        <h2 class="author-section-title">
+          <i class="bi bi-book me-2 text-warning"></i>Works by this Author
+        </h2>
+        <div class="row g-4 mt-1" id="authorNovelsGrid"></div>
+        <p class="text-center text-white-50 mt-4 d-none" id="noNovelsMsg">
+          No novels found for this author.
+        </p>
+      </div>
+
+    </main>
 
     <!-- =============== Footer ==================== -->
     <footer class="footer-section pt-5">
@@ -178,7 +164,7 @@
       </div>
     </footer>
 
-    <!-- Hidden Modals -->
+    <!-- Hidden Auth Modals -->
     <div class="hidden">
       <!-- =============== Contact Modal ==================== -->
       <div class="modal fade" id="contactModal" tabindex="-1" aria-hidden="true">
@@ -188,7 +174,7 @@
             <div class="modal-body p-4">
               <div class="row g-4 align-items-center">
                 <div class="col-md-5">
-                  <h2 class="display-6 fw-bold text-warning">Contact Us</h2>
+                  <h2 class="display-6 fw-bold text-warning mb-3">Contact Us</h2>
                   <p class="text-white-50">Have a question? Send us a message and we'll get back to you within 24 hours.</p>
                   <ul class="list-unstyled mt-4">
                     <li class="mb-2"><i class="bi bi-envelope-fill me-2 text-warning"></i>support@nextpage.com</li>
@@ -235,7 +221,9 @@
                 <button type="submit" class="btn btn-warning w-100 mb-3 fw-bold">Log in</button>
                 <div class="text-center mt-3">
                   <span>Don't have an account? </span>
-                  <a href="#" class="text-decoration-none text-dark fw-bold" data-bs-toggle="modal" data-bs-target="#registerModal" data-bs-dismiss="modal">Create one</a>
+                  <a href="#" class="text-decoration-none text-dark fw-bold"
+                    data-bs-toggle="modal" data-bs-target="#registerModal" data-bs-dismiss="modal"
+                    >Create one</a>
                 </div>
               </form>
               <div id="loginMessage" class="mt-3 text-center fw-bold"></div>
@@ -272,7 +260,9 @@
                 <button type="submit" class="btn btn-dark w-100 mb-3">Register</button>
                 <div class="text-center mt-3">
                   <span>Already have an account? </span>
-                  <a href="#" class="text-decoration-none text-dark fw-bold" data-bs-toggle="modal" data-bs-target="#loginModal" data-bs-dismiss="modal">Log in</a>
+                  <a href="#" class="text-decoration-none text-dark fw-bold"
+                    data-bs-toggle="modal" data-bs-target="#loginModal" data-bs-dismiss="modal"
+                    >Log in</a>
                 </div>
               </form>
               <div id="registerMessage" class="mt-3 text-center fw-bold"></div>
@@ -285,5 +275,85 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="js/renderData.js"></script>
     <script src="js/script.js"></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        const params   = new URLSearchParams(window.location.search);
+        const authorId = parseInt(params.get("id"));
+
+        // Find author in mock DB
+        const author = mockDB.authors.find((a) => a.id === authorId);
+
+        if (!author) {
+          document.getElementById("authorName").textContent = "Author Not Found";
+          return;
+        }
+
+        // ── Update page title & meta ──────────────────────────
+        document.title = `${author.name} - NextPage`;
+
+        // ── Inject author data ────────────────────────────────
+        document.getElementById("authorAvatar").src = author.image;
+        document.getElementById("authorAvatar").alt = author.name;
+        document.getElementById("authorName").textContent  = author.name;
+        document.getElementById("authorBio").textContent   = author.bio;
+
+        // Find this author's novels
+        const authorNovels = mockDB.novels.filter((n) => n.authorId === author.id);
+
+        // Stats
+        const totalViews  = authorNovels.reduce((sum, n) => sum + n.views, 0);
+        const avgRating   = authorNovels.length
+          ? (authorNovels.reduce((sum, n) => sum + n.rating, 0) / authorNovels.length).toFixed(1)
+          : "—";
+
+        document.getElementById("statNovels").textContent = authorNovels.length;
+        document.getElementById("statViews").textContent  = totalViews >= 1000
+          ? (totalViews / 1000).toFixed(1) + "k"
+          : totalViews;
+        document.getElementById("statRating").textContent = avgRating;
+
+        // Genre pills
+        const genres = [...new Set(authorNovels.flatMap((n) => n.categories))];
+        document.getElementById("authorGenres").innerHTML = genres
+          .map((g) => `<span class="author-profile-genre-pill">${g}</span>`)
+          .join("");
+
+        // ── Render novels grid ────────────────────────────────
+        const grid        = document.getElementById("authorNovelsGrid");
+        const noNovelsMsg = document.getElementById("noNovelsMsg");
+
+        if (authorNovels.length === 0) {
+          noNovelsMsg.classList.remove("d-none");
+        } else {
+          grid.innerHTML = authorNovels.map((novel) => `
+            <div class="col-6 col-md-4 col-lg-3">
+              <a href="novel_details.html?id=${novel.id}" class="text-decoration-none">
+                <div class="author-novel-card">
+                  <div class="author-novel-img-wrap">
+                    <img src="${novel.imgSrc}" alt="${novel.title}" />
+                    <div class="author-novel-overlay">
+                      <span class="author-novel-rating">
+                        <i class="bi bi-star-fill text-warning"></i> ${novel.rating}
+                      </span>
+                    </div>
+                    ${novel.isBestSeller ? '<span class="author-novel-badge">Bestseller</span>' : ""}
+                  </div>
+                  <div class="author-novel-body">
+                    <h6 class="author-novel-title">${novel.title}</h6>
+                    <p class="author-novel-cats">${novel.categories.join(" · ")}</p>
+                    <div class="author-novel-footer">
+                      <span class="author-novel-price">$${novel.price.toFixed(2)}</span>
+                      <span class="author-novel-views">
+                        <i class="bi bi-eye"></i> ${novel.views.toLocaleString()}
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              </a>
+            </div>
+          `).join("");
+        }
+      });
+    </script>
   </body>
 </html>

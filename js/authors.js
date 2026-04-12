@@ -1,41 +1,48 @@
-const authors = [
-  {
-    name: "F. Scott Fitzgerald",
-    image: "imgs/author1.webp",
-    info: "Author of The Great Gatsby.",
-  },
-  {
-    name: "George Orwell",
-    image: "imgs/author2.webp",
-    info: "Author of 1984.",
-  },
-  {
-    name: "Jane Austen",
-    image: "imgs/author3.webp",
-    info: "Author of Pride and Prejudice.",
-  },
-  // Add as many as you want here
-];
+// ── Render the Authors Grid from mockDB ──────────────────────────────────────
+document.addEventListener("DOMContentLoaded", () => {
+  const authorsGrid = document.getElementById("authorsGrid");
+  if (!authorsGrid) return;
 
-const authorsGrid = document.getElementById("authorsGrid");
+  authorsGrid.innerHTML = mockDB.authors
+    .map((author) => {
+      // Count how many novels this author has written
+      const novelCount = mockDB.novels.filter(
+        (n) => n.authorId === author.id
+      ).length;
 
-function renderAuthors() {
-  authorsGrid.innerHTML = authors
-    .map(
-      (author) => `
+      // Collect unique categories across all their novels
+      const genres = [
+        ...new Set(
+          mockDB.novels
+            .filter((n) => n.authorId === author.id)
+            .flatMap((n) => n.categories)
+        ),
+      ]
+        .slice(0, 3)
+        .map((g) => `<span class="author-genre-tag">${g}</span>`)
+        .join("");
+
+      return `
         <div class="col">
-            <div class="card bg-dark text-white border-secondary h-100 author-card">
-                <img src="${author.image}" class="card-img-top" alt="${author.name}" style="height: 200px; object-fit: cover;">
-                <div class="card-body">
-                    <h5 class="card-title fw-bold">${author.name}</h5>
-                    <p class="card-text small text-white-50">${author.info}</p>
-                    <a href="#" class="btn btn-sm btn-outline-warning">View Works</a>
+          <a href="author_details.html?id=${author.id}" class="text-decoration-none">
+            <div class="author-card">
+              <div class="author-card-img-wrap">
+                <img src="${author.image}" alt="${author.name}" />
+                <div class="author-card-overlay">
+                  <span class="author-novel-count">
+                    <i class="bi bi-book"></i> ${novelCount} novel${novelCount !== 1 ? "s" : ""}
+                  </span>
                 </div>
+              </div>
+              <div class="author-card-body">
+                <h5 class="author-card-name">${author.name}</h5>
+                <p class="author-card-bio">${author.bio}</p>
+                <div class="author-genre-tags">${genres}</div>
+              </div>
             </div>
+          </a>
         </div>
-    `,
-    )
+      `;
+    })
     .join("");
-}
-
-renderAuthors();
+});

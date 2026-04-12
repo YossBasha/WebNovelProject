@@ -1,0 +1,259 @@
+/* =========================================
+   AUTHOR DETAILS PAGE
+   ========================================= */
+
+/* ── Profile Hero ── */
+.author-profile-hero {
+  display: flex;
+  gap: 2.5rem;
+  align-items: flex-start;
+  padding: 2.5rem;
+  background: linear-gradient(135deg, rgba(60, 0, 80, 0.6) 0%, rgba(20, 0, 30, 0.6) 100%);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 20px;
+  backdrop-filter: blur(4px);
+}
+
+@media (max-width: 768px) {
+  .author-profile-hero {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 1.75rem 1.25rem;
+  }
+}
+
+/* ── Avatar ── */
+.author-avatar-wrap {
+  flex-shrink: 0;
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  overflow: hidden;
+  border: 3px solid rgba(157, 0, 177, 0.6);
+  box-shadow: 0 0 40px rgba(157, 0, 177, 0.3);
+}
+
+.author-avatar-wrap img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+@media (max-width: 768px) {
+  .author-avatar-wrap {
+    width: 140px;
+    height: 140px;
+  }
+}
+
+/* ── Profile Info ── */
+.author-profile-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.author-profile-back a {
+  color: rgba(255, 255, 255, 0.45);
+  font-size: 0.85rem;
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.author-profile-back a:hover {
+  color: #fff;
+}
+
+.author-profile-name {
+  font-size: clamp(1.8rem, 4vw, 2.8rem);
+  font-weight: 800;
+  color: #fff;
+  margin: 0.4rem 0 0.6rem;
+  line-height: 1.15;
+}
+
+.author-profile-bio {
+  color: rgba(255, 255, 255, 0.55);
+  font-size: 0.95rem;
+  line-height: 1.65;
+  margin-bottom: 1.5rem;
+  max-width: 520px;
+}
+
+/* ── Stats Row ── */
+.author-stats {
+  display: flex;
+  gap: 2rem;
+  margin-bottom: 1.25rem;
+  flex-wrap: wrap;
+}
+
+@media (max-width: 768px) {
+  .author-stats {
+    justify-content: center;
+    gap: 1.5rem;
+  }
+}
+
+.author-stat {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+@media (max-width: 768px) {
+  .author-stat { align-items: center; }
+}
+
+.author-stat-value {
+  font-size: 1.6rem;
+  font-weight: 800;
+  color: #fff;
+  line-height: 1;
+}
+
+.author-stat-label {
+  font-size: 0.72rem;
+  color: rgba(255, 255, 255, 0.4);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-top: 0.2rem;
+}
+
+/* ── Genre Pills ── */
+.author-genre-pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+
+@media (max-width: 768px) {
+  .author-genre-pills { justify-content: center; }
+}
+
+.author-profile-genre-pill {
+  font-size: 0.75rem;
+  padding: 0.25rem 0.75rem;
+  border-radius: 50px;
+  background: rgba(157, 0, 177, 0.2);
+  border: 1px solid rgba(157, 0, 177, 0.4);
+  color: rgba(255, 255, 255, 0.8);
+}
+
+/* ── Section Title ── */
+.author-section-title {
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: #fff;
+  padding-bottom: 0.75rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+/* ── Novels Grid Cards ── */
+.author-novel-card {
+  background: #1e0026;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 12px;
+  overflow: hidden;
+  transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+  cursor: pointer;
+  height: 100%;
+}
+
+.author-novel-card:hover {
+  transform: translateY(-8px);
+  border-color: rgba(157, 0, 177, 0.5);
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.5);
+}
+
+.author-novel-img-wrap {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 2 / 3;
+  overflow: hidden;
+}
+
+.author-novel-img-wrap img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.4s ease;
+}
+
+.author-novel-card:hover .author-novel-img-wrap img {
+  transform: scale(1.05);
+}
+
+.author-novel-overlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 0.5rem 0.6rem;
+  background: linear-gradient(to top, rgba(0,0,0,0.75) 0%, transparent 100%);
+  display: flex;
+  justify-content: flex-end;
+}
+
+.author-novel-rating {
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: #fff;
+}
+
+.author-novel-badge {
+  position: absolute;
+  top: 0.5rem;
+  left: 0.5rem;
+  background: #f39c12;
+  color: #000;
+  font-size: 0.65rem;
+  font-weight: 700;
+  padding: 0.2rem 0.55rem;
+  border-radius: 50px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+/* ── Novel Card Body ── */
+.author-novel-body {
+  padding: 0.75rem;
+}
+
+.author-novel-title {
+  color: #fff;
+  font-size: 0.88rem;
+  font-weight: 700;
+  margin-bottom: 0.2rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.author-novel-cats {
+  color: rgba(255, 255, 255, 0.4);
+  font-size: 0.72rem;
+  margin-bottom: 0.5rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.author-novel-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.author-novel-price {
+  color: #f39c12;
+  font-size: 0.85rem;
+  font-weight: 700;
+}
+
+.author-novel-views {
+  color: rgba(255, 255, 255, 0.35);
+  font-size: 0.72rem;
+}

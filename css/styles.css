@@ -22,116 +22,115 @@ h3 {
    ========================================= */
 .navbar {
   background-color: rgba(26, 0, 31, 0.8) !important;
-  backdrop-filter: blur(15px);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
   z-index: 1050;
+  padding: 0.8rem 0;
 }
 
-.navbar.nav-pills .nav-item {
-  display: flex;
-  flex: 0 0 auto;
+.navbar-brand {
+  transition: transform 0.3s ease;
 }
 
-.nav-link {
-  transition: all 0.3s ease-in-out;
-}
-
-/* Standard text links hover */
-.navbar-nav .nav-item:not(.nav-pills) .nav-link:hover {
-  color: #adb5bd !important;
+.navbar-brand:hover {
   transform: scale(1.05);
 }
 
-/* Pill buttons (Sign In / General) */
-.nav-pills .nav-link.active,
-.nav-pills .show > .nav-link {
-  background-color: white;
-  color: black !important;
-  border-radius: 9999px;
-  padding: 0.45rem 0.5rem;
-  display: inline-block;
+.nav-link {
+  font-weight: 500;
+  padding: 0.5rem 1rem !important;
+  border-radius: 8px;
+  position: relative;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-.nav-pills .nav-link.active:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 4px 15px rgba(255, 255, 255, 0.3);
+/* Hover effect for links */
+.navbar-nav .nav-link:hover {
+  color: #fff !important;
+  background-color: rgba(255, 255, 255, 0.08);
 }
 
-/* Register Button Specifics */
-.nav-pills .nav-link.active.register-btn {
-  background-color: #6c757d !important;
-  color: white !important;
-}
+/* Auth Pill buttons (Sign In / Register) - Desktop only logic refined */
+@media (min-width: 1201px) {
+  .sign-in .nav-link {
+    background-color: white !important;
+    color: black !important;
+    border-radius: 50px;
+    padding: 0.6rem 1.5rem !important;
+    font-weight: 700;
+  }
 
-.register-btn:hover {
-  background-color: #5a6268 !important;
-  box-shadow: 0 4px 15px rgba(108, 117, 125, 0.5) !important;
+  .sign-in .nav-link:hover {
+    background-color: #f0f0f0 !important;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(255, 255, 255, 0.2);
+  }
+
+  .register-btn {
+    background-color: rgba(255, 255, 255, 0.1) !important;
+    border: 1px solid rgba(255, 255, 255, 0.2) !important;
+    color: white !important;
+    border-radius: 50px;
+    padding: 0.6rem 1.5rem !important;
+  }
+
+  .register-btn:hover {
+    background-color: rgba(255, 255, 255, 0.2) !important;
+    border-color: rgba(255, 255, 255, 0.4) !important;
+  }
 }
 
 /* =========================================
-   SEARCH BAR
+   SEARCH BAR (Navbar Integrated)
    ========================================= */
-form {
-  display: flex !important;
-  margin: 10px auto 0 auto !important;
-}
-
-.search-container {
-  display: flex;
-  align-items: center;
-  margin: 0 !important;
-}
-
-.search-input {
-  border-radius: 50px 0 0 50px !important;
-  background-color: rgba(255, 255, 255, 0.1) !important;
-  border: 1px solid rgba(255, 255, 255, 0.3) !important;
-  color: white !important;
-  transition: all 0.3s ease;
-  width: 500px;
-}
-
-.search-input:focus {
-  width: 300px;
-  background-color: white !important;
-  color: black !important;
-}
-
-.btn-search {
-  border-radius: 0 50px 50px 0 !important;
-  border: 1px solid rgba(255, 255, 255, 0.3);
-  border-left: none;
-  color: white;
-  background-color: #160e44;
-}
-
-form .btn-outline-success {
-  color: white !important;
-  border-color: white !important;
-  padding: 0.375rem 15px;
-  transition: all 0.3s ease;
-}
-
-form .btn-outline-success:hover {
-  background-color: white !important;
-  color: black !important;
-  transform: scale(1.1);
-}
-
 .search-form-responsive {
-  width: 100%;
-  max-width: 300px;
-  margin-left: auto !important;
-  margin-top: 10px !important;
+  display: none !important; /* Mobile only */
+  margin: 0 !important;
+  padding: 0 1rem;
+}
+
+@media (max-width: 1200px) {
+  .search-form-responsive {
+    display: flex !important;
+  }
+}
+
+.search-form-responsive .input-group {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 50px;
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+
+.search-form-responsive .input-group:focus-within {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.3);
+  box-shadow: 0 0 15px rgba(255, 255, 255, 0.05);
 }
 
 .search-form-responsive .form-control {
-  border-radius: 50px 0 0 50px !important;
-  font-size: 0.9rem;
+  background: transparent !important;
+  border: none !important;
+  color: white !important;
+  padding: 0.6rem 1.2rem;
+  box-shadow: none !important;
 }
 
-.search-form-responsive .btn-outline-success {
-  border-radius: 0 50px 50px 0 !important;
+.search-form-responsive .form-control::placeholder {
+  color: rgba(255, 255, 255, 0.4);
+}
+
+.search-form-responsive .btn-search {
+  background: transparent !important;
+  border: none !important;
+  color: rgba(255, 255, 255, 0.6) !important;
+  padding: 0 1.2rem;
+}
+
+.search-form-responsive .btn-search:hover {
+  color: white !important;
 }
 
 /* =========================================
@@ -299,42 +298,50 @@ form .btn-outline-success:hover {
    ========================================= */
 @media (max-width: 1200px) {
   .navbar-nav {
-    flex-direction: column;
-    align-items: center;
-    margin-top: 10px;
+    padding: 1.5rem 0;
+    gap: 0.5rem;
   }
 
   .nav-item {
-    margin-bottom: 0.5rem;
     width: 100%;
+    padding: 0 1rem;
+  }
+
+  .nav-link {
     text-align: center;
+    padding: 0.8rem !important;
+    background-color: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    font-size: 1.1rem;
   }
 
-  .nav-pills .nav-link {
-    display: block;
-    margin: 0 auto;
-  }
-
-  .sign-in {
-    margin-bottom: 1rem;
-  }
-
-  .search-container {
-    width: 100%;
-    margin-top: 1rem !important;
-    padding: 0 10px;
-  }
-
-  .search-input {
-    width: 100% !important;
+  .nav-link:active {
+    background-color: rgba(255, 255, 255, 0.1);
   }
 
   .search-form-responsive {
-    max-width: 50%;
+    max-width: 100%;
+    order: -1; /* Place search at top of mobile menu */
+    margin-bottom: 1rem !important;
   }
 
-  .search-form-responsive .form-control {
-    flex: 1;
+  /* Hamburger customization */
+  .navbar-toggler {
+    border: none;
+    padding: 0.5rem;
+  }
+
+  .navbar-toggler:focus {
+    box-shadow: none;
+  }
+
+  /* Collapsed container styling */
+  .navbar-collapse {
+    background: rgba(26, 0, 31, 0.95);
+    border-radius: 15px;
+    margin-top: 1rem;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
   }
 }
 
@@ -354,7 +361,8 @@ form .btn-outline-success:hover {
 
 /* Container & Background */
 #loginModal .modal-content,
-#registerModal .modal-content {
+#registerModal .modal-content,
+#contactModal .modal-content {
   background-color: #1a1a1a;
   color: #ffffff;
   border-radius: 20px;
@@ -364,7 +372,8 @@ form .btn-outline-success:hover {
 
 /* Header & Close Button */
 #loginModal .modal-header,
-#registerModal .modal-header {
+#registerModal .modal-header,
+#contactModal .modal-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -379,7 +388,8 @@ form .btn-outline-success:hover {
 }
 
 #loginModal .btn-close,
-#registerModal .btn-close {
+#registerModal .btn-close,
+#contactModal .btn-close {
   filter: invert(1) grayscale(100%) brightness(200%);
 }
 
@@ -456,4 +466,74 @@ form .btn-outline-success:hover {
 
 .hidden li {
   list-style-type: none;
+}
+
+/* =========================================
+   CONTACT MODAL
+   ========================================= */
+
+/* Contact modal: headerless with absolute close button */
+.contact-modal-content {
+  background: linear-gradient(135deg, #180022 0%, #0f0018 100%) !important;
+  border: 1px solid rgba(157, 0, 177, 0.3) !important;
+  position: relative;
+}
+
+.contact-modal-close {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  z-index: 10;
+  filter: invert(1) grayscale(100%) brightness(200%);
+}
+
+#contactModal .modal-body {
+  padding: 2rem 2rem 2rem;
+}
+
+#contactModal .display-6 {
+  font-size: 1.65rem;
+}
+
+#contactModal .text-white-50 {
+  font-size: 0.88rem;
+  line-height: 1.6;
+}
+
+#contactModal .list-unstyled li {
+  font-size: 0.85rem;
+  color: rgba(255, 255, 255, 0.65);
+}
+
+#contactModal .form-control {
+  background: rgba(255, 255, 255, 0.07) !important;
+  border: 1px solid rgba(255, 255, 255, 0.12) !important;
+  color: #fff !important;
+  border-radius: 10px;
+  transition: border-color 0.25s, background 0.25s;
+}
+
+#contactModal .form-control::placeholder {
+  color: rgba(255, 255, 255, 0.3);
+}
+
+#contactModal .form-control:focus {
+  border-color: rgba(157, 0, 177, 0.7) !important;
+  background: rgba(255, 255, 255, 0.1) !important;
+  box-shadow: 0 0 0 3px rgba(157, 0, 177, 0.2) !important;
+  outline: none;
+}
+
+#contactModal .btn-warning {
+  background: linear-gradient(90deg, #f39c12, #e67e22);
+  border: none;
+  border-radius: 10px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+#contactModal .btn-warning:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(243, 156, 18, 0.35);
 }

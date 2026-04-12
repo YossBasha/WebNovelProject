@@ -29,15 +29,10 @@
           <span class="navbar-toggler-icon"></span>
         </button>
 
-        <div class="collapse navbar-collapse" id="navbarrBasic">
+        <div class="collapse navbar-collapse" id="navbarBasic">
           <ul class="navbar-nav me-auto mb-2 mb-xl-0">
-            <li class="nav-item nav-pills">
-              <a
-                class="nav-link active"
-                href="./library.html"
-                id="personalLibraryLink"
-                >Personal Library</a
-              >
+            <li class="nav-item">
+              <a class="nav-link active" href="./library.html" id="personalLibraryLink">Personal Library</a>
             </li>
             <li class="nav-item">
               <a class="nav-link active" href="Discover.html">Discover</a>
@@ -46,77 +41,44 @@
               <a class="nav-link active" href="authors.html">Authors</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link active" href="index.html#contactSection"
-                >Contact</a
-              >
+              <a class="nav-link active" href="#" data-bs-toggle="modal" data-bs-target="#contactModal">Contact</a>
             </li>
             <li class="nav-item">
               <a class="nav-link active" href="./about.html">About</a>
             </li>
-            <li class="nav-item nav-pills sign-in ms-xl-auto" id="signInItem">
-              <a
-                class="nav-link active"
-                href="#"
-                data-bs-toggle="modal"
-                data-bs-target="#loginModal"
-                >Sign In</a
-              >
+            <li class="nav-item sign-in ms-xl-auto" id="signInItem">
+              <a class="nav-link active" href="#" data-bs-toggle="modal" data-bs-target="#loginModal">Sign In</a>
             </li>
-            <li class="nav-item nav-pills" id="registerItem">
-              <a
-                class="nav-link active register-btn sign-in"
-                href="#"
-                data-bs-toggle="modal"
-                data-bs-target="#registerModal"
-                >Register</a
-              >
+            <li class="nav-item" id="registerItem">
+              <a class="nav-link active register-btn" href="#" data-bs-toggle="modal" data-bs-target="#registerModal">Register</a>
             </li>
 
-            <li
-              class="nav-item dropdown d-none ms-xl-auto"
-              id="userProfileItem"
-            >
-              <a
-                class="nav-link dropdown-toggle text-white d-flex align-items-center gap-2"
-                href="#"
-                role="button"
-                data-bs-toggle="dropdown"
-                aria-expanded="false"
-              >
+            <li class="nav-item dropdown d-none ms-xl-auto" id="userProfileItem">
+              <a class="nav-link dropdown-toggle text-white d-flex align-items-center gap-2" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                 <i class="bi bi-person-circle fs-4"></i>
                 <span class="fw-bold">My Account</span>
               </a>
               <ul class="dropdown-menu dropdown-menu-end dropdown-menu-dark">
-                <li>
-                  <a class="dropdown-item" href="library.html">Library</a>
-                </li>
+                <li><a class="dropdown-item" href="library.html">Library</a></li>
                 <li><a class="dropdown-item" href="#">Settings</a></li>
                 <li><hr class="dropdown-divider" /></li>
-                <li>
-                  <a class="dropdown-item text-danger" href="#" id="logoutBtn"
-                    >Logout</a
-                  >
-                </li>
+                <li><a class="dropdown-item text-danger" href="#" id="logoutBtn">Logout</a></li>
               </ul>
             </li>
           </ul>
+
+          <!-- Optimized Search Form Inside Collapse -->
+          <form class="d-flex search-form-responsive mt-3 mt-xl-0" action="Discover.html" method="GET">
+            <div class="input-group">
+              <input class="form-control" type="search" name="q" placeholder="Search novels..." aria-label="Search" />
+              <button class="btn btn-search" type="submit">
+                <i class="bi bi-search"></i>
+              </button>
+            </div>
+          </form>
         </div>
       </div>
     </nav>
-
-    <div class="collapse navbar-collapse show" id="navbarrBasic">
-      <form class="d-flex search-form-responsive search-bar-custom px-3 mt-2">
-        <input
-          class="form-control me-2"
-          type="search"
-          placeholder="Novels / Authors"
-          aria-label="Search"
-        />
-        <button class="btn btn-outline-success" type="submit">
-          <i class="bi bi-search"></i>
-        </button>
-      </form>
-    </div>
     <!-- =============== Page items container ==================== -->
     <div class="container mt-5">
       <h3 class="mb-4">Featured Novels</h3>
@@ -309,82 +271,77 @@
       </div>
     </div>
 
-    <section class="py-5 pb-0 border-top border-secondary" id="contactSection">
-      <div class="container-fluid">
-        <div class="row justify-content-center">
-          <div class="col-11">
-            <div
-              class="card bg-dark text-white border-secondary p-4 shadow-lg"
-              style="border-radius: 1.5rem"
-            >
-              <div class="row g-4 align-items-center">
-                <div class="col-md-5">
-                  <h2 class="display-6 fw-bold text-warning">Contact Us</h2>
-                  <p class="text-white-50">
-                    Have a question about a novel or want to join our author
-                    program? Send us a message and we'll get back to you within
-                    24 hours.
-                  </p>
-                  <ul class="list-unstyled mt-4">
-                    <li class="mb-2">
-                      <i class="bi bi-envelope-fill me-2 text-warning"></i>
-                      support@nextpage.com
-                    </li>
-                    <li>
-                      <i class="bi bi-geo-alt-fill me-2 text-warning"></i> 123
-                      WebNovel St, Fiction City
-                    </li>
-                  </ul>
-                </div>
 
-                <div class="col-md-7">
-                  <form id="miniContactForm">
-                    <div class="row g-3">
-                      <div class="col-md-6">
-                        <input
-                          type="text"
-                          class="form-control bg-secondary text-white border-0 py-3"
-                          placeholder="Name"
-                          required
-                        />
-                      </div>
-                      <div class="col-md-6">
-                        <input
-                          type="email"
-                          class="form-control bg-secondary text-white border-0 py-3"
-                          placeholder="Email"
-                          required
-                        />
-                      </div>
-                      <div class="col-12">
-                        <textarea
-                          class="form-control bg-secondary text-white border-0 py-3"
-                          rows="4"
-                          placeholder="Your Message..."
-                          required
-                        ></textarea>
-                      </div>
-                      <div class="col-12">
-                        <button
-                          type="submit"
-                          class="btn btn-warning w-100 fw-bold py-3 text-uppercase"
-                        >
-                          Send Message
-                        </button>
-                      </div>
+    <!-- =============== Contact Modal ==================== -->
+    <div class="modal fade" id="contactModal" tabindex="-1" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content contact-modal-content">
+            <button type="button" class="contact-modal-close btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            <div class="modal-body p-4">
+            <div class="row g-4 align-items-center">
+              <div class="col-md-5">
+                <h2 class="display-6 fw-bold text-warning">Contact Us</h2>
+                <p class="text-white-50">
+                  Have a question about a novel or want to join our author
+                  program? Send us a message and we'll get back to you within
+                  24 hours.
+                </p>
+                <ul class="list-unstyled mt-4">
+                  <li class="mb-2">
+                    <i class="bi bi-envelope-fill me-2 text-warning"></i>
+                    support@nextpage.com
+                  </li>
+                  <li>
+                    <i class="bi bi-geo-alt-fill me-2 text-warning"></i>
+                    123 WebNovel St, Fiction City
+                  </li>
+                </ul>
+              </div>
+              <div class="col-md-7">
+                <form id="miniContactForm">
+                  <div class="row g-3">
+                    <div class="col-md-6">
+                      <input
+                        type="text"
+                        class="form-control bg-secondary text-white border-0 py-3"
+                        placeholder="Name"
+                        required
+                      />
                     </div>
-                  </form>
-                  <div
-                    id="miniContactStatus"
-                    class="mt-3 text-center small"
-                  ></div>
-                </div>
+                    <div class="col-md-6">
+                      <input
+                        type="email"
+                        class="form-control bg-secondary text-white border-0 py-3"
+                        placeholder="Email"
+                        required
+                      />
+                    </div>
+                    <div class="col-12">
+                      <textarea
+                        class="form-control bg-secondary text-white border-0 py-3"
+                        rows="4"
+                        placeholder="Your Message..."
+                        required
+                      ></textarea>
+                    </div>
+                    <div class="col-12">
+                      <button
+                        type="submit"
+                        class="btn btn-warning w-100 fw-bold py-3 text-uppercase"
+                      >
+                        Send Message
+                      </button>
+                    </div>
+                  </div>
+                </form>
+                <div id="miniContactStatus" class="mt-3 text-center small"></div>
               </div>
             </div>
           </div>
         </div>
       </div>
-    </section>
+    </div>
+
 
     <footer class="footer-section pt-5">
       <div class="container">
