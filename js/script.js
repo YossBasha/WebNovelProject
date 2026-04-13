@@ -1,13 +1,15 @@
-// ==================================================== 
+// ====================================================
 // NextPage Global Script
-// ==================================================== 
+// ====================================================
 
-const API_URL = "http://localhost:3000";
+const API_URL = "https://premedical-dismally-tillie.ngrok-free.dev";
 
 // Toggles navbar elements based on login status
 function checkAuthState() {
-  const token = localStorage.getItem("userToken") || sessionStorage.getItem("userToken");
-  const username = localStorage.getItem("userName") || sessionStorage.getItem("userName");
+  const token =
+    localStorage.getItem("userToken") || sessionStorage.getItem("userToken");
+  const username =
+    localStorage.getItem("userName") || sessionStorage.getItem("userName");
 
   const signInItem = document.getElementById("signInItem");
   const registerItem = document.getElementById("registerItem");
@@ -35,7 +37,9 @@ function checkAuthState() {
 function showLoginModal() {
   const loginModalEl = document.getElementById("loginModal");
   if (!loginModalEl) return;
-  const loginModal = bootstrap.Modal.getInstance(loginModalEl) || new bootstrap.Modal(loginModalEl);
+  const loginModal =
+    bootstrap.Modal.getInstance(loginModalEl) ||
+    new bootstrap.Modal(loginModalEl);
   loginModal.show();
 }
 
@@ -44,13 +48,13 @@ function scrollSlider(sliderId, direction) {
   const slider = document.getElementById(sliderId);
   if (!slider) return;
 
-  const firstCard = slider.querySelector('.novel-link-wrapper');
+  const firstCard = slider.querySelector(".novel-link-wrapper");
   const cardWidth = firstCard ? firstCard.offsetWidth : 220;
   const gap = parseInt(window.getComputedStyle(slider).gap) || 16;
   const scrollAmount = cardWidth + gap;
 
   // RTL handling: In RTL, progress (Next) is towards negative scrollLeft.
-  const isRTL = document.documentElement.dir === 'rtl';
+  const isRTL = document.documentElement.dir === "rtl";
   const effectiveDirection = isRTL ? -direction : direction;
 
   const startScroll = slider.scrollLeft;
@@ -70,9 +74,9 @@ function scrollSlider(sliderId, direction) {
   window.requestAnimationFrame(animateScroll);
 }
 
-// ==================================================== 
+// ====================================================
 // Event Listeners
-// ==================================================== 
+// ====================================================
 
 document.addEventListener("DOMContentLoaded", () => {
   checkAuthState();
@@ -80,8 +84,8 @@ document.addEventListener("DOMContentLoaded", () => {
   // --- Dynamic Navbar Visibility ---
   const currentPath = window.location.pathname;
   const currentPage = currentPath.split("/").pop() || "index.html";
-  
-  document.querySelectorAll(".navbar-nav .nav-link").forEach(link => {
+
+  document.querySelectorAll(".navbar-nav .nav-link").forEach((link) => {
     const href = link.getAttribute("href");
     if (href && (href === currentPage || href === `./${currentPage}`)) {
       // Hide the parent li of the current page link
@@ -93,7 +97,9 @@ document.addEventListener("DOMContentLoaded", () => {
   const personalLibraryLink = document.getElementById("personalLibraryLink");
   if (personalLibraryLink) {
     personalLibraryLink.addEventListener("click", (e) => {
-      const token = localStorage.getItem("userToken") || sessionStorage.getItem("userToken");
+      const token =
+        localStorage.getItem("userToken") ||
+        sessionStorage.getItem("userToken");
       if (!token) {
         e.preventDefault();
         showLoginModal();
@@ -142,7 +148,8 @@ document.addEventListener("DOMContentLoaded", () => {
       const username = document.getElementById("regUsername").value;
       const email = document.getElementById("regEmail").value;
       const password = document.getElementById("regPassword").value;
-      const confirmPassword = document.getElementById("regConfirmPassword").value;
+      const confirmPassword =
+        document.getElementById("regConfirmPassword").value;
       const messageDiv = document.getElementById("registerMessage");
 
       if (password !== confirmPassword) {
@@ -177,7 +184,7 @@ document.addEventListener("DOMContentLoaded", () => {
   if (logoutBtn) {
     logoutBtn.addEventListener("click", (e) => {
       e.preventDefault();
-      ["userToken", "userName"].forEach(key => {
+      ["userToken", "userName"].forEach((key) => {
         localStorage.removeItem(key);
         sessionStorage.removeItem(key);
       });
@@ -190,13 +197,17 @@ document.addEventListener("DOMContentLoaded", () => {
     const btn = e.target.closest(".scroll-btn");
     if (btn) {
       const direction = btn.classList.contains("left") ? -1 : 1;
-      const sliderId = btn.getAttribute("data-slider") || (btn.previousElementSibling?.id || btn.nextElementSibling?.id);
-      
+      const sliderId =
+        btn.getAttribute("data-slider") ||
+        btn.previousElementSibling?.id ||
+        btn.nextElementSibling?.id;
+
       // Special logic for index.html button structure
-      const actualSliderId = btn.parentNode.querySelector('.featured-novels')?.id || sliderId;
+      const actualSliderId =
+        btn.parentNode.querySelector(".featured-novels")?.id || sliderId;
       if (actualSliderId) scrollSlider(actualSliderId, direction);
     }
-    
+
     // Support for the secondary slider buttons in index.html
     const customNavBtn = e.target.closest(".custom-nav-btn");
     if (customNavBtn) {
@@ -210,9 +221,9 @@ document.addEventListener("DOMContentLoaded", () => {
   initScrollReveal();
 });
 
-// ==================================================== 
+// ====================================================
 // UI Enhancements Helpers
-// ==================================================== 
+// ====================================================
 
 function initToasts() {
   if (!document.getElementById("toastContainer")) {
@@ -228,10 +239,11 @@ function showToast(message, type = "success") {
 
   const toast = document.createElement("div");
   toast.className = `np-toast ${type}`;
-  
-  const icon = type === "success" ? "bi-check-circle-fill" : "bi-exclamation-circle-fill";
+
+  const icon =
+    type === "success" ? "bi-check-circle-fill" : "bi-exclamation-circle-fill";
   toast.innerHTML = `<i class="bi ${icon}"></i> <span>${message}</span>`;
-  
+
   container.appendChild(toast);
 
   // Remove toast after animation completes
@@ -243,11 +255,11 @@ function showToast(message, type = "success") {
 function initScrollReveal() {
   const observerOptions = {
     threshold: 0.1,
-    rootMargin: "0px 0px -50px 0px"
+    rootMargin: "0px 0px -50px 0px",
   };
 
   const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
+    entries.forEach((entry) => {
       if (entry.isIntersecting) {
         entry.target.classList.add("active");
         observer.unobserve(entry.target); // Reveal only once
@@ -255,9 +267,10 @@ function initScrollReveal() {
     });
   }, observerOptions);
 
-  document.querySelectorAll(".reveal-on-scroll").forEach(el => observer.observe(el));
+  document
+    .querySelectorAll(".reveal-on-scroll")
+    .forEach((el) => observer.observe(el));
 }
 
 // Global exposure
 window.showToast = showToast;
-
