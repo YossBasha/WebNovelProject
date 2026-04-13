@@ -74,7 +74,7 @@ async function renderDiscoverPage() {
       }
 
       // No need for local filtering anymore since the backend handles category/status and search
-      const filtered = novelsToRender;
+      const filtered = typeof applyUserPreferences !== "undefined" ? applyUserPreferences(novelsToRender) : novelsToRender;
 
       if (filtered.length === 0 && currentPage === 0) {
         noResultsMsg.classList.remove("d-none");

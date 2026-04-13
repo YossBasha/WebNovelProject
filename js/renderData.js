@@ -88,6 +88,38 @@ function getTranslation(obj, field) {
 window.getActiveLang = getActiveLang;
 window.getTranslation = getTranslation;
 
+// =============== Preference Filtering ===================
+
+function applyUserPreferences(novels) {
+  const hideAdult = localStorage.getItem("hideAdult") === "true";
+  const prefGenre = localStorage.getItem("preferredGenre"); // 'romance' or 'fantasy'
+  
+  let filtered = novels;
+
+  // 1. Hide Adult Content
+  if (hideAdult) {
+    const adultCats = ["cat_adult", "cat_erotica", "cat_mature", "cat_smut", "cat_r18", "cat_18_"];
+    filtered = filtered.filter(n => {
+      const cats = n.categories || [];
+      return !cats.some(c => adultCats.includes(c.toLowerCase()));
+    });
+  }
+
+  // 2. Prioritize Genre
+  if (prefGenre) {
+    const targetCat = `cat_${prefGenre}`;
+    filtered = [...filtered].sort((a, b) => {
+      const aHas = (a.categories || []).includes(targetCat);
+      const bHas = (b.categories || []).includes(targetCat);
+      if (aHas && !bHas) return -1;
+      if (!aHas && bHas) return 1;
+      return 0;
+    });
+  }
+
+  return filtered;
+}
+
 // =============== Novel Card HTML ===================
 
 function createNovelCard(novel, categories = []) {
@@ -142,8 +174,9 @@ async function renderAllData() {
 
   if (novelSlider) {
     Promise.all([categoriesPromise, fetchFeatured()]).then(([categories, featured]) => {
-      novelSlider.innerHTML = featured.length > 0
-        ? featured.map((n) => createNovelCard(n, categories)).join("")
+      const processed = applyUserPreferences(featured);
+      novelSlider.innerHTML = processed.length > 0
+        ? processed.map((n) => createNovelCard(n, categories)).join("")
         : "<p class='text-white-50'>No featured novels available.</p>";
     }).catch(err => {
       console.error("Featured Slider failed:", err);
@@ -153,8 +186,9 @@ async function renderAllData() {
 
   if (bestSellerSlider) {
     Promise.all([categoriesPromise, fetchBestsellers()]).then(([categories, bestSellers]) => {
-      bestSellerSlider.innerHTML = bestSellers.length > 0
-        ? bestSellers.map((n) => createNovelCard(n, categories)).join("")
+      const processed = applyUserPreferences(bestSellers);
+      bestSellerSlider.innerHTML = processed.length > 0
+        ? processed.map((n) => createNovelCard(n, categories)).join("")
         : "<p class='text-white-50'>No bestsellers available.</p>";
     }).catch(err => {
       console.error("Bestsellers Slider failed:", err);

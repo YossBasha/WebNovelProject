@@ -90,7 +90,10 @@ const translations = {
     no_reviews_yet: "No reviews yet. Be the first to share your thoughts!",
     placeholder_review: "What did you think of this story?",
     btn_submit_review: "Submit Review",
-    btn_load_more: "Load More"
+    btn_load_more: "Load More",
+    settings_safety: "Content Safety",
+    hide_adult_title: "Hide Adult Content",
+    hide_adult_desc: "Filter out mature and erotica novels"
   },
   ar: {
     nav_library: "المكتبة الشخصية",
@@ -183,7 +186,10 @@ const translations = {
     no_reviews_yet: "لا توجد مراجعات بعد. كن أول من يشارك أفكاره!",
     placeholder_review: "ما رأيك في هذه القصة؟",
     btn_submit_review: "إرسال المراجعة",
-    btn_load_more: "تحميل المزيد"
+    btn_load_more: "تحميل المزيد",
+    settings_safety: "سلامة المحتوى",
+    hide_adult_title: "إخفاء محتوى البالغين",
+    hide_adult_desc: "تصفية الروايات الناضجة والإباحية"
   },
   es: {
     nav_library: "Biblioteca Personal",
@@ -276,7 +282,10 @@ const translations = {
     no_reviews_yet: "Aún no hay reseñas. ¡Sé el primero en compartir tus pensamientos!",
     placeholder_review: "¿Qué te ha parecido esta historia?",
     btn_submit_review: "Enviar reseña",
-    btn_load_more: "Cargar más"
+    btn_load_more: "Cargar más",
+    settings_safety: "Seguridad de Contenido",
+    hide_adult_title: "Ocultar contenido para adultos",
+    hide_adult_desc: "Filtrar novelas maduras y eróticas"
   }
 };
 
@@ -300,6 +309,16 @@ function changeLanguage(lang) {
   document.querySelectorAll(".lang-option").forEach((opt) => {
     opt.classList.toggle("active", opt.getAttribute("data-lang") === lang);
   });
+
+  // Highlight other preferences
+  const currentGenre = localStorage.getItem("preferredGenre");
+  document.querySelectorAll(".genre-option").forEach((opt) => {
+    opt.classList.toggle("active", opt.getAttribute("data-genre") === currentGenre);
+  });
+
+  const hideAdult = localStorage.getItem("hideAdult") === "true";
+  const safetyToggle = document.getElementById("hideAdultToggle");
+  if(safetyToggle) safetyToggle.classList.toggle("active", hideAdult);
 
   // Re-render data if render functions exist
   if (window.renderAllData) window.renderAllData();
@@ -342,10 +361,31 @@ document.addEventListener("DOMContentLoaded", () => {
       changeLanguage(lang);
     }
     
-    // Genre preference toggle simulation
+    // Genre preference toggle (Single Selection)
     const genreOpt = e.target.closest(".genre-option");
     if (genreOpt) {
-        genreOpt.classList.toggle("active");
+        const genre = genreOpt.getAttribute("data-genre");
+        const alreadyActive = genreOpt.classList.contains("active");
+        
+        // Clear all others
+        document.querySelectorAll(".genre-option").forEach(opt => opt.classList.remove("active"));
+        
+        if (!alreadyActive) {
+            genreOpt.classList.add("active");
+            localStorage.setItem("preferredGenre", genre);
+        } else {
+            localStorage.removeItem("preferredGenre");
+        }
+        if (window.renderAllData) window.renderAllData();
+    }
+
+    // Adult content toggle
+    const safetyOpt = e.target.closest(".safety-option");
+    if (safetyOpt) {
+        safetyOpt.classList.toggle("active");
+        const isActive = safetyOpt.classList.contains("active");
+        localStorage.setItem("hideAdult", isActive);
+        if (window.renderAllData) window.renderAllData();
     }
   });
 });
