@@ -83,10 +83,13 @@
       <div class="d-flex justify-content-between align-items-center flex-wrap gap-3 mb-5">
         <h2 class="text-white fw-bold mb-0" data-i18n="nav_authors">Authors</h2>
         <form class="d-flex" action="authors.html" method="GET">
-          <div class="input-group text-search-group">
-            <input class="form-control bg-dark text-white border-secondary" type="search" name="q" placeholder="Search authors..." aria-label="Search" />
-            <button class="btn btn-outline-secondary" type="submit">
+          <div class="input-group text-search-group glass-effect rounded-pill overflow-hidden">
+            <span class="input-group-text bg-transparent border-0 text-white-50 ps-3">
               <i class="bi bi-search"></i>
+            </span>
+            <input class="form-control glass-input py-2 ps-0" type="search" name="q" placeholder="Search authors..." aria-label="Search" data-i18n="search_author_placeholder" />
+            <button class="btn btn-primary px-4 fw-bold" type="submit">
+              Search
             </button>
           </div>
         </form>
