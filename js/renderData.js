@@ -6,6 +6,13 @@
 window.__cache = window.__cache || {};
 
 async function safeFetch(url, options = {}, retries = 3) {
+  // --- NGROK BYPASS FIX ---
+  if (!options.headers) {
+    options.headers = {};
+  }
+  options.headers["ngrok-skip-browser-warning"] = "69420";
+  // ------------------------
+
   try {
     const res = await fetch(url, options);
     if (!res.ok) throw new Error(`HTTP ${res.status}: ${res.statusText}`);
@@ -20,13 +27,22 @@ async function safeFetch(url, options = {}, retries = 3) {
   }
 }
 
-async function fetchNovels(limit = 20, offset = 0, query = '', category = 'All', status = 'all', sort = 'popular') {
+async function fetchNovels(
+  limit = 20,
+  offset = 0,
+  query = "",
+  category = "All",
+  status = "all",
+  sort = "popular",
+) {
   let url = `${API_BASE_URL}/api/novels?limit=${limit}&offset=${offset}`;
   if (query) url += `&q=${encodeURIComponent(query)}`;
-  if (category && category !== 'All') url += `&category=${encodeURIComponent(category)}`;
-  if (status && status !== 'all') url += `&status=${encodeURIComponent(status)}`;
-  if (sort && sort !== 'popular') url += `&sort=${encodeURIComponent(sort)}`;
-  
+  if (category && category !== "All")
+    url += `&category=${encodeURIComponent(category)}`;
+  if (status && status !== "all")
+    url += `&status=${encodeURIComponent(status)}`;
+  if (sort && sort !== "popular") url += `&sort=${encodeURIComponent(sort)}`;
+
   return await safeFetch(url);
 }
 
@@ -38,7 +54,7 @@ async function fetchBestsellers() {
   return await safeFetch(`${API_BASE_URL}/api/novels/bestsellers`);
 }
 
-async function fetchAuthors(limit = 24, offset = 0, query = '') {
+async function fetchAuthors(limit = 24, offset = 0, query = "") {
   let url = `${API_BASE_URL}/api/authors?limit=${limit}&offset=${offset}`;
   if (query) url += `&q=${encodeURIComponent(query)}`;
   return await safeFetch(url);
@@ -79,7 +95,9 @@ function createNovelCard(novel, categories = []) {
   const authorName = novel.authorName || "Unknown Author";
   const description = novel.description || novel.en?.description || "";
   const imgSrc = novel.imgSrc
-    ? (novel.imgSrc.startsWith("http") ? novel.imgSrc : `${API_BASE_URL}/${novel.imgSrc}`)
+    ? novel.imgSrc.startsWith("http")
+      ? novel.imgSrc
+      : `${API_BASE_URL}/${novel.imgSrc}`
     : "";
 
   return `
@@ -119,9 +137,10 @@ async function renderAllData() {
     const promises = [fetchCategories()];
     if (novelSlider) promises.push(fetchFeatured());
     if (bestSellerSlider) promises.push(fetchBestsellers());
-    
+
     // We only need some novels for category covers, fetch a randomly shuffled batch to ensure diverse covers
-    if (categoryContainer) promises.push(fetchNovels(100, 0, "", "All", "all", "random")); 
+    if (categoryContainer)
+      promises.push(fetchNovels(100, 0, "", "All", "all", "random"));
 
     const results = await Promise.all(promises);
     const categories = results[0] || [];
@@ -131,43 +150,59 @@ async function renderAllData() {
     const randomNovels = categoryContainer ? results[idx++] : [];
 
     if (novelSlider) {
-      novelSlider.innerHTML = featured.length > 0 
-        ? featured.map(n => createNovelCard(n, categories)).join("") 
-        : "<p class='text-white-50'>No featured novels available.</p>";
+      novelSlider.innerHTML =
+        featured.length > 0
+          ? featured.map((n) => createNovelCard(n, categories)).join("")
+          : "<p class='text-white-50'>No featured novels available.</p>";
     }
 
     if (bestSellerSlider) {
-      bestSellerSlider.innerHTML = bestSellers.length > 0
-        ? bestSellers.map(n => createNovelCard(n, categories)).join("")
-        : "<p class='text-white-50'>No bestsellers available.</p>";
+      bestSellerSlider.innerHTML =
+        bestSellers.length > 0
+          ? bestSellers.map((n) => createNovelCard(n, categories)).join("")
+          : "<p class='text-white-50'>No bestsellers available.</p>";
     }
 
     if (categoryContainer) {
       // Filter down to famous general categories for the homepage
       const popularCategoryIds = [
-        "cat_fiction", "cat_fantasy", "cat_romance", "cat_mystery", 
-        "cat_thriller", "cat_science_fiction", "cat_historical_fiction", 
-        "cat_young_adult", "cat_classics", "cat_nonfiction", "cat_crime"
+        "cat_fiction",
+        "cat_fantasy",
+        "cat_romance",
+        "cat_mystery",
+        "cat_thriller",
+        "cat_science_fiction",
+        "cat_historical_fiction",
+        "cat_young_adult",
+        "cat_classics",
+        "cat_nonfiction",
+        "cat_crime",
       ];
-      const displayCategories = categories.filter(cat => popularCategoryIds.includes(cat.id)).slice(0, 12);
-      
-      categoryContainer.innerHTML = displayCategories.map(cat => {
-        const catName = cat[lang] || cat.en;
-        
-        // Find a novel belonging to this category to use as cover
-        const catNovels = randomNovels.filter(n => (n.categories || []).includes(cat.id));
-        let coverImage = `${API_BASE_URL}/${cat.image}`;
-        
-        if (catNovels.length > 0) {
-            const randomNovel = catNovels[Math.floor(Math.random() * catNovels.length)];
-            coverImage = randomNovel.imgSrc.startsWith("http") 
-              ? randomNovel.imgSrc 
-              : `${API_BASE_URL}/${randomNovel.imgSrc}`;
-        } else if (cat.image && cat.image.startsWith("http")) {
-            coverImage = cat.image; // fallback to categorical image if valid URL
-        }
+      const displayCategories = categories
+        .filter((cat) => popularCategoryIds.includes(cat.id))
+        .slice(0, 12);
 
-        return `
+      categoryContainer.innerHTML = displayCategories
+        .map((cat) => {
+          const catName = cat[lang] || cat.en;
+
+          // Find a novel belonging to this category to use as cover
+          const catNovels = randomNovels.filter((n) =>
+            (n.categories || []).includes(cat.id),
+          );
+          let coverImage = `${API_BASE_URL}/${cat.image}`;
+
+          if (catNovels.length > 0) {
+            const randomNovel =
+              catNovels[Math.floor(Math.random() * catNovels.length)];
+            coverImage = randomNovel.imgSrc.startsWith("http")
+              ? randomNovel.imgSrc
+              : `${API_BASE_URL}/${randomNovel.imgSrc}`;
+          } else if (cat.image && cat.image.startsWith("http")) {
+            coverImage = cat.image; // fallback to categorical image if valid URL
+          }
+
+          return `
         <div class="col-6 col-md-4 col-lg-2 mb-3">
           <a href="discover.html?category=${encodeURIComponent(cat.id)}" class="text-decoration-none">
             <div class="card category-card border-0 shadow-sm overflow-hidden" style="height: 140px; cursor: pointer; transition: transform 0.2s; border-radius: 0.75rem; background-color: #1a1a1a;">
@@ -180,9 +215,9 @@ async function renderAllData() {
             </div>
           </a>
         </div>`;
-      }).join("");
+        })
+        .join("");
     }
-
   } catch (err) {
     console.error("Failed to load data from API:", err);
   }
