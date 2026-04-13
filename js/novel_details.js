@@ -128,6 +128,19 @@ async function renderNovelDetails() {
       newBtn.removeAttribute("data-bs-toggle");
       newBtn.removeAttribute("data-bs-target");
 
+      // Handle Read Button (if purchased)
+      let readBtn = document.querySelector(".read-btn");
+      if (status.isPurchased) {
+        if (!readBtn) {
+          readBtn = document.createElement("button");
+          readBtn.className = "btn read-btn ms-2";
+          readBtn.innerText = translations[lang].btn_read || "Read Now";
+          newBtn.after(readBtn);
+        }
+      } else {
+        if (readBtn) readBtn.remove();
+      }
+
       if (status.inLibrary) {
         newBtn.innerText = { en: "Remove from library", ar: "إزالة من المكتبة", es: "Eliminar de la biblioteca" }[lang] || "Remove from library";
         newBtn.classList.remove("btn-warning", "btn-primary", "btn-success");

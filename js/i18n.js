@@ -93,7 +93,8 @@ const translations = {
     btn_load_more: "Load More",
     settings_safety: "Content Safety",
     hide_adult_title: "Hide Adult Content",
-    hide_adult_desc: "Filter out mature and erotica novels"
+    hide_adult_desc: "Filter out mature and erotica novels",
+    btn_read: "Read Now"
   },
   ar: {
     nav_library: "المكتبة الشخصية",
@@ -189,7 +190,8 @@ const translations = {
     btn_load_more: "تحميل المزيد",
     settings_safety: "سلامة المحتوى",
     hide_adult_title: "إخفاء محتوى البالغين",
-    hide_adult_desc: "تصفية الروايات الناضجة والإباحية"
+    hide_adult_desc: "تصفية الروايات الناضجة والإباحية",
+    btn_read: "اقرأ الآن"
   },
   es: {
     nav_library: "Biblioteca Personal",
@@ -285,7 +287,8 @@ const translations = {
     btn_load_more: "Cargar más",
     settings_safety: "Seguridad de Contenido",
     hide_adult_title: "Ocultar contenido para adultos",
-    hide_adult_desc: "Filtrar novelas maduras y eróticas"
+    hide_adult_desc: "Filtrar novelas maduras y eróticas",
+    btn_read: "Leer ahora"
   }
 };
 

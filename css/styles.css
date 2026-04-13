@@ -907,3 +907,25 @@ h3 {
   background: transparent !important;
 }
 
+/* =========================================
+   READ BUTTON
+   ========================================= */
+.read-btn {
+  background: linear-gradient(90deg, #00d4ff, #0083fe) !important;
+  color: #fff !important;
+  border: none !important;
+  padding: 0.7rem 2.25rem !important;
+  border-radius: 50px !important;
+  font-weight: 700 !important;
+  font-size: 0.9rem !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.05em !important;
+  cursor: pointer;
+  transition: transform 0.25s ease, box-shadow 0.25s ease !important;
+}
+
+.read-btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 24px rgba(0, 212, 255, 0.4);
+}
+
