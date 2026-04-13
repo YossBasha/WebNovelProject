@@ -3,7 +3,7 @@ async function renderDiscoverPage() {
   let activeCategory = params.get("category") || "All";
   let activeStatus = "all";
   const initialQuery = params.get("q") || "";
-  let currentSort = "popular";
+  let currentSort = "random";
 
   const discoverGrid = document.getElementById("discoverGrid");
   const searchInput = document.getElementById("discoverSearch");
@@ -209,6 +209,13 @@ async function renderDiscoverPage() {
       loadMore(true);
     });
   });
+
+  // Initialize correct label on load based on default currentSort
+  if (activeSortLabel) {
+    const i18n = typeof translations !== "undefined" ? translations[lang] : {};
+    const sortKeys = { random: "sort_random", recently: "sort_recently", popular: "sort_popular", rating: "sort_rating" };
+    activeSortLabel.textContent = `${i18n["sort_by"] || "Sort By"}: ${i18n[sortKeys[currentSort]] || currentSort}`;
+  }
 
   // Search Logic
   let debounceTimeout;

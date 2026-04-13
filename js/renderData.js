@@ -103,7 +103,7 @@ function createNovelCard(novel, categories = []) {
   return `
   <a href="novel_details.html?id=${novel.id}" class="text-decoration-none text-dark novel-link-wrapper">
     <div class="card h-100 shadow-sm border-secondary">
-      <img src="${imgSrc}" class="card-img-top" alt="${title}" loading="lazy" style="height: 280px; object-fit: cover;" />
+      <img src="${imgSrc}" class="card-img-top" alt="${title}" style="height: 280px; object-fit: cover;" />
       <div class="card-body d-flex flex-column">
         <h5 class="card-title fw-bold mb-1">${title}</h5>
         <p class="text-muted small mb-2"><i class="bi bi-pen"></i> ${authorName}</p>
@@ -127,43 +127,43 @@ window.createNovelCard = createNovelCard;
 async function renderAllData() {
   const lang = getActiveLang();
 
+  // Only load these specifically for the home page to avoid pulling 16k novels
+  const novelSlider = document.getElementById("novelSlider");
+  const bestSellerSlider = document.getElementById("bestSellerSlider");
+  const categoryContainer = document.getElementById("categoryContainer");
+
+  // Fetch categories immediately, as they might be needed anywhere
+  let categoriesPromise = Promise.resolve([]);
   try {
-    // Only load these specifically for the home page to avoid pulling 16k novels
-    const novelSlider = document.getElementById("novelSlider");
-    const bestSellerSlider = document.getElementById("bestSellerSlider");
-    const categoryContainer = document.getElementById("categoryContainer");
+    categoriesPromise = fetchCategories();
+  } catch (err) {
+    console.error("Failed to start categories fetch", err);
+  }
 
-    // Fetch in parallel what is needed
-    const promises = [fetchCategories()];
-    if (novelSlider) promises.push(fetchFeatured());
-    if (bestSellerSlider) promises.push(fetchBestsellers());
+  if (novelSlider) {
+    Promise.all([categoriesPromise, fetchFeatured()]).then(([categories, featured]) => {
+      novelSlider.innerHTML = featured.length > 0
+        ? featured.map((n) => createNovelCard(n, categories)).join("")
+        : "<p class='text-white-50'>No featured novels available.</p>";
+    }).catch(err => {
+      console.error("Featured Slider failed:", err);
+      novelSlider.innerHTML = "<p class='text-danger'>Failed to load featured novels.</p>";
+    });
+  }
 
-    // We only need some novels for category covers, fetch a randomly shuffled batch to ensure diverse covers
-    if (categoryContainer)
-      promises.push(fetchNovels(100, 0, "", "All", "all", "random"));
+  if (bestSellerSlider) {
+    Promise.all([categoriesPromise, fetchBestsellers()]).then(([categories, bestSellers]) => {
+      bestSellerSlider.innerHTML = bestSellers.length > 0
+        ? bestSellers.map((n) => createNovelCard(n, categories)).join("")
+        : "<p class='text-white-50'>No bestsellers available.</p>";
+    }).catch(err => {
+      console.error("Bestsellers Slider failed:", err);
+      bestSellerSlider.innerHTML = "<p class='text-danger'>Failed to load bestsellers.</p>";
+    });
+  }
 
-    const results = await Promise.all(promises);
-    const categories = results[0] || [];
-    let idx = 1;
-    const featured = novelSlider ? results[idx++] : [];
-    const bestSellers = bestSellerSlider ? results[idx++] : [];
-    const randomNovels = categoryContainer ? results[idx++] : [];
-
-    if (novelSlider) {
-      novelSlider.innerHTML =
-        featured.length > 0
-          ? featured.map((n) => createNovelCard(n, categories)).join("")
-          : "<p class='text-white-50'>No featured novels available.</p>";
-    }
-
-    if (bestSellerSlider) {
-      bestSellerSlider.innerHTML =
-        bestSellers.length > 0
-          ? bestSellers.map((n) => createNovelCard(n, categories)).join("")
-          : "<p class='text-white-50'>No bestsellers available.</p>";
-    }
-
-    if (categoryContainer) {
+  if (categoryContainer) {
+    Promise.all([categoriesPromise, fetchNovels(100, 0, "", "All", "all", "random")]).then(([categories, randomNovels]) => {
       // Filter down to famous general categories for the homepage
       const popularCategoryIds = [
         "cat_fiction",
@@ -217,9 +217,10 @@ async function renderAllData() {
         </div>`;
         })
         .join("");
-    }
-  } catch (err) {
-    console.error("Failed to load data from API:", err);
+    }).catch(err => {
+      console.error("Categories Container failed:", err);
+      categoryContainer.innerHTML = "<p class='text-danger'>Failed to load categories.</p>";
+    });
   }
 }
 
