@@ -18,13 +18,6 @@ async function renderAuthorDetails() {
 
   document.title = `${author.name} - NextPage`;
 
-  const imgSrc = author.image
-    ? (author.image.startsWith("http") ? author.image : `${API_BASE_URL}/${author.image}`)
-    : "";
-
-  const avatarEl = document.getElementById("authorAvatar");
-  if (avatarEl) { avatarEl.src = imgSrc; avatarEl.alt = author.name; }
-
   const nameEl = document.getElementById("authorName");
   if (nameEl) nameEl.textContent = author.name;
 
@@ -41,7 +34,15 @@ async function renderAuthorDetails() {
   if (statNovels) statNovels.textContent = novels.length;
 
   const statViews = document.getElementById("statViews");
-  if (statViews) statViews.textContent = totalViews >= 1000 ? (totalViews / 1000).toFixed(1) + "k" : totalViews;
+  if (statViews) {
+    if (totalViews >= 1000000) {
+      statViews.textContent = (totalViews / 1000000).toFixed(1) + "m";
+    } else if (totalViews >= 1000) {
+      statViews.textContent = (totalViews / 1000).toFixed(1) + "k";
+    } else {
+      statViews.textContent = totalViews;
+    }
+  }
 
   const statRating = document.getElementById("statRating");
   if (statRating) statRating.textContent = avgRating;

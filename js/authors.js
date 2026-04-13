@@ -73,28 +73,17 @@ async function renderAuthors() {
           })
           .join("");
 
-        const imgSrc = author.image
-          ? author.image.startsWith("http")
-            ? author.image
-            : `${API_BASE_URL}/${author.image}`
-          : "imgs/placeholder.webp";
-
         return `
         <div class="col reveal-on-scroll">
           <a href="author_details.html?id=${author.id}" class="text-decoration-none">
-            <div class="author-card">
-              <div class="author-card-img-wrap">
-                <img src="${imgSrc}" onerror="this.src='./imgs/placeholder.webp'" alt="${author.name}" />
-                <div class="author-card-overlay">
-                  <span class="author-novel-count">
-                    <i class="bi bi-book"></i> ${novelCount} ${novelText}
-                  </span>
+            <div class="author-card h-100 p-3">
+              <div class="author-card-body text-center d-flex flex-column justify-content-center align-items-center h-100">
+                <h5 class="author-card-name text-truncate fs-4 mb-2 w-100">${author.name}</h5>
+                <div class="author-novel-count mb-3 text-warning fw-bold">
+                  <i class="bi bi-book"></i> ${novelCount} ${novelText}
                 </div>
-              </div>
-              <div class="author-card-body">
-                <h5 class="author-card-name text-truncate">${author.name}</h5>
-                <p class="author-card-bio" style="display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;">${author.bio || "An amazing author with a collection of great stories."}</p>
-                <div class="author-genre-tags">${genres}</div>
+                <p class="author-card-bio text-white-50" style="display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; line-height: 1.5; margin-bottom: 1rem;">${author.bio || "An amazing author with a collection of great stories."}</p>
+                <div class="author-genre-tags justify-content-center mt-auto">${genres}</div>
               </div>
             </div>
           </a>

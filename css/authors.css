@@ -21,43 +21,6 @@
   box-shadow: 0 14px 35px rgba(0, 0, 0, 0.5);
 }
 
-/* ── Portrait Image ── */
-.author-card-img-wrap {
-  position: relative;
-  width: 100%;
-  aspect-ratio: 1 / 1;
-  overflow: hidden;
-}
-
-.author-card-img-wrap img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  display: block;
-  transition: transform 0.4s ease;
-}
-
-.author-card:hover .author-card-img-wrap img {
-  transform: scale(1.06);
-}
-
-.author-card-overlay {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  padding: 0.6rem 0.75rem;
-  background: linear-gradient(to top, rgba(0, 0, 0, 0.75) 0%, transparent 100%);
-  display: flex;
-  justify-content: flex-end;
-}
-
-.author-novel-count {
-  font-size: 0.75rem;
-  font-weight: 600;
-  color: rgba(255, 255, 255, 0.85);
-}
-
 /* ── Card Body ── */
 .author-card-body {
   padding: 1rem;
