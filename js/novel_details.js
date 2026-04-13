@@ -115,6 +115,69 @@ async function renderNovelDetails() {
   if (buyBtn) {
     const token =
       localStorage.getItem("userToken") || sessionStorage.getItem("userToken");
+    
+    // Helper to update UI state based on library ownership
+    const setOwnershipUI = (status) => {
+      // Find the current button in DOM since it might have been cloned
+      const currentBtn = document.querySelector(".buy-btn");
+      if (!currentBtn) return;
+      
+      const newBtn = currentBtn.cloneNode(true);
+      currentBtn.parentNode.replaceChild(newBtn, currentBtn); // Replace it cleanly
+      
+      newBtn.removeAttribute("data-bs-toggle");
+      newBtn.removeAttribute("data-bs-target");
+
+      if (status.inLibrary) {
+        newBtn.innerText = { en: "Remove from library", ar: "إزالة من المكتبة", es: "Eliminar de la biblioteca" }[lang] || "Remove from library";
+        newBtn.classList.remove("btn-warning", "btn-primary", "btn-success");
+        newBtn.classList.add("btn-danger");
+        
+        newBtn.addEventListener("click", async () => {
+          try {
+            const delRes = await fetch(`${API_BASE_URL}/api/library/${novelId}`, {
+              method: 'DELETE',
+              headers: { 
+                 'Authorization': `Bearer ${token}`,
+                 'ngrok-skip-browser-warning': '69420'
+              }
+            });
+            if (delRes.ok) {
+              if (window.showToast) showToast({ en: "Removed from library", ar: "تمت الإزالة من المكتبة", es: "Eliminado de la biblioteca" }[lang] || "Removed from library", "success");
+              setOwnershipUI({ isPurchased: true, inLibrary: false });
+            }
+          } catch(err) { console.error(err); }
+        });
+      } else if (status.isPurchased && !status.inLibrary) {
+        newBtn.innerText = { en: "Add to library", ar: "أضف إلى المكتبة", es: "Añadir a la biblioteca" }[lang] || "Add to library";
+        newBtn.classList.remove("btn-danger", "btn-warning");
+        newBtn.classList.add("btn-success");
+        
+        newBtn.addEventListener("click", async () => {
+          try {
+            const addRes = await fetch(`${API_BASE_URL}/api/library/${novelId}`, {
+              method: 'POST',
+              headers: { 
+                 'Authorization': `Bearer ${token}`,
+                 'ngrok-skip-browser-warning': '69420'
+              }
+            });
+            if (addRes.ok) {
+              if (window.showToast) showToast({ en: "Added to library", ar: "تمت الإضافة للمكتبة", es: "Añadido a la biblioteca" }[lang] || "Added to library", "success");
+              setOwnershipUI({ isPurchased: true, inLibrary: true });
+            }
+          } catch(err) { console.error(err); }
+        });
+      } else {
+        // Not purchased
+        newBtn.innerText = { en: "Buy Now", ar: "اشتري الآن", es: "Comprar ahora" }[lang] || "Buy Now";
+        newBtn.classList.remove("btn-danger", "btn-success");
+        newBtn.classList.add("btn-warning");
+        newBtn.setAttribute("data-bs-toggle", "modal");
+        newBtn.setAttribute("data-bs-target", "#paymentModal");
+      }
+    };
+
     if (!token) {
       const loginText =
         {
@@ -125,6 +188,54 @@ async function renderNovelDetails() {
       buyBtn.innerText = loginText;
       buyBtn.setAttribute("data-bs-toggle", "modal");
       buyBtn.setAttribute("data-bs-target", "#loginModal");
+    } else {
+      // Check library status
+      try {
+        const checkRes = await fetch(`${API_BASE_URL}/api/library/check/${novelId}`, {
+          headers: { 
+            'Authorization': `Bearer ${token}`,
+            'ngrok-skip-browser-warning': '69420'
+          }
+        });
+        if (checkRes.ok) {
+          const status = await checkRes.json();
+          setOwnershipUI(status);
+        }
+      } catch(err) {
+        console.error("Library check failed", err);
+      }
+    }
+
+    // Payment Form Listener
+    const paymentForm = document.getElementById("paymentForm");
+    if (paymentForm && token) {
+      paymentForm.onsubmit = async (e) => {
+        e.preventDefault();
+        try {
+          const pmRes = await fetch(`${API_BASE_URL}/api/library/${novelId}`, {
+            method: 'POST',
+            headers: { 
+              'Authorization': `Bearer ${token}`,
+              'ngrok-skip-browser-warning': '69420'
+            }
+          });
+          if (pmRes.ok) {
+            const modalEl = document.getElementById('paymentModal');
+            const modalInstance = bootstrap.Modal.getInstance(modalEl) || new bootstrap.Modal(modalEl);
+            modalInstance.hide();
+            
+            // Clean up backdrop
+            document.body.classList.remove('modal-open');
+            const backdrop = document.querySelector('.modal-backdrop');
+            if (backdrop) backdrop.remove();
+
+            if (window.showToast) showToast({ en: "Added to library!", ar: "تمت الإضافة للمكتبة!", es: "¡Añadido a la biblioteca!" }[lang] || "Added to library!", "success");
+            setOwnershipUI(true);
+          } else {
+             if (window.showToast) showToast("Failed to purchase.", "error");
+          }
+        } catch(err) { console.error(err); }
+      };
     }
   }
 }
@@ -189,7 +300,39 @@ async function renderRelatedNovels(currentNovel, allCategories) {
   }
 }
 
-function initRatingSystem() {
+async function loadReviews(novelId) {
+  const reviewsList = document.getElementById("reviewsList");
+  if (!reviewsList) return;
+  const lang = typeof getActiveLang !== "undefined" ? getActiveLang() : "en";
+  try {
+    const res = await fetch(`${API_BASE_URL}/api/reviews/${novelId}`, {
+         headers: { 'ngrok-skip-browser-warning': '69420' }
+    });
+    if (res.ok) {
+      const reviews = await res.json();
+      if (reviews.length > 0) {
+        reviewsList.innerHTML = reviews.map(r => `
+          <div class="mb-3 border-bottom border-secondary pb-3">
+            <div class="d-flex justify-content-between align-items-center mb-2">
+              <span class="fw-bold text-white"><i class="bi bi-person-circle me-1"></i> ${r.Username}</span>
+              <span class="text-white-50 small">${new Date(r.DatePosted).toLocaleDateString()}</span>
+            </div>
+            <div class="text-warning small mb-2">
+              ${'<i class="bi bi-star-fill"></i>'.repeat(r.Rating)}${'<i class="bi bi-star"></i>'.repeat(5 - r.Rating)}
+            </div>
+            <p class="text-light mb-0" style="font-size: 0.95rem;">${r.Comment || ''}</p>
+          </div>
+        `).join("");
+      } else {
+        reviewsList.innerHTML = `<p class="text-white-50 small">${lang === 'ar' ? 'لا توجد مراجعات بعد.' : lang === 'es' ? 'No hay reseñas todavía.' : 'No reviews yet. Be the first to share your thoughts!'}</p>`;
+      }
+    }
+  } catch (err) {
+    console.error("Failed to load reviews", err);
+  }
+}
+
+function initRatingSystem(novelId) {
   const stars = document.querySelectorAll(".review-star");
   const submitBtn = document.getElementById("submitReviewBtn");
   let selectedRating = 0;
@@ -216,29 +359,74 @@ function initRatingSystem() {
   }
 
   if (submitBtn) {
-    submitBtn.addEventListener("click", () => {
-      if (selectedRating === 0) {
-        if (window.showToast) showToast("Please select a rating!", "error");
+    submitBtn.addEventListener("click", async () => {
+      const token = localStorage.getItem("userToken") || sessionStorage.getItem("userToken");
+      const lang = typeof getActiveLang !== "undefined" ? getActiveLang() : "en";
+      
+      if (!token) {
+        if (window.showToast) {
+           const loginMsg = { en: "Please login to review!", ar: "يرجى تسجيل الدخول للتقييم!", es: "¡Inicia sesión para opinar!" }[lang] || "Please login to review!";
+           showToast(loginMsg, "error");
+        }
+        
+        // Show login modal if it exists
+        const loginModalEl = document.getElementById("loginModal");
+        if (loginModalEl) {
+           const loginModal = bootstrap.Modal.getInstance(loginModalEl) || new bootstrap.Modal(loginModalEl);
+           loginModal.show();
+        }
         return;
       }
-      if (window.showToast) {
-        const msg =
-          {
-            en: "Review submitted!",
-            ar: "تم إرسال المراجعة!",
-            es: "¡Reseña enviada!",
-          }[getActiveLang()] || "Review submitted!";
-        showToast(msg, "success");
+      
+      if (selectedRating === 0) {
+        if (window.showToast) showToast({ en: "Please select a rating!", ar: "يرجى اختيار تقييم!", es: "¡Por favor selecciona una calificación!" }[lang] || "Please select a rating!", "error");
+        return;
       }
-      document.getElementById("reviewText").value = "";
-      selectedRating = 0;
-      highlightStars(0);
+      
+      const comment = document.getElementById("reviewText").value;
+      const originalText = submitBtn.innerText;
+      submitBtn.innerText = "...";
+      
+      try {
+        const res = await fetch(`${API_BASE_URL}/api/reviews/${novelId}`, {
+          method: 'POST',
+          headers: { 
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`,
+            'ngrok-skip-browser-warning': '69420'
+          },
+          body: JSON.stringify({ rating: selectedRating, comment })
+        });
+        
+        if (res.ok) {
+          if (window.showToast) {
+            const msg = { en: "Review submitted!", ar: "تم إرسال المراجعة!", es: "¡Reseña enviada!" }[lang] || "Review submitted!";
+            showToast(msg, "success");
+          }
+          document.getElementById("reviewText").value = "";
+          selectedRating = 0;
+          highlightStars(0);
+          
+          await loadReviews(novelId);
+        } else {
+             if (window.showToast) showToast({ en: "Failed to submit", ar: "فشل الإرسال", es: "Error al enviar" }[lang] || "Failed to submit", "error");
+        }
+      } catch(err) {
+         console.error(err);
+      } finally {
+         submitBtn.innerText = originalText;
+      }
     });
   }
 }
 
 document.addEventListener("DOMContentLoaded", () => {
-  initRatingSystem();
+  const params = new URLSearchParams(window.location.search);
+  const novelId = parseInt(params.get("id"));
+  if (novelId) {
+    initRatingSystem(novelId);
+    loadReviews(novelId);
+  }
 });
 
 window.renderNovelDetails = renderNovelDetails;

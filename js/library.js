@@ -33,20 +33,28 @@ async function renderLibrary() {
   const lang = typeof getActiveLang !== "undefined" ? getActiveLang() : (localStorage.getItem("preferredLang") || "en");
   const viewText = { en: "View", ar: "عرض", es: "Ver" }[lang] || "View";
 
-  let allNovels = [];
-  try {
-    allNovels = await fetchNovels();
-  } catch (err) {
-    console.error("Library: Failed to fetch novels", err);
-    libraryGrid.innerHTML = `<p class="text-danger text-center w-100">Failed to load library.</p>`;
+  let myBooks = [];
+  const token = localStorage.getItem("userToken") || sessionStorage.getItem("userToken");
+  
+  if (!token) {
+    libraryGrid.innerHTML = `<p class="text-danger text-center w-100">Authentication required.</p>`;
     return;
   }
 
-  // --- Mock User Library Logic ---
-  // In a real app, this would come from a 'UserLibrary' API endpoint.
-  // For now, we'll mock it by picking a few specific novel IDs.
-  const myBookIds = [101, 103, 105, 107, 109];
-  let myBooks = allNovels.filter(n => myBookIds.includes(n.id));
+  try {
+    const res = await fetch(`${API_BASE_URL}/api/library`, {
+      headers: { 
+        'Authorization': `Bearer ${token}`,
+        'ngrok-skip-browser-warning': '69420'
+      }
+    });
+    if (!res.ok) throw new Error("Failed to load library");
+    myBooks = await res.json();
+  } catch (err) {
+    console.error("Library: Failed to fetch user library", err);
+    libraryGrid.innerHTML = `<p class="text-danger text-center w-100">Failed to load library.</p>`;
+    return;
+  }
 
   if (myBooks.length === 0) {
     libraryGrid.innerHTML = `<div class="col-12 text-center mt-5"><p class="text-white-50">${
@@ -86,7 +94,7 @@ async function renderLibrary() {
                 <div class="hover-overlay text-center">
                     <h6 class="text-white fw-bold">${title}</h6>
                     <p class="text-warning small mb-2"><i class="bi bi-star-fill"></i> ${book.rating}</p>
-                    <p class="text-light" style="font-size: 0.7rem;">${description}</p>
+                    <p class="text-light" style="font-size: 0.7rem; display: -webkit-box; -webkit-line-clamp: 4; -webkit-box-orient: vertical; overflow: hidden; text-overflow: ellipsis;">${description}</p>
                     <a href="novel_details.html?id=${book.id}" class="btn btn-sm btn-primary w-100 mt-2">${viewText}</a>
                 </div>
             </div>

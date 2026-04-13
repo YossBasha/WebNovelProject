@@ -393,6 +393,38 @@
 
     </div>
 
+    <!-- =============== Payment Modal ==================== -->
+    <div class="modal fade" id="paymentModal" tabindex="-1" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content bg-dark text-white border-secondary rounded-4">
+          <div class="modal-header border-0 pb-0">
+            <h5 class="modal-title fw-bold" data-i18n="modal_payment_title">Complete Purchase</h5>
+            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body p-4">
+            <p class="text-white-50 small mb-4" data-i18n="modal_payment_desc">Please enter your payment details to add this novel to your library.</p>
+            <form id="paymentForm">
+              <div class="mb-3">
+                <label for="cardNumber" class="form-label text-white-50" data-i18n="label_card">Card Number</label>
+                <input type="text" class="form-control bg-secondary text-white border-0" id="cardNumber" placeholder="0000 0000 0000 0000" required />
+              </div>
+              <div class="row g-3 mb-4">
+                <div class="col-6">
+                  <label for="cardExpiry" class="form-label text-white-50" data-i18n="label_expiry">Expiry Date</label>
+                  <input type="text" class="form-control bg-secondary text-white border-0" id="cardExpiry" placeholder="MM/YY" required />
+                </div>
+                <div class="col-6">
+                  <label for="cardCvc" class="form-label text-white-50" data-i18n="label_cvc">CVC</label>
+                  <input type="text" class="form-control bg-secondary text-white border-0" id="cardCvc" placeholder="123" required />
+                </div>
+              </div>
+              <button type="submit" class="btn btn-warning w-100 fw-bold rounded-pill py-2" id="payAndAddBtn" data-i18n="btn_pay">Pay & Add to Library</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <!-- =============== Settings/Preferences Modal ==================== -->
     <div class="modal fade" id="settingsModal" tabindex="-1" aria-hidden="true">
       <div class="modal-dialog modal-dialog-centered">

@@ -3,6 +3,15 @@ async function renderAuthors() {
   if (!authorsGrid) return;
 
   const lang = typeof getActiveLang !== "undefined" ? getActiveLang() : "en";
+  
+  const params = new URLSearchParams(window.location.search);
+  const query = params.get("q") || "";
+
+  // Pre-fill inner page search input
+  const searchInput = document.querySelector('.text-search-group input[name="q"]');
+  if (searchInput && query) {
+    searchInput.value = query;
+  }
 
   let currentPage = 0;
   const pageSize = 24;
@@ -30,7 +39,7 @@ async function renderAuthors() {
     }
 
     try {
-      const newAuthors = await fetchAuthors(pageSize, currentPage * pageSize);
+      const newAuthors = await fetchAuthors(pageSize, currentPage * pageSize, query);
 
       if (newAuthors.length < pageSize) {
         hasMore = false;
@@ -94,6 +103,10 @@ async function renderAuthors() {
 
     if (append) authorsGrid.insertAdjacentHTML("beforeend", authorsHTML);
     else authorsGrid.innerHTML = authorsHTML;
+    
+    if (!append && authorsToAppend.length === 0) {
+       authorsGrid.innerHTML = `<div class="col-12 text-center text-white-50 mt-5 w-100">No authors found matching your criteria.</div>`;
+    }
 
     if (window.initScrollReveal) window.initScrollReveal();
   }

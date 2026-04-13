@@ -80,8 +80,16 @@
     </nav>
 
     <main class="container my-5">
-      <div class="d-flex justify-content-between align-items-center mb-5">
-        <h2 class="text-white fw-bold" data-i18n="nav_authors">Authors</h2>
+      <div class="d-flex justify-content-between align-items-center flex-wrap gap-3 mb-5">
+        <h2 class="text-white fw-bold mb-0" data-i18n="nav_authors">Authors</h2>
+        <form class="d-flex" action="authors.html" method="GET">
+          <div class="input-group text-search-group">
+            <input class="form-control bg-dark text-white border-secondary" type="search" name="q" placeholder="Search authors..." aria-label="Search" />
+            <button class="btn btn-outline-secondary" type="submit">
+              <i class="bi bi-search"></i>
+            </button>
+          </div>
+        </form>
       </div>
       <div
         class="row row-cols-1 row-cols-md-3 row-cols-lg-4 g-4"
