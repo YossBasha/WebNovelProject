@@ -7,22 +7,22 @@ async function renderAuthorDetails() {
 
   let author;
   try {
-    const res = await fetch(`${API_BASE_URL}/api/novels/${novelId}`, {
-      headers: {
-        "ngrok-skip-browser-warning": "69420",
-      },
-    });
-    if (!res.ok) throw new Error("Author not found");
-    author = await res.json();
+    // 1. We use safeFetch so we don't have to write the headers manually
+    // 2. We use /api/authors/ instead of /api/novels/
+    // 3. We use the authorId variable
+    author = await safeFetch(`${API_BASE_URL}/api/authors/${authorId}`);
+
+    if (!author) throw new Error("Author not found");
   } catch (err) {
     const nameEl = document.getElementById("authorName");
-    if (nameEl)
+    if (nameEl) {
       nameEl.textContent =
         lang === "ar"
           ? "المؤلف غير موجود"
           : lang === "es"
             ? "Autor no encontrado"
             : "Author Not Found";
+    }
     return;
   }
 
