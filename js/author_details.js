@@ -7,12 +7,22 @@ async function renderAuthorDetails() {
 
   let author;
   try {
-    const res = await fetch(`${API_BASE_URL}/api/authors/${authorId}`);
+    const res = await fetch(`${API_BASE_URL}/api/novels/${novelId}`, {
+      headers: {
+        "ngrok-skip-browser-warning": "69420",
+      },
+    });
     if (!res.ok) throw new Error("Author not found");
     author = await res.json();
   } catch (err) {
     const nameEl = document.getElementById("authorName");
-    if (nameEl) nameEl.textContent = lang === "ar" ? "المؤلف غير موجود" : (lang === "es" ? "Autor no encontrado" : "Author Not Found");
+    if (nameEl)
+      nameEl.textContent =
+        lang === "ar"
+          ? "المؤلف غير موجود"
+          : lang === "es"
+            ? "Autor no encontrado"
+            : "Author Not Found";
     return;
   }
 
@@ -27,7 +37,9 @@ async function renderAuthorDetails() {
   const novels = author.novels || [];
   const totalViews = novels.reduce((sum, n) => sum + (n.views || 0), 0);
   const avgRating = novels.length
-    ? (novels.reduce((sum, n) => sum + (n.rating || 0), 0) / novels.length).toFixed(1)
+    ? (
+        novels.reduce((sum, n) => sum + (n.rating || 0), 0) / novels.length
+      ).toFixed(1)
     : "—";
 
   const statNovels = document.getElementById("statNovels");
@@ -49,16 +61,20 @@ async function renderAuthorDetails() {
 
   // Genre pills
   let allCategories = [];
-  try { allCategories = await fetchCategories(); } catch (_) {}
+  try {
+    allCategories = await fetchCategories();
+  } catch (_) {}
 
   const genresEl = document.getElementById("authorGenres");
   if (genresEl) {
-    const uniqueCatIds = [...new Set(novels.flatMap(n => n.categories))];
-    genresEl.innerHTML = uniqueCatIds.map(catId => {
-      const cat = allCategories.find(c => c.id === catId);
-      const catName = cat ? (cat[lang] || cat.en) : catId;
-      return `<span class="author-profile-genre-pill">${catName}</span>`;
-    }).join("");
+    const uniqueCatIds = [...new Set(novels.flatMap((n) => n.categories))];
+    genresEl.innerHTML = uniqueCatIds
+      .map((catId) => {
+        const cat = allCategories.find((c) => c.id === catId);
+        const catName = cat ? cat[lang] || cat.en : catId;
+        return `<span class="author-profile-genre-pill">${catName}</span>`;
+      })
+      .join("");
   }
 
   // Novels grid
@@ -70,19 +86,26 @@ async function renderAuthorDetails() {
       if (noNovelsMsg) noNovelsMsg.classList.remove("d-none");
     } else {
       if (noNovelsMsg) noNovelsMsg.classList.add("d-none");
-      const bestsellerText = { en: "Bestseller", ar: "الأكثر مبيعاً", es: "Más vendido" }[lang] || "Bestseller";
+      const bestsellerText =
+        { en: "Bestseller", ar: "الأكثر مبيعاً", es: "Más vendido" }[lang] ||
+        "Bestseller";
 
-      grid.innerHTML = novels.map(novel => {
-        const cats = novel.categories.map(catId => {
-          const cat = allCategories.find(c => c.id === catId);
-          return cat ? (cat[lang] || cat.en) : catId;
-        }).join(" · ");
+      grid.innerHTML = novels
+        .map((novel) => {
+          const cats = novel.categories
+            .map((catId) => {
+              const cat = allCategories.find((c) => c.id === catId);
+              return cat ? cat[lang] || cat.en : catId;
+            })
+            .join(" · ");
 
-        const imgSrc = novel.imgSrc
-          ? (novel.imgSrc.startsWith("http") ? novel.imgSrc : `${API_BASE_URL}/${novel.imgSrc}`)
-          : "";
+          const imgSrc = novel.imgSrc
+            ? novel.imgSrc.startsWith("http")
+              ? novel.imgSrc
+              : `${API_BASE_URL}/${novel.imgSrc}`
+            : "";
 
-        return `
+          return `
         <div class="col-6 col-md-4 col-lg-3">
           <a href="novel_details.html?id=${novel.id}" class="text-decoration-none">
             <div class="author-novel-card">
@@ -106,7 +129,8 @@ async function renderAuthorDetails() {
             </div>
           </a>
         </div>`;
-      }).join("");
+        })
+        .join("");
     }
   }
 }
