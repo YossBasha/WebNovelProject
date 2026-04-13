@@ -106,13 +106,13 @@ function createNovelCard(novel, categories = []) {
       <img src="${imgSrc}" class="card-img-top" alt="${title}" style="height: 280px; object-fit: cover;" />
       <div class="card-body d-flex flex-column">
         <h5 class="card-title fw-bold mb-1">${title}</h5>
-        <p class="text-muted small mb-2"><i class="bi bi-pen"></i> ${authorName}</p>
+        <p class="text-white-50 small mb-2"><i class="bi bi-pen"></i> ${authorName}</p>
         <p class="card-text small mb-3" style="display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden;">
           ${description}
         </p>
         <div class="mt-auto d-flex justify-content-between align-items-center">
           <span class="text-warning fw-bold small"><i class="bi bi-star-fill"></i> ${novel.rating}</span>
-          <span class="text-secondary small"><i class="bi bi-eye"></i> ${(novel.views || 0).toLocaleString()}</span>
+          <span class="text-white-50 small"><i class="bi bi-eye"></i> ${(novel.views || 0).toLocaleString()}</span>
         </div>
       </div>
     </div>
