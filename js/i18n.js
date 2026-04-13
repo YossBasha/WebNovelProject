@@ -89,7 +89,8 @@ const translations = {
     filter_completed: "Completed",
     no_reviews_yet: "No reviews yet. Be the first to share your thoughts!",
     placeholder_review: "What did you think of this story?",
-    btn_submit_review: "Submit Review"
+    btn_submit_review: "Submit Review",
+    btn_load_more: "Load More"
   },
   ar: {
     nav_library: "المكتبة الشخصية",
@@ -181,7 +182,8 @@ const translations = {
     filter_completed: "مكتملة",
     no_reviews_yet: "لا توجد مراجعات بعد. كن أول من يشارك أفكاره!",
     placeholder_review: "ما رأيك في هذه القصة؟",
-    btn_submit_review: "إرسال المراجعة"
+    btn_submit_review: "إرسال المراجعة",
+    btn_load_more: "تحميل المزيد"
   },
   es: {
     nav_library: "Biblioteca Personal",
@@ -273,7 +275,8 @@ const translations = {
     filter_completed: "Finalizado",
     no_reviews_yet: "Aún no hay reseñas. ¡Sé el primero en compartir tus pensamientos!",
     placeholder_review: "¿Qué te ha parecido esta historia?",
-    btn_submit_review: "Enviar reseña"
+    btn_submit_review: "Enviar reseña",
+    btn_load_more: "Cargar más"
   }
 };
 

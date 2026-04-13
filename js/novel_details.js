@@ -230,7 +230,7 @@ async function renderNovelDetails() {
             if (backdrop) backdrop.remove();
 
             if (window.showToast) showToast({ en: "Added to library!", ar: "تمت الإضافة للمكتبة!", es: "¡Añadido a la biblioteca!" }[lang] || "Added to library!", "success");
-            setOwnershipUI(true);
+            setOwnershipUI({ isPurchased: true, inLibrary: true });
           } else {
              if (window.showToast) showToast("Failed to purchase.", "error");
           }

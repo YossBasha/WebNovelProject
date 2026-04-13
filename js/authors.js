@@ -116,7 +116,8 @@ async function renderAuthors() {
   if (!loadMoreBtn && authorsGrid) {
     const btnContainer = document.createElement("div");
     btnContainer.className = "text-center my-5 w-100";
-    btnContainer.innerHTML = `<button id="loadMoreAuthorsBtn" class="btn btn-outline-primary px-5 py-2 glass-effect rounded-pill">Load More</button>`;
+    const i18n = typeof translations !== "undefined" ? translations[lang] : {};
+    btnContainer.innerHTML = `<button id="loadMoreAuthorsBtn" class="btn btn-outline-primary px-5 py-2 glass-effect rounded-pill" data-i18n="btn_load_more">${i18n.btn_load_more || "Load More"}</button>`;
     authorsGrid.parentElement.appendChild(btnContainer);
     loadMoreBtn = document.getElementById("loadMoreAuthorsBtn");
     loadMoreBtn.addEventListener("click", () => loadMore(false));

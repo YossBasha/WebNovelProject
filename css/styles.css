@@ -594,6 +594,32 @@ h3 {
   transform: translateY(-2px);
   box-shadow: 0 8px 20px rgba(243, 156, 18, 0.35);
 }
+
+.btn-success {
+  background: linear-gradient(90deg, #2ecc71, #27ae60) !important;
+  border: none !important;
+  color: white !important;
+  font-weight: 700 !important;
+  transition: all 0.3s ease !important;
+}
+
+.btn-success:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(46, 204, 113, 0.35);
+}
+
+.btn-danger {
+  background: linear-gradient(90deg, #e74c3c, #c0392b) !important;
+  border: none !important;
+  color: white !important;
+  font-weight: 700 !important;
+  transition: all 0.3s ease !important;
+}
+
+.btn-danger:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(231, 76, 60, 0.35);
+}
 /* =========================================
    PREFERENCES MODAL (Sleek Dark Theme)
    ========================================= */
