@@ -8,6 +8,7 @@ async function renderNovelDetails() {
   let novel;
   try {
     const res = await fetch(`${API_BASE_URL}/api/novels/${novelId}`, {
+      cache: "no-store",
       headers: {
         "ngrok-skip-browser-warning": "69420",
       },
@@ -109,6 +110,105 @@ async function renderNovelDetails() {
   }
 
   renderRelatedNovels(novel, allCategories);
+  
+  // Initialize author/admin controls
+  const userToken = localStorage.getItem("userToken") || sessionStorage.getItem("userToken");
+  const userRole = localStorage.getItem("userRole") || sessionStorage.getItem("userRole");
+  const userAuthorId = parseInt(localStorage.getItem("authorId") || sessionStorage.getItem("authorId"));
+
+  const authorControls = document.getElementById("authorControls");
+  if (authorControls && userToken && (userRole === "Admin" || (userRole === "Author" && userAuthorId === novel.authorId))) {
+    authorControls.classList.remove("d-none");
+    
+    document.getElementById("editNovelBtn").addEventListener("click", () => {
+      document.getElementById("editNovelTitle").value = novel.title;
+      document.getElementById("editNovelDesc").value = novel.description;
+      document.getElementById("editNovelPrice").value = novel.price || 0;
+      document.getElementById("editNovelImage").value = novel.imgSrc || "";
+      
+      const select = document.getElementById("editNovelCategories");
+      select.innerHTML = "";
+      allCategories.forEach(c => {
+        const option = document.createElement("option");
+        option.value = c.id;
+        option.text = c.en;
+        if (novel.categories && novel.categories.includes(c.id)) {
+          option.selected = true;
+        }
+        select.appendChild(option);
+      });
+
+      const modalEl = document.getElementById('editNovelModal');
+      if (modalEl) {
+        document.body.appendChild(modalEl);
+        const editModal = new bootstrap.Modal(modalEl);
+        editModal.show();
+      } else {
+        console.error("Edit modal not found in DOM");
+      }
+    });
+
+    document.getElementById("editNovelForm").addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const titleEn = document.getElementById("editNovelTitle").value;
+      const descriptionEn = document.getElementById("editNovelDesc").value;
+      const price = parseFloat(document.getElementById("editNovelPrice").value);
+      const imagePath = document.getElementById("editNovelImage").value;
+      const cats = Array.from(document.getElementById("editNovelCategories").selectedOptions).map(opt => opt.value);
+
+      try {
+        const res = await fetch(`${API_BASE_URL}/api/novels/${novelId}`, {
+          method: "PUT",
+          headers: { 
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${userToken}`,
+            "ngrok-skip-browser-warning": "69420"
+          },
+          body: JSON.stringify({ titleEn, descriptionEn, price, imagePath, cats })
+        });
+        
+        if (res.ok) {
+          alert("Novel updated successfully.");
+          location.reload();
+        } else {
+          let errorMsg = "Unknown error";
+          try {
+            const data = await res.json();
+            errorMsg = data.message || errorMsg;
+          } catch (e) {
+            errorMsg = await res.text();
+          }
+          alert(`Failed to update novel: ${errorMsg}`);
+        }
+      } catch (err) {
+        console.error(err);
+        alert(`Network error or failure: ${err.message}`);
+      }
+    });
+
+    document.getElementById("deleteNovelBtn").addEventListener("click", async () => {
+      if (confirm("Are you sure you want to delete this novel? This action cannot be undone.")) {
+        try {
+          const res = await fetch(`${API_BASE_URL}/api/novels/${novelId}`, {
+            method: "DELETE",
+            headers: { 
+              "Authorization": `Bearer ${userToken}`,
+              "ngrok-skip-browser-warning": "69420"
+            }
+          });
+          if (res.ok) {
+            alert("Novel deleted successfully.");
+            window.location.href = userRole === "Admin" ? "admin_dashboard.html" : "author_dashboard.html";
+          } else {
+            alert("Failed to delete novel.");
+          }
+        } catch (err) {
+          console.error(err);
+        }
+      }
+    });
+  }
+
   initShareButton(novel);
 
   const buyBtn = document.querySelector(".buy-btn");
@@ -317,6 +417,36 @@ async function loadReviews(novelId) {
   const reviewsList = document.getElementById("reviewsList");
   if (!reviewsList) return;
   const lang = typeof getActiveLang !== "undefined" ? getActiveLang() : "en";
+  
+  const userToken = localStorage.getItem("userToken") || sessionStorage.getItem("userToken");
+  let currentUserId = null;
+  let currentUserRole = null;
+  let currentUserAuthorId = null;
+  
+  if (userToken && userToken.split('.').length === 3) {
+    try {
+      const base64Url = userToken.split('.')[1];
+      const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+      const jsonPayload = decodeURIComponent(atob(base64).split('').map(function(c) {
+          return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+      }).join(''));
+      const payload = JSON.parse(jsonPayload);
+      currentUserId = payload.id;
+      currentUserRole = payload.role;
+      currentUserAuthorId = payload.authorId;
+    } catch(e) {
+      console.error("Token decoding failed", e);
+    }
+  }
+  
+  const canDelete = (r) => {
+    if (!userToken) return false;
+    if (currentUserRole === 'Admin') return true;
+    if (r.UserId == currentUserId) return true;
+    if (currentUserAuthorId && currentUserAuthorId == r.NovelAuthorId) return true;
+    return false;
+  };
+
   try {
     const res = await fetch(`${API_BASE_URL}/api/reviews/${novelId}`, {
          headers: { 'ngrok-skip-browser-warning': '69420' }
@@ -328,7 +458,10 @@ async function loadReviews(novelId) {
           <div class="mb-3 border-bottom border-secondary pb-3">
             <div class="d-flex justify-content-between align-items-center mb-2">
               <span class="fw-bold text-white"><i class="bi bi-person-circle me-1"></i> ${r.Username}</span>
-              <span class="text-white-50 small">${new Date(r.DatePosted).toLocaleDateString()}</span>
+              <div class="d-flex align-items-center gap-2">
+                <span class="text-white-50 small">${new Date(r.DatePosted).toLocaleDateString()}</span>
+                ${canDelete(r) ? `<button class="btn btn-sm btn-link text-danger p-0 ms-2 delete-review-btn" data-id="${r.Id}"><i class="bi bi-trash"></i></button>` : ''}
+              </div>
             </div>
             <div class="text-warning small mb-2">
               ${'<i class="bi bi-star-fill"></i>'.repeat(r.Rating)}${'<i class="bi bi-star"></i>'.repeat(5 - r.Rating)}
@@ -336,6 +469,31 @@ async function loadReviews(novelId) {
             <p class="text-light mb-0" style="font-size: 0.95rem;">${r.Comment || ''}</p>
           </div>
         `).join("");
+
+        // Attach event listeners for delete buttons
+        document.querySelectorAll(".delete-review-btn").forEach(btn => {
+          btn.addEventListener("click", async (e) => {
+            const reviewId = e.currentTarget.getAttribute("data-id");
+            if (confirm("Are you sure you want to delete this comment?")) {
+              try {
+                const delRes = await fetch(`${API_BASE_URL}/api/reviews/${reviewId}`, {
+                  method: "DELETE",
+                  headers: { 
+                    "Authorization": `Bearer ${userToken}`,
+                    "ngrok-skip-browser-warning": "69420"
+                  }
+                });
+                if (delRes.ok) {
+                  location.reload();
+                } else {
+                  alert("Failed to delete review.");
+                }
+              } catch(err) {
+                console.error(err);
+              }
+            }
+          });
+        });
       } else {
         reviewsList.innerHTML = `<p class="text-white-50 small">${lang === 'ar' ? 'لا توجد مراجعات بعد.' : lang === 'es' ? 'No hay reseñas todavía.' : 'No reviews yet. Be the first to share your thoughts!'}</p>`;
       }

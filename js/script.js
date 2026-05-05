@@ -10,6 +10,8 @@ function checkAuthState() {
     localStorage.getItem("userToken") || sessionStorage.getItem("userToken");
   const username =
     localStorage.getItem("userName") || sessionStorage.getItem("userName");
+  const userRole =
+    localStorage.getItem("userRole") || sessionStorage.getItem("userRole");
 
   const signInItem = document.getElementById("signInItem");
   const registerItem = document.getElementById("registerItem");
@@ -25,6 +27,15 @@ function checkAuthState() {
     const profileNameElement = userProfileItem.querySelector(".fw-bold");
     if (profileNameElement && username) {
       profileNameElement.textContent = username;
+    }
+
+    const dropdownMenu = userProfileItem.querySelector(".dropdown-menu");
+    if (dropdownMenu && !document.getElementById("dashboardLink")) {
+      if (userRole === "Admin") {
+        dropdownMenu.insertAdjacentHTML("afterbegin", `<li><a id="dashboardLink" class="dropdown-item fw-bold text-primary" href="admin_dashboard.html"><i class="bi bi-speedometer2 me-2"></i>Admin Dashboard</a></li><li><hr class="dropdown-divider"></li>`);
+      } else if (userRole === "Author") {
+        dropdownMenu.insertAdjacentHTML("afterbegin", `<li><a id="dashboardLink" class="dropdown-item fw-bold text-primary" href="author_dashboard.html"><i class="bi bi-pencil-square me-2"></i>Author Dashboard</a></li><li><hr class="dropdown-divider"></li>`);
+      }
     }
   } else {
     signInItem.classList.remove("d-none");
@@ -130,6 +141,8 @@ document.addEventListener("DOMContentLoaded", () => {
           const storage = rememberMe ? localStorage : sessionStorage;
           storage.setItem("userToken", data.token || "session-active");
           storage.setItem("userName", data.username || emailVal);
+          if (data.role) storage.setItem("userRole", data.role);
+          if (data.authorId) storage.setItem("authorId", data.authorId);
           setTimeout(() => window.location.reload(), 800);
         } else {
           messageDiv.innerHTML = `<span class="text-danger">${data.message}</span>`;
@@ -169,6 +182,7 @@ document.addEventListener("DOMContentLoaded", () => {
           messageDiv.innerHTML = `<span class="text-success">Success! Redirecting...</span>`;
           localStorage.setItem("userToken", data.token || "session-active");
           localStorage.setItem("userName", username);
+          if (data.role) localStorage.setItem("userRole", data.role);
           setTimeout(() => window.location.reload(), 1000);
         } else {
           messageDiv.innerHTML = `<span class="text-danger">${data.message}</span>`;
@@ -184,7 +198,7 @@ document.addEventListener("DOMContentLoaded", () => {
   if (logoutBtn) {
     logoutBtn.addEventListener("click", (e) => {
       e.preventDefault();
-      ["userToken", "userName"].forEach((key) => {
+      ["userToken", "userName", "userRole", "authorId"].forEach((key) => {
         localStorage.removeItem(key);
         sessionStorage.removeItem(key);
       });
