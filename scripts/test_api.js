@@ -1,4 +1,4 @@
-const { poolPromise } = require('../AntiGravity/web-backend/db');
+const { poolPromise } = require('../../AntiGravity/web-backend/db');
 async function test() {
   const pool = await poolPromise;
   const res = await pool.request().query('SELECT TOP 1 NovelId FROM Reviews');

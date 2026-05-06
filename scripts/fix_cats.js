@@ -1,4 +1,4 @@
-const { poolPromise } = require('../AntiGravity/web-backend/db');
+const { poolPromise } = require('../../AntiGravity/web-backend/db');
 poolPromise.then(pool => {
   return pool.request().query("DELETE FROM NovelCategories WHERE CategoryId NOT IN (SELECT Id FROM Categories)");
 }).then(() => {

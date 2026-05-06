@@ -1,4 +1,4 @@
-const { poolPromise } = require('../AntiGravity/web-backend/db');
+const { poolPromise } = require('../../AntiGravity/web-backend/db');
 
 async function fix() {
   const pool = await poolPromise;
